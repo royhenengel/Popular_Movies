@@ -43,7 +43,10 @@ dependencies {
     implementation "com.google.android.material:material:$version_material"
 
     implementation "com.google.dagger:dagger:$version_dagger"
+    implementation "com.google.dagger:dagger-android:$version_dagger"
+    implementation "com.google.dagger:dagger-android-support:$version_dagger"
     kapt "com.google.dagger:dagger-compiler:$version_dagger"
+    kapt "com.google.dagger:dagger-android-processor:$version_dagger"
 
     implementation "androidx.core:core-ktx:$version_ktx_core"
     implementation "androidx.lifecycle:lifecycle-extensions:$version_lifecycle_extensions"
