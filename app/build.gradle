@@ -7,7 +7,6 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-
     compileSdkVersion version_sdk_target
     defaultConfig {
         applicationId "com.example.popularmovies"
@@ -24,16 +23,29 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions{
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions{
+        jvmTarget = kotlin_jvm_target
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$version_kotlin"
     implementation "androidx.appcompat:appcompat:$version_app_compat"
-    implementation "androidx.core:core-ktx:$version_ktx_core"
+    implementation "androidx.legacy:legacy-support-v4:$version_support_leagacy"
     implementation "androidx.constraintlayout:constraintlayout:$version_contraintlayout"
     implementation "com.google.android.material:material:$version_material"
-    implementation "androidx.legacy:legacy-support-v4:$version_support_leagacy"
+
+    implementation "com.google.dagger:dagger:$version_dagger"
+    kapt "com.google.dagger:dagger-compiler:$version_dagger"
+
+    implementation "androidx.core:core-ktx:$version_ktx_core"
     implementation "androidx.lifecycle:lifecycle-extensions:$version_lifecycle_extensions"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$version_ktx_lifecycle_view_model"
 
