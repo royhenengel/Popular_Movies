@@ -19,6 +19,10 @@ buildscript {
     ext.version_ktx_lifecycle_view_model = '2.0.0'
     ext.version_dagger = '2.17'
     ext.version_auto_value = '1.6.2'
+    ext.version_retrofit = '2.4.0'
+    ext.version_okhttp = '3.10.0'
+    ext.version_logging_interceptor = '3.9.1'
+    ext.version_picasso = '2.71828'
 
     ext.version_junit = '4.12'
     ext.version_testRunner = '1.1.0-alpha4'

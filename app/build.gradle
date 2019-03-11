@@ -40,17 +40,31 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$version_app_compat"
     implementation "androidx.legacy:legacy-support-v4:$version_support_leagacy"
     implementation "androidx.constraintlayout:constraintlayout:$version_contraintlayout"
+    implementation "com.android.support:recyclerview-v7:$version_support_leagacy"
     implementation "com.google.android.material:material:$version_material"
 
+    // Dagger
     implementation "com.google.dagger:dagger:$version_dagger"
     implementation "com.google.dagger:dagger-android:$version_dagger"
     implementation "com.google.dagger:dagger-android-support:$version_dagger"
     kapt "com.google.dagger:dagger-compiler:$version_dagger"
     kapt "com.google.dagger:dagger-android-processor:$version_dagger"
 
+    // Kotlin
     implementation "androidx.core:core-ktx:$version_ktx_core"
     implementation "androidx.lifecycle:lifecycle-extensions:$version_lifecycle_extensions"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$version_ktx_lifecycle_view_model"
+
+    // Retrofit 2
+    implementation "com.squareup.retrofit2:retrofit:$version_retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$version_retrofit"
+
+    // OkHttp
+    implementation "com.squareup.okhttp3:okhttp:$version_okhttp"
+    implementation "com.squareup.okhttp3:logging-interceptor:$version_logging_interceptor"
+
+    // Picasso
+    implementation "com.squareup.picasso:picasso:$version_picasso"
 
     testImplementation "junit:junit:$version_junit"
     androidTestImplementation "androidx.test:runner:$version_testRunner"
