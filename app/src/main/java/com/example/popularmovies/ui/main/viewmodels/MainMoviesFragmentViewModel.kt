@@ -1,7 +1,6 @@
 package com.example.popularmovies.ui.main.viewmodels
 
-import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModel
+import javax.inject.Inject
 
-class MainMoviesFragmentViewModel : ViewModel() {
-
-}
+class MainMoviesFragmentViewModel @Inject constructor(): ViewModel()
