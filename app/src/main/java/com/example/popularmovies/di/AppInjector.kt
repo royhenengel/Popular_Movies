@@ -14,8 +14,6 @@ import dagger.android.support.HasSupportFragmentInjector
 /**
  * Helper class to automatically inject fragments if they implement {@link Injectable}.
  */
-interface Injectable
-
 object AppInjector {
 
     @JvmStatic
