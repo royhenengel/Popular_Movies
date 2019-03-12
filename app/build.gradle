@@ -52,6 +52,10 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$version_dagger"
     kapt "com.google.dagger:dagger-android-processor:$version_dagger"
 
+    // Auto Value
+    kapt "com.google.auto.value:auto-value:$version_auto_value"
+    implementation "com.google.auto.value:auto-value-annotations:$version_auto_value"
+
     // Kotlin
     implementation "androidx.core:core-ktx:$version_ktx_core"
     implementation "androidx.lifecycle:lifecycle-extensions:$version_lifecycle_extensions"
