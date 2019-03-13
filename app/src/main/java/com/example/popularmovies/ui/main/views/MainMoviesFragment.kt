@@ -17,10 +17,6 @@ class MainMoviesFragment : Fragment(), Injectable {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    companion object {
-        fun newInstance() = MainMoviesFragment()
-    }
-
     private lateinit var viewModel: MainMoviesFragmentViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -32,6 +28,7 @@ class MainMoviesFragment : Fragment(), Injectable {
         super.onActivityCreated(savedInstanceState)
 
         viewModel = ViewModelProviders.of(this,viewModelFactory).get(MainMoviesFragmentViewModel::class.java)
+        viewModel.start()
     }
 
 }
