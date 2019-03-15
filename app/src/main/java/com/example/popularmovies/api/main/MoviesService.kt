@@ -1,7 +1,13 @@
 package com.example.popularmovies.api.main
 
-interface MoviesService{
+import com.example.popularmovies.api.main.models.ResponseMoviesList
+import retrofit2.Call
+import retrofit2.http.GET
+import retrofit2.http.Path
 
-    fun getMovies()
+interface MoviesService {
+
+    @GET("{endpoint}")
+    fun getMovies(@Path("endpoint") endpoint: String): Call<ResponseMoviesList>
 
 }

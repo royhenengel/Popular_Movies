@@ -1,5 +1,5 @@
 // ==================================================================
-// ---------- Contains networking constants for app module ----------
+// ----------------- Contains networking constants ------------------
 // ==================================================================
 android {
 
@@ -9,7 +9,8 @@ android {
         // --------------- Endpoints and URLs ---------------
         // ==================================================
 
-        buildConfigField "String", "MOVIES_BASE_URL", "\"https://reqres.in/\""
+        buildConfigField "String", "MOVIES_BASE_URL", "\"https://api.themoviedb.org/3/movie/\""
+        buildConfigField "String", "API_KEY", "\"5fa91f4d299a99ecc758dfeb22e26c10\""
     }
 
 }
