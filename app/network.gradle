@@ -9,8 +9,11 @@ android {
         // --------------- Endpoints and URLs ---------------
         // ==================================================
 
-        buildConfigField "String", "MOVIES_BASE_URL", "\"https://api.themoviedb.org/3/movie/\""
         buildConfigField "String", "API_KEY", "\"5fa91f4d299a99ecc758dfeb22e26c10\""
+
+        buildConfigField "String", "MOVIES_BASE_URL", "\"https://api.themoviedb.org/\""
+
+        buildConfigField "String", "ENDPOINT_MOVIES", "\"3/movie\""
     }
 
 }
