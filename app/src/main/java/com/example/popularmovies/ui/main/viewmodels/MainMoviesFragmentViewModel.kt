@@ -8,9 +8,9 @@ class MainMoviesFragmentViewModel @Inject constructor(
 
     private val moviesRepository: MoviesRepository
 
-): ViewModel(){
+) : ViewModel() {
 
-    fun start(){
+    fun start() {
 
         getMovies()
     }
