@@ -37,6 +37,7 @@ object NetworkModule {
         return GsonBuilder().create()
     }
 
+    @Provides
     @JvmStatic
     fun provideGsonConverterFactory(gson: Gson): GsonConverterFactory {
 
@@ -52,18 +53,16 @@ object NetworkModule {
 
     @Provides
     @JvmStatic
-    fun provideInterceptor(): Interceptor {
+    fun provideInterceptor(): HttpLoggingInterceptor {
 
         return HttpLoggingInterceptor { Log.d(TAG_LOGGING_INTERCEPTOR, it)}.setLevel(HttpLoggingInterceptor.Level.BODY)
     }
 
     @Provides
     @JvmStatic
-    fun provideHttpUrl(): HttpUrl? {
+    fun provideHttpUrl(): HttpUrl {
 
-        return HttpUrl.parse(BuildConfig.MOVIES_BASE_URL)
+        return HttpUrl.parse(BuildConfig.MOVIES_BASE_URL)!!
     }
-
-
 
 }

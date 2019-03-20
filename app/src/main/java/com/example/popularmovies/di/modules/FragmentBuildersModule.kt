@@ -5,7 +5,7 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
 @Module
-abstract class FragmentBuildersModule{
+abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeMainMoviesFragment(): MainMoviesFragment

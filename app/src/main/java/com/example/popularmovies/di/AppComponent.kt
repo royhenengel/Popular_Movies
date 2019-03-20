@@ -3,6 +3,7 @@ package com.example.popularmovies.di
 import android.app.Application
 import com.example.popularmovies.MoviesApp
 import com.example.popularmovies.di.modules.ActivityBuildersModule
+import com.example.popularmovies.di.modules.ApiModule
 import com.example.popularmovies.di.modules.NetworkModule
 import com.example.popularmovies.di.modules.ViewModelModule
 import dagger.BindsInstance
@@ -18,7 +19,7 @@ import javax.inject.Singleton
         AndroidSupportInjectionModule::class,
         ActivityBuildersModule::class,
         ViewModelModule::class,
-        NetworkModule::class
+        ApiModule::class
     ]
 )
 interface AppComponent {
