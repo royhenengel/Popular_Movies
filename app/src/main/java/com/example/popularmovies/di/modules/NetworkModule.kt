@@ -4,15 +4,14 @@ import android.util.Log
 import com.example.popularmovies.BuildConfig
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import okhttp3.HttpUrl
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Singleton
 
 private const val TAG_LOGGING_INTERCEPTOR = "OkHttp"
 
@@ -21,12 +20,18 @@ object NetworkModule {
 
     @Provides
     @JvmStatic
-    fun provideRetrofit(httpUrl: HttpUrl, gsonConverterFactory: GsonConverterFactory, client: OkHttpClient): Retrofit {
+    fun provideRetrofit(
+        httpUrl: HttpUrl,
+        gsonConverterFactory: GsonConverterFactory,
+        coroutinesAdapter: CoroutineCallAdapterFactory,
+        client: OkHttpClient
+    ): Retrofit {
 
         return Retrofit.Builder()
             .baseUrl(httpUrl)
             .client(client)
             .addConverterFactory(gsonConverterFactory)
+            .addCallAdapterFactory(coroutinesAdapter)
             .build()
     }
 
@@ -46,6 +51,13 @@ object NetworkModule {
 
     @Provides
     @JvmStatic
+    fun provideCoroutinesAdapterFactory(): CoroutineCallAdapterFactory {
+
+        return CoroutineCallAdapterFactory()
+    }
+
+    @Provides
+    @JvmStatic
     fun provideOkHttpClient(interceptor: HttpLoggingInterceptor): OkHttpClient {
 
         return OkHttpClient.Builder().addInterceptor(interceptor).build()
@@ -55,7 +67,7 @@ object NetworkModule {
     @JvmStatic
     fun provideInterceptor(): HttpLoggingInterceptor {
 
-        return HttpLoggingInterceptor { Log.d(TAG_LOGGING_INTERCEPTOR, it)}.setLevel(HttpLoggingInterceptor.Level.BODY)
+        return HttpLoggingInterceptor { Log.d(TAG_LOGGING_INTERCEPTOR, it) }.setLevel(HttpLoggingInterceptor.Level.BODY)
     }
 
     @Provides
