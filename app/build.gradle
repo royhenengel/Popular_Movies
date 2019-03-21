@@ -34,6 +34,7 @@ android {
     kotlinOptions{
         jvmTarget = kotlin_jvm_target
     }
+
 }
 
 dependencies {
@@ -60,11 +61,12 @@ dependencies {
     implementation "androidx.core:core-ktx:$version_ktx_core"
     implementation "androidx.lifecycle:lifecycle-extensions:$version_lifecycle_extensions"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$version_ktx_lifecycle_view_model"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version_ktx_coroutines"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_ktx_coroutines"
 
     // Retrofit 2
     implementation "com.squareup.retrofit2:retrofit:$version_retrofit"
     implementation "com.squareup.retrofit2:converter-gson:$version_retrofit"
+    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$version_retrofit_coroutines_adapter"
 
     // OkHttp
     implementation "com.squareup.okhttp3:okhttp:$version_okhttp"
@@ -76,4 +78,5 @@ dependencies {
     testImplementation "junit:junit:$version_junit"
     androidTestImplementation "androidx.test:runner:$version_testRunner"
     androidTestImplementation "androidx.test.espresso:espresso-core:$version_espresso_core"
+
 }
