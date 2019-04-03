@@ -1,31 +1,30 @@
 package com.example.popularmovies.data.main.source.remote
 
-import com.example.popularmovies.api.main.MoviesService
-import com.example.popularmovies.api.models.MoviesEndpointFactory
-import com.example.popularmovies.api.models.MoviesEndpointFactory.CATEGORY.POPULAR
+import androidx.lifecycle.MutableLiveData
+import androidx.paging.PageKeyedDataSource
+import com.example.popularmovies.api.main.models.ResponseMoviesList
 import com.example.popularmovies.data.main.models.MovieModel
 import com.example.popularmovies.data.main.source.remote.mapper.ResponseMovieItemToModelMapper
-import javax.inject.Inject
 
-class MoviesRemoteDataSource @Inject constructor(
-
-    private val moviesService: MoviesService,
-
-    private val moviesEndpointFactory: MoviesEndpointFactory,
+abstract class MoviesRemoteDataSource (
 
     private val responseMovieItemToModelMapper: ResponseMovieItemToModelMapper
 
-) {
+) : PageKeyedDataSource<Int, MovieModel>() {
 
-    suspend fun getMovies(): ArrayList<MovieModel> {
+    val stateLiveData: MutableLiveData<STATE> = MutableLiveData()
 
-        val response = moviesService.getMoviesAsync(
-            endpoint = moviesEndpointFactory.endpoint_movies,
-            category = POPULAR.description,
-            key = moviesEndpointFactory.apiKey,
-            language = moviesEndpointFactory.language,
-            page = 1
-        ).await()
+    abstract override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, MovieModel>)
+
+    abstract override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, MovieModel>)
+
+    abstract override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, MovieModel>)
+
+    protected fun keyAfter(params: LoadParams<Int>) : Int? = if (params.key > 1) params.key + 1 else null
+
+    protected fun keyBefore(params: LoadParams<Int>) : Int? = if (params.key > 1) params.key - 1 else null
+
+    protected fun mapResponseItemsToModels(response: ResponseMoviesList): MutableList<MovieModel> {
 
         val movieModelsList = arrayListOf<MovieModel>()
         if (response.results != null) {
@@ -37,7 +36,25 @@ class MoviesRemoteDataSource @Inject constructor(
         }
 
         return movieModelsList
-
     }
 
+    enum class STATE {
+        DONE, LOADING, ERROR
+    }
+
+    enum class CATEGORY(
+
+        val description: String
+
+    ) {
+
+        POPULAR("popular")
+    }
+
+    companion object {
+
+        const val FIRST_PAGE = 1
+        const val PAGE_SIZE = 20
+        const val MOVIE_LANGUAGE = "en-US"
+    }
 }

@@ -24,6 +24,16 @@ interface MoviesService {
         @Query(QUERY_LANGUAGE) language: String,
         @Query(QUERY_PAGE) page: Int
 
+    ): Call<ResponseMoviesList>
+
+    @GET("{$PATH_ENDPOINT}/{$PATH_CATEGORY}")
+    fun getMoviesDeferred(
+        @Path(PATH_ENDPOINT, encoded = true) endpoint: String,
+        @Path(PATH_CATEGORY, encoded = true) category: String,
+        @Query(QUERY_API_KEY) key: String,
+        @Query(QUERY_LANGUAGE) language: String,
+        @Query(QUERY_PAGE) page: Int
+
     ): Deferred<ResponseMoviesList>
 
 }
