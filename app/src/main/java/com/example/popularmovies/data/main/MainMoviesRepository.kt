@@ -1,21 +1,28 @@
 package com.example.popularmovies.data.main
 
+import androidx.lifecycle.LiveData
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.example.popularmovies.data.main.models.MovieModel
 import com.example.popularmovies.data.main.source.remote.MoviesRemoteDataSource
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.example.popularmovies.data.main.source.remote.MoviesRemoteDataSourceFactory
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class MoviesRepository @Inject constructor(
 
-    private val remoteDataSource: MoviesRemoteDataSource
+    moviesRemoteDataSourceFactory: MoviesRemoteDataSourceFactory
 
 ){
+    val moviesPagedListLiveData: LiveData<PagedList<MovieModel>> by lazy {
 
-    suspend fun getMovies(): ArrayList<MovieModel> {
+        val config: PagedList.Config = PagedList.Config.Builder()
+            .setEnablePlaceholders(false)
+            .setPageSize(MoviesRemoteDataSource.PAGE_SIZE)
+            .build()
 
-        return remoteDataSource.getMovies()
+        LivePagedListBuilder(moviesRemoteDataSourceFactory, config).build()
     }
 
 }
