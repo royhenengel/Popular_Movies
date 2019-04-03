@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:elevation="3dp"
+        app:cardCornerRadius="3dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main_movies_root"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <ImageView
+                android:id="@+id/item_movie_iv_image"
+                android:layout_width="@dimen/item_movie_image_width"
+                android:layout_height="@dimen/item_movie_image_height"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars"/>
+
+        <TextView
+                android:id="@+id/item_movie_tv_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:maxLines="2"
+                android:ellipsize="end"
+                app:layout_constraintEnd_toStartOf="@+id/item_movie_iv_star"
+                app:layout_constraintStart_toEndOf="@+id/item_movie_iv_image"
+                app:layout_constraintTop_toTopOf="@+id/item_movie_iv_image" tools:text="Title"
+                android:layout_marginTop="8dp"/>
+
+        <ImageView
+                android:id="@+id/item_movie_iv_star"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="8dp"
+                android:tint="@color/star_yellow"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:src="@drawable/ic_star"
+                app:layout_constraintTop_toTopOf="@+id/item_movie_tv_title"/>
+
+        <TextView
+                android:id="@+id/item_movie_tv_year"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:textColor="@color/dark_grey"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@+id/item_movie_iv_star"
+                app:layout_constraintStart_toEndOf="@+id/item_movie_iv_image"
+                app:layout_constraintTop_toBottomOf="@+id/item_movie_tv_title" tools:text="Year"/>
+
+        <TextView
+                android:id="@+id/item_movie_tv_score"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="12sp"
+                android:textColor="@color/dark_grey"
+                app:layout_constraintEnd_toEndOf="@+id/item_movie_iv_star"
+                app:layout_constraintStart_toStartOf="@+id/item_movie_iv_star"
+                app:layout_constraintTop_toBottomOf="@+id/item_movie_iv_star"
+                tools:text="5.5"/>
+
+        <TextView
+                android:id="@+id/item_movie_tv_overview"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/item_movie_iv_image"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/item_movie_iv_image"
+                app:layout_constraintTop_toBottomOf="@+id/item_movie_tv_year"
+                android:textColor="@color/dark_grey"
+                android:gravity="top|start"
+                android:maxLines="4"
+                android:ellipsize="end"
+                tools:text="A young elephant, whose oversized ears enable him to fly, helps save a struggling circus, but when the circus plans a new venture, Dumbo and his friends discover dark secrets beneath its shiny veneer.A young elephant, whose oversized ears enable him to fly, helps save a struggling circus, but when the circus plans a new venture, Dumbo and his friends discover dark secrets beneath its shiny veneer"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
