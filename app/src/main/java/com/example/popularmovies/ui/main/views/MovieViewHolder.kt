@@ -24,11 +24,11 @@ class MovieViewHolder(
     private val scoreTv: TextView = itemView.findViewById(R.id.item_movie_tv_score)
     private val thumbnailIv: ImageView = itemView.findViewById(R.id.item_movie_iv_image)
 
-    interface MovieClickListener{
+    interface MovieClickListener {
         fun onMovieClicked(position: Int)
     }
 
-    fun bind(movieModel: MovieModel?, position: Int){
+    fun bind(movieModel: MovieModel?, position: Int) {
 
         movieModel?.let {
             title.text = it.title
@@ -36,12 +36,11 @@ class MovieViewHolder(
             overviewTv.text = it.overview
             scoreTv.text = it.voteAverage.toString()
 
-            if(it.posterPath != null){
+            if (it.posterPath != null) {
                 Glide.with(thumbnailIv.context)
                     .load("${BuildConfig.MOVIES_IMAGE_BASE_URL}${it.posterPath}")
                     .into(thumbnailIv)
-            }
-            else{
+            } else {
                 Glide.with(thumbnailIv.context)
                     .clear(thumbnailIv)
             }
@@ -51,6 +50,7 @@ class MovieViewHolder(
     }
 
     companion object {
+
         private const val PATTERN_YEAR = "yyyy"
     }
 }
