@@ -14,4 +14,6 @@ class MainMoviesFragmentViewModel @Inject constructor(
 
     fun start() {}
 
+    fun onMovieClicked(position: Int) {}
+
 }

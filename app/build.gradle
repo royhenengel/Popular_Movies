@@ -1,11 +1,7 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
-
 apply plugin: 'kotlin-kapt'
-
 apply from: 'network.gradle'
 
 android {
@@ -74,9 +70,10 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp:$version_okhttp"
     implementation "com.squareup.okhttp3:logging-interceptor:$version_logging_interceptor"
 
-    // Picasso
-    implementation "com.squareup.picasso:picasso:$version_picasso"
+    // Glide
+    implementation "com.github.bumptech.glide:glide:$version_glide"
 
+    // Test
     testImplementation "junit:junit:$version_junit"
     androidTestImplementation "androidx.test:runner:$version_testRunner"
     androidTestImplementation "androidx.test.espresso:espresso-core:$version_espresso_core"

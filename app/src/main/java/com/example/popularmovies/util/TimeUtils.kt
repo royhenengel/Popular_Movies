@@ -1,5 +1,6 @@
 package com.example.popularmovies.util
 
+import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -22,4 +23,13 @@ fun dateFromString(dateString: String?, format: String = PATTERN_API_DATE): Date
     }
     else null
 
+}
+
+fun dateAsString(date: Date?, format: String = PATTERN_API_DATE) : String? {
+
+    return if (date != null){
+        val dateFormat = SimpleDateFormat(format, Locale.getDefault())
+        dateFormat.format(date)
+    }
+    else null
 }

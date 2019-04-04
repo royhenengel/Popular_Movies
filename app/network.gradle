@@ -13,6 +13,8 @@ android {
 
         buildConfigField "String", "MOVIES_BASE_URL", "\"https://api.themoviedb.org/\""
 
+        buildConfigField "String", "MOVIES_IMAGE_BASE_URL", "\"https://image.tmdb.org/t/p/w500\""
+
         buildConfigField "String", "ENDPOINT_MOVIES", "\"3/movie\""
     }
 
