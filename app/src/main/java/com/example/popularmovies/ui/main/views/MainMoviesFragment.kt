@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -54,8 +55,8 @@ class MainMoviesFragment : Fragment(), Injectable, MovieViewHolder.MovieClickLis
 
     private fun initViews(view: View) {
 
-        moviesRv = view.findViewById(R.id.fragment_main_movies_rv)
-        moviesRv.apply {
+        moviesRv = view.findViewById<RecyclerView>(R.id.fragment_main_movies_rv).apply{
+
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
 
@@ -67,6 +68,14 @@ class MainMoviesFragment : Fragment(), Injectable, MovieViewHolder.MovieClickLis
     private fun observe() {
 
         fragmentViewModel.moviesLiveData.observe(this, Observer { moviesAdapter.submitList(it) })
+        fragmentViewModel.onMovieClickedLiveEvent.observe(this, Observer { handleMovieClickedEvent(it) })
+
+    }
+
+    private fun handleMovieClickedEvent(movieModel: MovieModel?){
+
+        val action = MainMoviesFragmentDirections.actionDestMainToDestMovieDetails()
+        findNavController().navigate(action)
     }
 
 }

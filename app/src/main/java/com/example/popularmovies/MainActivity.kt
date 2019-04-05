@@ -5,9 +5,10 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.NavigationUI
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
@@ -19,12 +20,19 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
+    private lateinit var appBarConfiguration: AppBarConfiguration
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
         initNavUi()
+    }
+
+    override fun onBackPressed() {
+
+        findNavController(R.id.main_nav_host).popBackStack()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -43,6 +51,11 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         }
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+
+        return findNavController(R.id.main_nav_host).navigateUp()
+    }
+
     override fun supportFragmentInjector(): AndroidInjector<Fragment> {
 
         return dispatchingAndroidInjector
@@ -50,13 +63,12 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
     private fun initNavUi() {
 
-        val host: NavHostFragment = supportFragmentManager
-            .findFragmentById(R.id.main_nav_host_fragment) as NavHostFragment? ?: return
+        val navController = Navigation.findNavController(this, R.id.main_nav_host)
+        appBarConfiguration = AppBarConfiguration(
+            setOf(R.id.dest_main)
+        )
 
-        val navController = host.navController
-        val appBarConfiguration = AppBarConfiguration(navController.graph)
-
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration)
     }
 
 }
