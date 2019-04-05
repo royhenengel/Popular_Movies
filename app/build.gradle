@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'androidx.navigation.safeargs.kotlin'
 apply from: 'network.gradle'
 
 android {
@@ -60,6 +61,10 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$version_lifecycle_extensions"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$version_ktx_lifecycle_view_model"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_ktx_coroutines"
+
+    //Navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:$version_ktx_navigation"
+    implementation "androidx.navigation:navigation-ui-ktx:$version_ktx_navigation"
 
     // Retrofit 2
     implementation "com.squareup.retrofit2:retrofit:$version_retrofit"
