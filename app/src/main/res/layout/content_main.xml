@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<fragment
-        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/fragment_main_movies"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.example.popularmovies.ui.main.views.MainMoviesFragment"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:layout="@layout/fragment_main_movies"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <fragment
+            android:id="@+id/main_nav_host_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/main_navigation"/>
+
+</FrameLayout>
+

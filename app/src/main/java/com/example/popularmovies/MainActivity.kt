@@ -1,16 +1,16 @@
 package com.example.popularmovies
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.popularmovies.R
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
-
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
@@ -23,6 +23,8 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+
+        initNavUi()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -45,4 +47,16 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
         return dispatchingAndroidInjector
     }
+
+    private fun initNavUi() {
+
+        val host: NavHostFragment = supportFragmentManager
+            .findFragmentById(R.id.main_nav_host_fragment) as NavHostFragment? ?: return
+
+        val navController = host.navController
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
+
+        setupActionBarWithNavController(navController, appBarConfiguration)
+    }
+
 }
