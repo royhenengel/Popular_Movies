@@ -40,10 +40,11 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$version_app_compat"
     implementation "androidx.legacy:legacy-support-v4:$version_support_leagacy"
     implementation "androidx.constraintlayout:constraintlayout:$version_contraintlayout"
-    implementation "com.android.support:recyclerview-v7:$version_support_leagacy"
+    implementation "androidx.recyclerview:recyclerview:$version_recyclerview"
     implementation "com.android.support:cardview-v7:$version_support_leagacy"
     implementation "com.google.android.material:material:$version_material"
     implementation "android.arch.paging:runtime:$version_paging_library"
+    implementation "android.arch.lifecycle:extensions:$versions_arch"
 
     // Dagger
     implementation "com.google.dagger:dagger:$version_dagger"
