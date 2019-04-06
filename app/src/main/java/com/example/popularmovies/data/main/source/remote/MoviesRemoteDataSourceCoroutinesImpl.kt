@@ -23,7 +23,7 @@ class MoviesRemoteDataSourceCoroutinesImpl @Inject constructor(
         stateLiveData.postValue(STATE.LOADING)
 
         GlobalScope.launch {
-            val response = moviesService.getMoviesDeferred(
+            val response = moviesService.getMoviesAsync(
                 endpoint = BuildConfig.ENDPOINT_MOVIES,
                 category = CATEGORY.POPULAR.description,
                 key = BuildConfig.API_KEY,
@@ -42,7 +42,7 @@ class MoviesRemoteDataSourceCoroutinesImpl @Inject constructor(
         stateLiveData.postValue(STATE.LOADING)
 
         GlobalScope.launch {
-            val response = moviesService.getMoviesDeferred(
+            val response = moviesService.getMoviesAsync(
                 endpoint = BuildConfig.ENDPOINT_MOVIES,
                 category = CATEGORY.POPULAR.description,
                 key = BuildConfig.API_KEY,
@@ -61,7 +61,7 @@ class MoviesRemoteDataSourceCoroutinesImpl @Inject constructor(
         stateLiveData.postValue(STATE.LOADING)
 
         GlobalScope.launch {
-            val response = moviesService.getMoviesDeferred(
+            val response = moviesService.getMoviesAsync(
                 endpoint = BuildConfig.ENDPOINT_MOVIES,
                 category = CATEGORY.POPULAR.description,
                 key = BuildConfig.API_KEY,

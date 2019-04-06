@@ -40,7 +40,8 @@ class MovieViewHolder(
                 Glide.with(thumbnailIv.context)
                     .load("${BuildConfig.MOVIES_IMAGE_BASE_URL}${it.posterPath}")
                     .into(thumbnailIv)
-            } else {
+            }
+            else {
                 Glide.with(thumbnailIv.context)
                     .clear(thumbnailIv)
             }

@@ -17,7 +17,7 @@ private const val QUERY_PAGE = "page"
 interface MoviesService {
 
     @GET("{$PATH_ENDPOINT}/{$PATH_CATEGORY}")
-    fun getMoviesAsync(
+    fun getMovies(
         @Path(PATH_ENDPOINT, encoded = true) endpoint: String,
         @Path(PATH_CATEGORY, encoded = true) category: String,
         @Query(QUERY_API_KEY) key: String,
@@ -27,7 +27,7 @@ interface MoviesService {
     ): Call<ResponseMoviesList>
 
     @GET("{$PATH_ENDPOINT}/{$PATH_CATEGORY}")
-    fun getMoviesDeferred(
+    fun getMoviesAsync(
         @Path(PATH_ENDPOINT, encoded = true) endpoint: String,
         @Path(PATH_CATEGORY, encoded = true) category: String,
         @Query(QUERY_API_KEY) key: String,

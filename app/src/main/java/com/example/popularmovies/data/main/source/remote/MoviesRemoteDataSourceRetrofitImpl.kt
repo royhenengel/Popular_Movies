@@ -24,7 +24,7 @@ class MoviesRemoteDataSourceRetrofitImpl @Inject constructor(
 
         stateLiveData.postValue(STATE.LOADING)
 
-        val call = moviesService.getMoviesAsync(
+        val call = moviesService.getMovies(
             endpoint = BuildConfig.ENDPOINT_MOVIES,
             category = CATEGORY.POPULAR.description,
             key = BuildConfig.API_KEY,
@@ -53,7 +53,7 @@ class MoviesRemoteDataSourceRetrofitImpl @Inject constructor(
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, MovieModel>) {
 
-        val call = moviesService.getMoviesAsync(
+        val call = moviesService.getMovies(
             endpoint = BuildConfig.ENDPOINT_MOVIES,
             category = CATEGORY.POPULAR.description,
             key = BuildConfig.API_KEY,
@@ -82,7 +82,7 @@ class MoviesRemoteDataSourceRetrofitImpl @Inject constructor(
 
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, MovieModel>) {
 
-        val call = moviesService.getMoviesAsync(
+        val call = moviesService.getMovies(
             endpoint = BuildConfig.ENDPOINT_MOVIES,
             category = CATEGORY.POPULAR.description,
             key = BuildConfig.API_KEY,
