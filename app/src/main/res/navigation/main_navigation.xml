@@ -25,6 +25,10 @@
             android:id="@+id/dest_movie_details"
             android:name="com.example.popularmovies.ui.details.movie.view.MovieDetailsFragment"
             android:label="@string/movie_details"
-            tools:layout="@layout/fragment_movie_details"/>
+            tools:layout="@layout/fragment_movie_details">
+        <argument
+            android:name="movie_id"
+            app:argType="integer" />
+    </fragment>
 
 </navigation>

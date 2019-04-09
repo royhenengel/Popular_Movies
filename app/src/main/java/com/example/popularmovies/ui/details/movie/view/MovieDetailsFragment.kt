@@ -44,6 +44,74 @@ class MovieDetailsFragment : Fragment(), Injectable {
             fragmentViewModel.start(MovieDetailsFragmentArgs.fromBundle(it).movieId)
 
         }
+
+        observe()
     }
 
+    private fun observe() {
+
+        fragmentViewModel.movieDetailsModelLiveData.observe(this, Observer { handleMovieData(it) })
+    }
+
+    private fun handleMovieData(movieModel: MovieDetailsModel) {
+
+        movieModel.let {
+            titleTv.text = it.title
+            yearTv.text = dateAsString(it.releaseDate, PATTERN_YEAR)
+            overviewTv.text = it.overview
+            scoreTv.text = it.score.toString()
+            lengthTv.text = String.format(PATTERN_MOVIE_LENGTH, it.length)
+
+            if (it.thumbnailPath != null) {
+                Glide.with(context!!)
+                    .load("${BuildConfig.MOVIES_IMAGE_BASE_URL}${it.thumbnailPath}")
+                    .listener(object : RequestListener<Drawable>{
+
+                        override fun onLoadFailed(
+                            e: GlideException?,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            // TODO Handle error loading image
+                            return true
+                        }
+
+                        override fun onResourceReady(
+                            resource: Drawable?,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            dataSource: DataSource?,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            imageBackgroundIv.background = resource
+                            showLayout()
+                            return true
+                        }
+                    })
+                    .into(imageBackgroundIv)
+            }
+            else{
+                Glide.with(context!!)
+                    .clear(imageBackgroundIv)
+            }
+        }
+    }
+
+    /** TODO - Show all the layout only when both terms are met
+     * Show fragment layout only if both movie details has be received and background image has been
+     * downloaded and set
+     */
+    private fun showLayout() {
+
+        loaderPb.visibility = View.GONE
+        movieDetailsViewsGroup.visibility = View.VISIBLE
+    }
+
+    companion object {
+
+        private const val PATTERN_YEAR = "yyyy"
+        private const val PATTERN_MOVIE_LENGTH = "%d min"
+        private const val MESSAGE_ARGS_NOT_RECEIVED = "Movie model wan't received, can't start fragment"
+    }
 }
