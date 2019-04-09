@@ -9,7 +9,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
-import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.popularmovies.R
@@ -69,12 +68,11 @@ class MainMoviesFragment : Fragment(), Injectable, MovieViewHolder.MovieClickLis
 
         fragmentViewModel.moviesLiveData.observe(this, Observer { moviesAdapter.submitList(it) })
         fragmentViewModel.onMovieClickedLiveEvent.observe(this, Observer { handleMovieClickedEvent(it) })
-
     }
 
-    private fun handleMovieClickedEvent(movieModel: MovieModel?){
+    private fun handleMovieClickedEvent(movieModel: MovieModel){
 
-        val action = MainMoviesFragmentDirections.actionDestMainToDestMovieDetails()
+        val action = MainMoviesFragmentDirections.actionDestMainToDestMovieDetails(movieModel.id)
         findNavController().navigate(action)
     }
 
