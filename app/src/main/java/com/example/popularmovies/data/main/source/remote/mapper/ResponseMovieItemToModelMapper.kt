@@ -17,14 +17,8 @@ class ResponseMovieItemToModelMapper @Inject constructor() : Function<ResponseMo
             title = movieResponse.originalTitle,
             overview = movieResponse.overview ,
             releaseDate = dateFromString(dateString = movieResponse.releaseDate),
-            voteCount =  movieResponse.voteCount,
-            popularity = movieResponse.popularity,
-            voteAverage = movieResponse.voteAverage,
-            isAdult = movieResponse.adult,
-            isVideo = movieResponse.video,
-            posterPath = movieResponse.posterPath,
-            backdropPath = movieResponse.backdropPath,
-            genreIds = movieResponse.genreIds
+            score = movieResponse.voteAverage,
+            thumbnailPath = movieResponse.posterPath
         )
     }
 

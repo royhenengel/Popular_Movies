@@ -34,11 +34,11 @@ class MovieViewHolder(
             title.text = it.title
             yearTv.text = dateAsString(it.releaseDate, PATTERN_YEAR)
             overviewTv.text = it.overview
-            scoreTv.text = it.voteAverage.toString()
+            scoreTv.text = it.score.toString()
 
-            if (it.posterPath != null) {
+            if (it.thumbnailPath != null) {
                 Glide.with(thumbnailIv.context)
-                    .load("${BuildConfig.MOVIES_IMAGE_BASE_URL}${it.posterPath}")
+                    .load("${BuildConfig.MOVIES_IMAGE_BASE_URL}${it.thumbnailPath}")
                     .into(thumbnailIv)
             }
             else {
