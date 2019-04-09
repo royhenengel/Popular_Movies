@@ -2,7 +2,9 @@ package com.example.popularmovies.data.main.source.remote
 
 import com.example.popularmovies.BuildConfig
 import com.example.popularmovies.api.main.MoviesService
+import com.example.popularmovies.data.details.model.MovieDetailsModel
 import com.example.popularmovies.data.main.models.MovieModel
+import com.example.popularmovies.data.main.source.remote.mapper.MovieDetailsResponseToModelMapper
 import com.example.popularmovies.data.main.source.remote.mapper.ResponseMovieItemToModelMapper
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -10,18 +12,20 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class MoviesRemoteDataSourceCoroutinesImpl @Inject constructor(
+class MoviesRemoteDataSourceImpl @Inject constructor(
 
-    private val moviesService: MoviesService,
+    responseMovieItemToModelMapper: ResponseMovieItemToModelMapper,
 
-    responseMovieItemToModelMapper: ResponseMovieItemToModelMapper
+    movieDetailsResponseToModelMapper: MovieDetailsResponseToModelMapper,
 
-) : MoviesRemoteDataSource(responseMovieItemToModelMapper) {
+    private val moviesService: MoviesService
+
+) : MoviesRemoteDataSource(responseMovieItemToModelMapper, movieDetailsResponseToModelMapper) {
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, MovieModel>) {
 
         stateLiveData.postValue(STATE.LOADING)
-
+        // TODO Handle error fetching data
         GlobalScope.launch {
             val response = moviesService.getMoviesAsync(
                 endpoint = BuildConfig.ENDPOINT_MOVIES,
@@ -40,7 +44,7 @@ class MoviesRemoteDataSourceCoroutinesImpl @Inject constructor(
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, MovieModel>) {
 
         stateLiveData.postValue(STATE.LOADING)
-
+        // TODO Handle error fetching data
         GlobalScope.launch {
             val response = moviesService.getMoviesAsync(
                 endpoint = BuildConfig.ENDPOINT_MOVIES,
@@ -59,7 +63,7 @@ class MoviesRemoteDataSourceCoroutinesImpl @Inject constructor(
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, MovieModel>) {
 
         stateLiveData.postValue(STATE.LOADING)
-
+        // TODO Handle error fetching data
         GlobalScope.launch {
             val response = moviesService.getMoviesAsync(
                 endpoint = BuildConfig.ENDPOINT_MOVIES,
@@ -73,6 +77,19 @@ class MoviesRemoteDataSourceCoroutinesImpl @Inject constructor(
             callback.onResult(movieModelsList, keyBefore(params))
             stateLiveData.postValue(STATE.DONE)
         }
+    }
+
+    override suspend fun getMovieDetails(movieId: Int) : MovieDetailsModel {
+
+        // TODO Handle error fetching data
+        val response = moviesService.getMovieDetailsAsync(
+                endpoint = BuildConfig.ENDPOINT_MOVIES,
+                movieId = movieId,
+                key = BuildConfig.API_KEY,
+                language = MOVIE_LANGUAGE
+        ).await()
+
+        return mapMovieDetailsResponseToModel(response)
     }
 
 }

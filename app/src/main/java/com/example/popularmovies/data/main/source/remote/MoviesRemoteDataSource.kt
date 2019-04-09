@@ -2,13 +2,18 @@ package com.example.popularmovies.data.main.source.remote
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
+import com.example.popularmovies.api.details.model.ResponseMovieDetails
 import com.example.popularmovies.api.main.models.ResponseMoviesList
+import com.example.popularmovies.data.details.model.MovieDetailsModel
 import com.example.popularmovies.data.main.models.MovieModel
+import com.example.popularmovies.data.main.source.remote.mapper.MovieDetailsResponseToModelMapper
 import com.example.popularmovies.data.main.source.remote.mapper.ResponseMovieItemToModelMapper
 
-abstract class MoviesRemoteDataSource (
+abstract class MoviesRemoteDataSource(
 
-    private val responseMovieItemToModelMapper: ResponseMovieItemToModelMapper
+        private val responseMovieItemToModelMapper: ResponseMovieItemToModelMapper,
+
+        private val movieDetailsResponseToModelMapper: MovieDetailsResponseToModelMapper
 
 ) : PageKeyedDataSource<Int, MovieModel>() {
 
@@ -20,9 +25,11 @@ abstract class MoviesRemoteDataSource (
 
     abstract override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, MovieModel>)
 
-    protected fun keyAfter(params: LoadParams<Int>) : Int? = if (params.key > 1) params.key + 1 else null
+    abstract suspend fun getMovieDetails(movieId: Int): MovieDetailsModel
 
-    protected fun keyBefore(params: LoadParams<Int>) : Int? = if (params.key > 1) params.key - 1 else null
+    protected fun keyAfter(params: LoadParams<Int>): Int? = if (params.key > 1) params.key + 1 else null
+
+    protected fun keyBefore(params: LoadParams<Int>): Int? = if (params.key > 1) params.key - 1 else null
 
     protected fun mapResponseItemsToModels(response: ResponseMoviesList): MutableList<MovieModel> {
 
@@ -38,13 +45,18 @@ abstract class MoviesRemoteDataSource (
         return movieModelsList
     }
 
+    protected fun mapMovieDetailsResponseToModel(response: ResponseMovieDetails): MovieDetailsModel {
+
+        return movieDetailsResponseToModelMapper.apply(response)
+    }
+
     enum class STATE {
         DONE, LOADING, ERROR
     }
 
     enum class CATEGORY(
 
-        val description: String
+            val description: String
 
     ) {
 

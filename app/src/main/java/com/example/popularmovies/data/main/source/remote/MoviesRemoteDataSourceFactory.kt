@@ -8,7 +8,7 @@ import javax.inject.Singleton
 @Singleton
 class MoviesRemoteDataSourceFactory @Inject constructor(
 
-    private val remoteDataSource: MoviesRemoteDataSourceCoroutinesImpl
+    private val remoteDataSource: MoviesRemoteDataSourceImpl
 
 ) : DataSource.Factory<Int, MovieModel>() {
 
