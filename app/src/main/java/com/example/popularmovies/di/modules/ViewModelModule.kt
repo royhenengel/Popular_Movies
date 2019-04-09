@@ -3,6 +3,7 @@ package com.example.popularmovies.di.modules
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.popularmovies.di.ViewModelKey
+import com.example.popularmovies.ui.details.movie.viewmodel.MovieDetailsFragmentViewModel
 import com.example.popularmovies.ui.main.viewmodels.MainMoviesFragmentViewModel
 import com.example.popularmovies.viewmodel.MoviesViewModelFactory
 import dagger.Binds
@@ -13,11 +14,16 @@ import dagger.multibindings.IntoMap
 abstract class ViewModelModule{
 
     @Binds
+    abstract fun bindViewModelFactory(factory: MoviesViewModelFactory) : ViewModelProvider.Factory
+
+    @Binds
     @IntoMap
     @ViewModelKey(MainMoviesFragmentViewModel::class)
     abstract fun bindMainMoviesFragmentViewModel(viewModel: MainMoviesFragmentViewModel) : ViewModel
 
     @Binds
-    abstract fun bindViewModelFactory(factory: MoviesViewModelFactory) : ViewModelProvider.Factory
+    @IntoMap
+    @ViewModelKey(MovieDetailsFragmentViewModel::class)
+    abstract fun bindMainMovieDetailsFragmentViewModel(viewModel: MovieDetailsFragmentViewModel) : ViewModel
 
 }
