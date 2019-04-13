@@ -2,13 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/thumbnailRootCl"
+    android:id="@+id/thumbnail_movie_cl_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:drawable/screen_background_light_transparent">
 
     <ImageView
-        android:id="@+id/thumbnailImageIv"
+        android:id="@+id/thumbnail_cast_iv_image"
         android:layout_width="60dp"
         android:layout_height="90dp"
         android:layout_marginStart="8dp"
@@ -16,7 +16,7 @@
         android:layout_marginEnd="8dp"
         android:contentDescription="@string/thumbnail_image"
         android:scaleType="centerCrop"
-        app:layout_constraintBottom_toTopOf="@+id/thumbnailTitleTv"
+        app:layout_constraintBottom_toTopOf="@+id/thumbnail_cast_tv_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,7 +25,7 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/thumbnailTitleTv"
+        android:id="@+id/thumbnail_cast_tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -35,10 +35,10 @@
         android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/thumbnailImageIv"
+        app:layout_constraintEnd_toEndOf="@+id/thumbnail_cast_iv_image"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/thumbnailImageIv"
-        app:layout_constraintTop_toBottomOf="@+id/thumbnailImageIv"
+        app:layout_constraintStart_toStartOf="@+id/thumbnail_cast_iv_image"
+        app:layout_constraintTop_toBottomOf="@+id/thumbnail_cast_iv_image"
         tools:text="Loren Iposum" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
