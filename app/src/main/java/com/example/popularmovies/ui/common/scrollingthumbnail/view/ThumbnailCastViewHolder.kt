@@ -19,7 +19,7 @@ class ThumbnailCastViewHolder(
 ) : RecyclerView.ViewHolder(itemView) {
 
     private val titleTv = itemView.findViewById<TextView>(R.id.thumbnail_cast_tv_title)
-    private val descTv = itemView.findViewById<TextView>(R.id.thumbnail_cast_tv_title)
+    private val descTv = itemView.findViewById<TextView>(R.id.thumbnail_cast_tv_desc)
     private val imageIv = itemView.findViewById<ImageView>(R.id.thumbnail_cast_iv_image)
 
     fun bind(thumbnailCast: ThumbnailCast, position: Int) {
