@@ -1,4 +1,4 @@
-package com.example.popularmovies.api.details.model
+package com.example.popularmovies.api.details.model.movie
 
 import com.google.gson.annotations.SerializedName
 

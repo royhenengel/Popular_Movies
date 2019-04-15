@@ -1,7 +1,7 @@
 package com.example.popularmovies.data.main.source.remote.mapper
 
 import androidx.arch.core.util.Function
-import com.example.popularmovies.api.details.model.ResponseMovieDetails
+import com.example.popularmovies.api.details.model.movie.ResponseMovieDetails
 import com.example.popularmovies.data.details.model.MovieDetailsModel
 import com.example.popularmovies.util.dateFromString
 import javax.inject.Inject

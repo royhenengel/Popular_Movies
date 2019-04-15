@@ -92,4 +92,9 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
         return mapMovieDetailsResponseToModel(response)
     }
 
+    override suspend fun getMovieCast(movieId: Int) {
+
+
+    }
+
 }

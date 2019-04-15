@@ -1,9 +1,8 @@
 package com.example.popularmovies.api.main
 
-import com.example.popularmovies.api.details.model.ResponseMovieDetails
+import com.example.popularmovies.api.details.model.movie.ResponseMovieDetails
 import com.example.popularmovies.api.main.models.ResponseMoviesList
 import kotlinx.coroutines.Deferred
-import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

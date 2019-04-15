@@ -2,7 +2,7 @@ package com.example.popularmovies.data.main.source.remote
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
-import com.example.popularmovies.api.details.model.ResponseMovieDetails
+import com.example.popularmovies.api.details.model.movie.ResponseMovieDetails
 import com.example.popularmovies.api.main.models.ResponseMoviesList
 import com.example.popularmovies.data.details.model.MovieDetailsModel
 import com.example.popularmovies.data.main.models.MovieModel
@@ -26,6 +26,8 @@ abstract class MoviesRemoteDataSource(
     abstract override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, MovieModel>)
 
     abstract suspend fun getMovieDetails(movieId: Int): MovieDetailsModel
+
+    abstract suspend fun getMovieCast(movieId: Int)
 
     protected fun keyAfter(params: LoadParams<Int>): Int? = if (params.key > 1) params.key + 1 else null
 

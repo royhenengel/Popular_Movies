@@ -13,6 +13,9 @@ class MovieDetailsFragmentViewModel @Inject constructor(
 
 ) : ViewModel() {
 
+    private val uiScope = CoroutineScope(Dispatchers.Main)
+    private val bgScope = CoroutineScope(Dispatchers.IO)
+
     private var getMovieDetailsJob: Job? = null
 
     val movieDetailsModelLiveData = MutableLiveData<MovieDetailsModel>()
@@ -24,6 +27,11 @@ class MovieDetailsFragmentViewModel @Inject constructor(
     }
 
     fun start(movieId: Int) {
+
+        uiScope.launch {
+
+            val detailsTask = repository.getMovieDetails(movieId)
+        }
 
         getMovieDetailsJob = CoroutineScope(Dispatchers.Default).launch {
 
