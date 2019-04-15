@@ -2,8 +2,8 @@ package com.example.popularmovies.ui.details.movie.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.popularmovies.data.details.model.MovieDetailsModel
-import com.example.popularmovies.data.main.MoviesRepository
+import com.example.popularmovies.data.details.model.movie.MovieDetailsModel
+import com.example.popularmovies.data.MoviesRepository
 import kotlinx.coroutines.*
 import javax.inject.Inject
 

@@ -1,9 +1,9 @@
-package com.example.popularmovies.data.main
+package com.example.popularmovies.data
 
 import androidx.lifecycle.LiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import com.example.popularmovies.data.details.model.MovieDetailsModel
+import com.example.popularmovies.data.details.model.movie.MovieDetailsModel
 import com.example.popularmovies.data.main.models.MovieModel
 import com.example.popularmovies.data.main.source.remote.MoviesRemoteDataSource
 import com.example.popularmovies.data.main.source.remote.MoviesRemoteDataSourceFactory

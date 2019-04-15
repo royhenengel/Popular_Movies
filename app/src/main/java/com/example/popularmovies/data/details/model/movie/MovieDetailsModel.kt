@@ -1,4 +1,4 @@
-package com.example.popularmovies.data.details.model
+package com.example.popularmovies.data.details.model.movie
 
 import java.util.*
 

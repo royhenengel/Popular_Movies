@@ -2,9 +2,11 @@ package com.example.popularmovies.data.main.source.remote
 
 import com.example.popularmovies.BuildConfig
 import com.example.popularmovies.api.main.MoviesService
-import com.example.popularmovies.data.details.model.MovieDetailsModel
+import com.example.popularmovies.data.details.model.cast.CastModel
+import com.example.popularmovies.data.details.model.movie.MovieDetailsModel
 import com.example.popularmovies.data.main.models.MovieModel
 import com.example.popularmovies.data.main.source.remote.mapper.MovieDetailsResponseToModelMapper
+import com.example.popularmovies.data.main.source.remote.mapper.ResponseCastItemToModelMapper
 import com.example.popularmovies.data.main.source.remote.mapper.ResponseMovieItemToModelMapper
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -16,11 +18,13 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
 
     responseMovieItemToModelMapper: ResponseMovieItemToModelMapper,
 
+    responseCastItemToModelMapper: ResponseCastItemToModelMapper,
+
     movieDetailsResponseToModelMapper: MovieDetailsResponseToModelMapper,
 
     private val moviesService: MoviesService
 
-) : MoviesRemoteDataSource(responseMovieItemToModelMapper, movieDetailsResponseToModelMapper) {
+) : MoviesRemoteDataSource(responseMovieItemToModelMapper, movieDetailsResponseToModelMapper, responseCastItemToModelMapper) {
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, MovieModel>) {
 
@@ -35,7 +39,7 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
                 page = FIRST_PAGE
             ).await()
 
-            val mapResponseItemsToModels = mapResponseItemsToModels(response)
+            val mapResponseItemsToModels = mapPopularMovieResponseItemsToModels(response)
             callback.onResult(mapResponseItemsToModels, null, FIRST_PAGE + 1)
             stateLiveData.postValue(STATE.DONE)
         }
@@ -54,7 +58,7 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
                 page = FIRST_PAGE
             ).await()
 
-            val movieModelsList = mapResponseItemsToModels(response)
+            val movieModelsList = mapPopularMovieResponseItemsToModels(response)
             callback.onResult(movieModelsList, keyAfter(params))
             stateLiveData.postValue(STATE.DONE)
         }
@@ -73,7 +77,7 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
                 page = FIRST_PAGE
             ).await()
 
-            val movieModelsList = mapResponseItemsToModels(response)
+            val movieModelsList = mapPopularMovieResponseItemsToModels(response)
             callback.onResult(movieModelsList, keyBefore(params))
             stateLiveData.postValue(STATE.DONE)
         }
@@ -92,9 +96,17 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
         return mapMovieDetailsResponseToModel(response)
     }
 
-    override suspend fun getMovieCast(movieId: Int) {
+    override suspend fun getMovieCast(movieId: Int): List<CastModel> {
 
+        // TODO Handle error fetching data
+        val response = moviesService.getMovieCastAsync(
+                endpoint = BuildConfig.ENDPOINT_MOVIES,
+                movieId = movieId,
+                key = BuildConfig.API_KEY,
+                language = MOVIE_LANGUAGE
+        ).await()
 
+        return mapCastResponseItemsToModels(response)
     }
 
 }

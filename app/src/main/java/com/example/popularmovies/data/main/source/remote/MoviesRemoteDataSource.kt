@@ -2,18 +2,23 @@ package com.example.popularmovies.data.main.source.remote
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
+import com.example.popularmovies.api.details.model.cast.ResponseMovieCast
 import com.example.popularmovies.api.details.model.movie.ResponseMovieDetails
 import com.example.popularmovies.api.main.models.ResponseMoviesList
-import com.example.popularmovies.data.details.model.MovieDetailsModel
+import com.example.popularmovies.data.details.model.cast.CastModel
+import com.example.popularmovies.data.details.model.movie.MovieDetailsModel
 import com.example.popularmovies.data.main.models.MovieModel
 import com.example.popularmovies.data.main.source.remote.mapper.MovieDetailsResponseToModelMapper
+import com.example.popularmovies.data.main.source.remote.mapper.ResponseCastItemToModelMapper
 import com.example.popularmovies.data.main.source.remote.mapper.ResponseMovieItemToModelMapper
 
 abstract class MoviesRemoteDataSource(
 
         private val responseMovieItemToModelMapper: ResponseMovieItemToModelMapper,
 
-        private val movieDetailsResponseToModelMapper: MovieDetailsResponseToModelMapper
+        private val movieDetailsResponseToModelMapper: MovieDetailsResponseToModelMapper,
+
+        private val responseCastItemToModelMapper: ResponseCastItemToModelMapper
 
 ) : PageKeyedDataSource<Int, MovieModel>() {
 
@@ -27,13 +32,13 @@ abstract class MoviesRemoteDataSource(
 
     abstract suspend fun getMovieDetails(movieId: Int): MovieDetailsModel
 
-    abstract suspend fun getMovieCast(movieId: Int)
+    abstract suspend fun getMovieCast(movieId: Int): List<CastModel>
 
     protected fun keyAfter(params: LoadParams<Int>): Int? = if (params.key > 1) params.key + 1 else null
 
     protected fun keyBefore(params: LoadParams<Int>): Int? = if (params.key > 1) params.key - 1 else null
 
-    protected fun mapResponseItemsToModels(response: ResponseMoviesList): MutableList<MovieModel> {
+    protected fun mapPopularMovieResponseItemsToModels(response: ResponseMoviesList): MutableList<MovieModel> {
 
         val movieModelsList = arrayListOf<MovieModel>()
         if (response.results != null) {
@@ -50,6 +55,20 @@ abstract class MoviesRemoteDataSource(
     protected fun mapMovieDetailsResponseToModel(response: ResponseMovieDetails): MovieDetailsModel {
 
         return movieDetailsResponseToModelMapper.apply(response)
+    }
+
+    protected fun mapCastResponseItemsToModels(response: ResponseMovieCast): MutableList<CastModel> {
+
+        val castModelsList = arrayListOf<CastModel>()
+        if (response.cast != null) {
+            for (responseCastItem in response.cast) {
+                if (responseCastItem?.id != null) {
+                    castModelsList.add(responseCastItemToModelMapper.apply(responseCastItem))
+                }
+            }
+        }
+
+        return castModelsList
     }
 
     enum class STATE {

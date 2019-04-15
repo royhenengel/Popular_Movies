@@ -16,7 +16,7 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.example.popularmovies.BuildConfig
 import com.example.popularmovies.R
-import com.example.popularmovies.data.details.model.MovieDetailsModel
+import com.example.popularmovies.data.details.model.movie.MovieDetailsModel
 import com.example.popularmovies.di.Injectable
 import com.example.popularmovies.ui.details.movie.viewmodel.MovieDetailsFragmentViewModel
 import com.example.popularmovies.util.dateAsString

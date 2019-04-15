@@ -1,5 +1,6 @@
 package com.example.popularmovies.api.main
 
+import com.example.popularmovies.api.details.model.cast.ResponseMovieCast
 import com.example.popularmovies.api.details.model.movie.ResponseMovieDetails
 import com.example.popularmovies.api.main.models.ResponseMoviesList
 import kotlinx.coroutines.Deferred
@@ -27,6 +28,15 @@ interface MoviesService {
             @Query(QUERY_LANGUAGE) language: String
 
     ) : Deferred<ResponseMovieDetails>
+
+    @GET("{$PATH_ENDPOINT}/{$PATH_MOVIE_ID}/casts")
+    fun getMovieCastAsync(
+            @Path(PATH_ENDPOINT, encoded = true) endpoint: String,
+            @Path(PATH_MOVIE_ID, encoded = true) movieId: Int,
+            @Query(QUERY_API_KEY) key: String,
+            @Query(QUERY_LANGUAGE) language: String
+
+    ) : Deferred<ResponseMovieCast>
 
     companion object {
 
