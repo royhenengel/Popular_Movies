@@ -19,7 +19,7 @@ class MovieDetailsResponseToModelMapper @Inject constructor() : Function<Respons
                 releaseDate = dateFromString(dateString = movieDetailsResponse.releaseDate),
                 score = movieDetailsResponse.voteAverage,
                 length = movieDetailsResponse.runtime,
-                thumbnailPath = movieDetailsResponse.backdropPath
+                imagePath = movieDetailsResponse.backdropPath
         )
     }
 

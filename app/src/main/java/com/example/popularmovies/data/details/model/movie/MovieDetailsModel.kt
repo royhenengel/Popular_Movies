@@ -17,6 +17,6 @@ data class MovieDetailsModel(
 
         val length: Int?,
 
-        val thumbnailPath: String?
+        val imagePath: String?
 
 )
