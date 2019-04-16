@@ -1,16 +1,14 @@
 package com.example.popularmovies.ui.common.scrollingthumbnail.view
 
 import android.content.Context
-import android.graphics.Color
 import android.util.AttributeSet
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.popularmovies.ui.common.scrollingthumbnail.model.ScrollingThumbnailClickListener
 import com.example.popularmovies.ui.common.scrollingthumbnail.model.Thumbnail
-import com.example.popularmovies.ui.common.scrollingthumbnail.model.ThumbnailCast
 import com.example.popularmovies.ui.common.scrollingthumbnail.model.ThumbnailClickListener
-import com.example.popularmovies.ui.common.scrollingthumbnail.model.ThumbnailMovie
 import com.example.popularmovies.ui.common.scrollingthumbnail.viewmodel.ScrollingThumbnailsViewUiModel
 
 class ScrollingThumbnailsView @JvmOverloads constructor(
@@ -25,6 +23,8 @@ class ScrollingThumbnailsView @JvmOverloads constructor(
 
     private lateinit var lifecycleOwner: LifecycleOwner
     private lateinit var uiModel: ScrollingThumbnailsViewUiModel
+
+    private var thumbnailClickListener: ScrollingThumbnailClickListener? = null
 
     init {
         layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -41,19 +41,25 @@ class ScrollingThumbnailsView @JvmOverloads constructor(
         observe()
     }
 
-    fun setClickLlistener(thumbnailsClickListener: ThumbnailClickListener){
+    fun setClickListener(scrollingThumbnailClickListener: ScrollingThumbnailClickListener){
 
-        uiModel.clickListener = thumbnailsClickListener
+        thumbnailClickListener = scrollingThumbnailClickListener
     }
 
     private fun observe() {
 
         uiModel.thumbnailsLiveData.observe(lifecycleOwner, Observer { handleThumbnailsData(it) })
+        uiModel.clickListenerLiveEvent.observe(lifecycleOwner, Observer { handleThumbnailClickedEvent(it) })
     }
 
     private fun handleThumbnailsData(thumbnails: List<Thumbnail>) {
 
         adapter = ScrollingThumbnailAdapter(thumbnails, uiModel)
+    }
+
+    private fun handleThumbnailClickedEvent(positing: Int) {
+
+        thumbnailClickListener?.onThumbnailClicked(positing)
     }
 
 }

@@ -3,6 +3,7 @@ package com.example.popularmovies.ui.common.scrollingthumbnail.viewmodel
 import androidx.lifecycle.MutableLiveData
 import com.example.popularmovies.ui.common.scrollingthumbnail.model.Thumbnail
 import com.example.popularmovies.ui.common.scrollingthumbnail.model.ThumbnailClickListener
+import com.example.popularmovies.viewmodel.SingleLiveEvent
 
 class ScrollingThumbnailsViewUiModel @JvmOverloads constructor(
 
@@ -11,8 +12,7 @@ class ScrollingThumbnailsViewUiModel @JvmOverloads constructor(
 ): ThumbnailClickListener {
 
     val thumbnailsLiveData = MutableLiveData<List<Thumbnail>>()
-
-    var clickListener: ThumbnailClickListener? = null
+    val clickListenerLiveEvent = SingleLiveEvent<Int>()
 
     init {
 
@@ -23,7 +23,7 @@ class ScrollingThumbnailsViewUiModel @JvmOverloads constructor(
 
     override fun onThumbnailClicked(position: Int) {
 
-        clickListener?.onThumbnailClicked(position)
+        clickListenerLiveEvent.value = position
     }
 
     fun setThumbnails(thumbnails: List<Thumbnail>){

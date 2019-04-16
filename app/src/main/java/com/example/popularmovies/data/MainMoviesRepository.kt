@@ -3,6 +3,7 @@ package com.example.popularmovies.data
 import androidx.lifecycle.LiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
+import com.example.popularmovies.data.details.model.cast.CastModel
 import com.example.popularmovies.data.details.model.movie.MovieDetailsModel
 import com.example.popularmovies.data.main.models.MovieModel
 import com.example.popularmovies.data.main.source.remote.MoviesRemoteDataSource
@@ -18,6 +19,7 @@ class MoviesRepository @Inject constructor(
         private val moviesRemoteDataSource: MoviesRemoteDataSource
 
 ) {
+
     val moviesPagedListLiveData: LiveData<PagedList<MovieModel>> by lazy {
 
         val config: PagedList.Config = PagedList.Config.Builder()
@@ -31,6 +33,11 @@ class MoviesRepository @Inject constructor(
     suspend fun getMovieDetails(movieId: Int): MovieDetailsModel {
 
         return moviesRemoteDataSource.getMovieDetails(movieId)
+    }
+
+    suspend fun getMovieCast(movieId: Int): List<CastModel>{
+
+        return moviesRemoteDataSource.getMovieCast(movieId)
     }
 
 }

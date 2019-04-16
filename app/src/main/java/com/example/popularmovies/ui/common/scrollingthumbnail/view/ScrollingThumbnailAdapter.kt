@@ -4,10 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.popularmovies.R
-import com.example.popularmovies.ui.common.scrollingthumbnail.model.Thumbnail
-import com.example.popularmovies.ui.common.scrollingthumbnail.model.ThumbnailCast
-import com.example.popularmovies.ui.common.scrollingthumbnail.model.ThumbnailClickListener
-import com.example.popularmovies.ui.common.scrollingthumbnail.model.ThumbnailMovie
+import com.example.popularmovies.ui.common.scrollingthumbnail.model.*
 
 class ScrollingThumbnailAdapter(
 
