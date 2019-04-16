@@ -2,17 +2,17 @@ package com.example.popularmovies.data.main.source.remote.mapper
 
 import androidx.arch.core.util.Function
 import com.example.popularmovies.api.details.model.movie.ResponseMovieDetails
-import com.example.popularmovies.data.details.model.movie.MovieDetailsModel
+import com.example.popularmovies.data.details.model.movie.MovieDetailsEntity
 import com.example.popularmovies.util.dateFromString
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class MovieDetailsResponseToModelMapper @Inject constructor() : Function<ResponseMovieDetails, MovieDetailsModel> {
+class MovieDetailsResponseToEntityMapper @Inject constructor() : Function<ResponseMovieDetails, MovieDetailsEntity> {
 
-    override fun apply(movieDetailsResponse: ResponseMovieDetails): MovieDetailsModel {
+    override fun apply(movieDetailsResponse: ResponseMovieDetails): MovieDetailsEntity {
 
-        return MovieDetailsModel(
+        return MovieDetailsEntity(
                 id = movieDetailsResponse.id!!,
                 title = movieDetailsResponse.title,
                 overview = movieDetailsResponse.overview,

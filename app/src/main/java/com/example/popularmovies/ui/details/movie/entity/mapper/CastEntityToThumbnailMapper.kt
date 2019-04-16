@@ -1,21 +1,21 @@
 package com.example.popularmovies.ui.details.movie.entity.mapper
 
 import androidx.arch.core.util.Function
-import com.example.popularmovies.data.details.model.cast.CastModel
-import com.example.popularmovies.ui.common.scrollingthumbnail.model.Thumbnail
-import com.example.popularmovies.ui.common.scrollingthumbnail.model.ThumbnailCast
+import com.example.popularmovies.data.details.model.cast.CastEntity
+import com.example.popularmovies.ui.common.scrollingthumbnail.model.ThumbnailUiEntity
+import com.example.popularmovies.ui.common.scrollingthumbnail.model.ThumbnailUiEntityCastUiEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class CastEntityToCastThumbnailMapper @Inject constructor() : Function<CastModel, Thumbnail> {
+class CastEntityToCastThumbnailMapper @Inject constructor() : Function<CastEntity, ThumbnailUiEntity> {
 
-    override fun apply(castModel: CastModel): Thumbnail {
+    override fun apply(castEntity: CastEntity): ThumbnailUiEntity {
 
-        return ThumbnailCast(
-                imagePath = castModel.imagePath,
-                title = castModel.name,
-                desc = castModel.character
+        return ThumbnailUiEntityCastUiEntity(
+                imagePath = castEntity.imagePath,
+                title = castEntity.name,
+                desc = castEntity.character
         )
     }
 

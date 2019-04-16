@@ -8,9 +8,9 @@ import com.example.popularmovies.ui.common.scrollingthumbnail.model.*
 
 class ScrollingThumbnailAdapter(
 
-    private val dataSet: List<Thumbnail>,
+        private val dataSet: List<ThumbnailUiEntity>,
 
-    private val thumbnailClickListener: ThumbnailClickListener
+        private val thumbnailClickListener: ThumbnailClickListener
 
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -49,9 +49,9 @@ class ScrollingThumbnailAdapter(
 
         return when (dataSet[position]) {
 
-            is ThumbnailCast -> TYPE_CAST
+            is ThumbnailUiEntityCastUiEntity -> TYPE_CAST
 
-            is ThumbnailMovie -> TYPE_MOVIE
+            is ThumbnailUiEntityMovieUiEntity -> TYPE_MOVIE
 
             else -> TYPE_NOT_VALID
         }
@@ -73,14 +73,14 @@ class ScrollingThumbnailAdapter(
 
     private fun bindCastViewHolder(holder: ThumbnailCastViewHolder, position: Int) {
 
-        val thumbnailCast: ThumbnailCast = dataSet[position] as ThumbnailCast
-        holder.bind(thumbnailCast, position)
+        val thumbnailCastUiEntity: ThumbnailUiEntityCastUiEntity = dataSet[position] as ThumbnailUiEntityCastUiEntity
+        holder.bind(thumbnailCastUiEntity, position)
     }
 
     private fun bindMovieViewHolder(holder: ThumbnailMovieViewHolder, position: Int) {
 
-        val thumbnailMovie: ThumbnailMovie = dataSet[position] as ThumbnailMovie
-        holder.bind(thumbnailMovie, position)
+        val thumbnailMovieUiEntity: ThumbnailUiEntityMovieUiEntity = dataSet[position] as ThumbnailUiEntityMovieUiEntity
+        holder.bind(thumbnailMovieUiEntity, position)
     }
 
     companion object {

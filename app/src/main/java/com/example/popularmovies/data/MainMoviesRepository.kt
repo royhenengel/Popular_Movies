@@ -3,9 +3,9 @@ package com.example.popularmovies.data
 import androidx.lifecycle.LiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import com.example.popularmovies.data.details.model.cast.CastModel
-import com.example.popularmovies.data.details.model.movie.MovieDetailsModel
-import com.example.popularmovies.data.main.models.MovieModel
+import com.example.popularmovies.data.details.model.cast.CastEntity
+import com.example.popularmovies.data.details.model.movie.MovieDetailsEntity
+import com.example.popularmovies.data.main.models.MovieEntity
 import com.example.popularmovies.data.main.source.remote.MoviesRemoteDataSource
 import com.example.popularmovies.data.main.source.remote.MoviesRemoteDataSourceFactory
 import javax.inject.Inject
@@ -20,7 +20,7 @@ class MoviesRepository @Inject constructor(
 
 ) {
 
-    val moviesPagedListLiveData: LiveData<PagedList<MovieModel>> by lazy {
+    val moviesPagedListLiveData: LiveData<PagedList<MovieEntity>> by lazy {
 
         val config: PagedList.Config = PagedList.Config.Builder()
                 .setEnablePlaceholders(false)
@@ -30,12 +30,12 @@ class MoviesRepository @Inject constructor(
         LivePagedListBuilder(moviesRemoteDataSourceFactory, config).build()
     }
 
-    suspend fun getMovieDetails(movieId: Int): MovieDetailsModel {
+    suspend fun getMovieDetails(movieId: Int): MovieDetailsEntity {
 
         return moviesRemoteDataSource.getMovieDetails(movieId)
     }
 
-    suspend fun getMovieCast(movieId: Int): List<CastModel>{
+    suspend fun getMovieCast(movieId: Int): List<CastEntity>{
 
         return moviesRemoteDataSource.getMovieCast(movieId)
     }

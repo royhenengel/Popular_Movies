@@ -2,7 +2,7 @@ package com.example.popularmovies.ui.main.viewmodels
 
 import androidx.lifecycle.ViewModel
 import com.example.popularmovies.data.MoviesRepository
-import com.example.popularmovies.data.main.models.MovieModel
+import com.example.popularmovies.data.main.models.MovieEntity
 import com.example.popularmovies.viewmodel.SingleLiveEvent
 import javax.inject.Inject
 
@@ -13,7 +13,7 @@ class MainMoviesFragmentViewModel @Inject constructor(
 ) : ViewModel() {
 
     val moviesLiveData = repository.moviesPagedListLiveData
-    val onMovieClickedLiveEvent = SingleLiveEvent<MovieModel>()
+    val onMovieClickedLiveEvent = SingleLiveEvent<MovieEntity>()
 
     fun start() {}
 

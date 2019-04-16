@@ -7,8 +7,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.popularmovies.ui.common.scrollingthumbnail.model.ScrollingThumbnailClickListener
-import com.example.popularmovies.ui.common.scrollingthumbnail.model.Thumbnail
-import com.example.popularmovies.ui.common.scrollingthumbnail.model.ThumbnailClickListener
+import com.example.popularmovies.ui.common.scrollingthumbnail.model.ThumbnailUiEntity
 import com.example.popularmovies.ui.common.scrollingthumbnail.viewmodel.ScrollingThumbnailsViewUiModel
 
 class ScrollingThumbnailsView @JvmOverloads constructor(
@@ -52,9 +51,9 @@ class ScrollingThumbnailsView @JvmOverloads constructor(
         uiModel.clickListenerLiveEvent.observe(lifecycleOwner, Observer { handleThumbnailClickedEvent(it) })
     }
 
-    private fun handleThumbnailsData(thumbnails: List<Thumbnail>) {
+    private fun handleThumbnailsData(thumbnailUiEntities: List<ThumbnailUiEntity>) {
 
-        adapter = ScrollingThumbnailAdapter(thumbnails, uiModel)
+        adapter = ScrollingThumbnailAdapter(thumbnailUiEntities, uiModel)
     }
 
     private fun handleThumbnailClickedEvent(positing: Int) {

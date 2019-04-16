@@ -12,7 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.popularmovies.R
-import com.example.popularmovies.data.main.models.MovieModel
+import com.example.popularmovies.data.main.models.MovieEntity
 import com.example.popularmovies.di.Injectable
 import com.example.popularmovies.ui.main.viewmodels.MainMoviesFragmentViewModel
 import javax.inject.Inject
@@ -70,9 +70,9 @@ class MainMoviesFragment : Fragment(), Injectable, MovieViewHolder.MovieClickLis
         fragmentViewModel.onMovieClickedLiveEvent.observe(this, Observer { handleMovieClickedEvent(it) })
     }
 
-    private fun handleMovieClickedEvent(movieModel: MovieModel){
+    private fun handleMovieClickedEvent(movieEntity: MovieEntity){
 
-        val action = MainMoviesFragmentDirections.actionDestMainToDestMovieDetails(movieModel.id)
+        val action = MainMoviesFragmentDirections.actionDestMainToDestMovieDetails(movieEntity.id)
         findNavController().navigate(action)
     }
 

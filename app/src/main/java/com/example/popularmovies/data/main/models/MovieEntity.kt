@@ -2,7 +2,7 @@ package com.example.popularmovies.data.main.models
 
 import java.util.*
 
-data class MovieModel(
+data class MovieEntity(
 
         val id: Int,
 

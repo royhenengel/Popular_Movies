@@ -2,12 +2,12 @@ package com.example.popularmovies.data.main.source.remote
 
 import com.example.popularmovies.BuildConfig
 import com.example.popularmovies.api.main.MoviesService
-import com.example.popularmovies.data.details.model.cast.CastModel
-import com.example.popularmovies.data.details.model.movie.MovieDetailsModel
-import com.example.popularmovies.data.main.models.MovieModel
-import com.example.popularmovies.data.main.source.remote.mapper.MovieDetailsResponseToModelMapper
-import com.example.popularmovies.data.main.source.remote.mapper.ResponseCastItemToModelMapper
-import com.example.popularmovies.data.main.source.remote.mapper.ResponseMovieItemToModelMapper
+import com.example.popularmovies.data.details.model.cast.CastEntity
+import com.example.popularmovies.data.details.model.movie.MovieDetailsEntity
+import com.example.popularmovies.data.main.models.MovieEntity
+import com.example.popularmovies.data.main.source.remote.mapper.MovieDetailsResponseToEntityMapper
+import com.example.popularmovies.data.main.source.remote.mapper.ResponseCastItemToEntityMapper
+import com.example.popularmovies.data.main.source.remote.mapper.ResponseMovieItemToEntityMapper
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,17 +16,17 @@ import javax.inject.Singleton
 @Singleton
 class MoviesRemoteDataSourceImpl @Inject constructor(
 
-    responseMovieItemToModelMapper: ResponseMovieItemToModelMapper,
+        responseMovieItemToEntityMapper: ResponseMovieItemToEntityMapper,
 
-    responseCastItemToModelMapper: ResponseCastItemToModelMapper,
+        responseCastItemToEntityMapper: ResponseCastItemToEntityMapper,
 
-    movieDetailsResponseToModelMapper: MovieDetailsResponseToModelMapper,
+        movieDetailsResponseToEntityMapper: MovieDetailsResponseToEntityMapper,
 
-    private val moviesService: MoviesService
+        private val moviesService: MoviesService
 
-) : MoviesRemoteDataSource(responseMovieItemToModelMapper, movieDetailsResponseToModelMapper, responseCastItemToModelMapper) {
+) : MoviesRemoteDataSource(responseMovieItemToEntityMapper, movieDetailsResponseToEntityMapper, responseCastItemToEntityMapper) {
 
-    override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, MovieModel>) {
+    override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, MovieEntity>) {
 
         stateLiveData.postValue(STATE.LOADING)
         // TODO Handle error fetching data
@@ -45,7 +45,7 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
         }
     }
 
-    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, MovieModel>) {
+    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, MovieEntity>) {
 
         stateLiveData.postValue(STATE.LOADING)
         // TODO Handle error fetching data
@@ -64,7 +64,7 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
         }
     }
 
-    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, MovieModel>) {
+    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, MovieEntity>) {
 
         stateLiveData.postValue(STATE.LOADING)
         // TODO Handle error fetching data
@@ -83,7 +83,7 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getMovieDetails(movieId: Int) : MovieDetailsModel {
+    override suspend fun getMovieDetails(movieId: Int) : MovieDetailsEntity {
 
         // TODO Handle error fetching data
         val response = moviesService.getMovieDetailsAsync(
@@ -96,7 +96,7 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
         return mapMovieDetailsResponseToModel(response)
     }
 
-    override suspend fun getMovieCast(movieId: Int): List<CastModel> {
+    override suspend fun getMovieCast(movieId: Int): List<CastEntity> {
 
         // TODO Handle error fetching data
         val response = moviesService.getMovieCastAsync(

@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.popularmovies.BuildConfig
 import com.example.popularmovies.R
-import com.example.popularmovies.ui.common.scrollingthumbnail.model.ThumbnailMovie
+import com.example.popularmovies.ui.common.scrollingthumbnail.model.ThumbnailUiEntityMovieUiEntity
 import com.example.popularmovies.ui.common.scrollingthumbnail.model.ThumbnailClickListener
 
 class ThumbnailMovieViewHolder(
@@ -21,10 +21,10 @@ class ThumbnailMovieViewHolder(
     private val titleTv = itemView.findViewById<TextView>(R.id.thumbnail_cast_tv_title)
     private val imageIv = itemView.findViewById<ImageView>(R.id.thumbnail_cast_iv_image)
 
-    fun bind(thumbnailMovie: ThumbnailMovie, position: Int) {
+    fun bind(thumbnailMovieUiEntity: ThumbnailUiEntityMovieUiEntity, position: Int) {
 
-        thumbnailMovie.let {
-            titleTv.text = thumbnailMovie.title
+        thumbnailMovieUiEntity.let {
+            titleTv.text = thumbnailMovieUiEntity.title
 
             Glide.with(itemView.context)
                     .load("${BuildConfig.MOVIES_IMAGE_BASE_URL}${it.imagePath}")

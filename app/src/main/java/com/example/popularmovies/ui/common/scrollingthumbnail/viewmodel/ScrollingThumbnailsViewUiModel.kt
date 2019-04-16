@@ -1,22 +1,22 @@
 package com.example.popularmovies.ui.common.scrollingthumbnail.viewmodel
 
 import androidx.lifecycle.MutableLiveData
-import com.example.popularmovies.ui.common.scrollingthumbnail.model.Thumbnail
+import com.example.popularmovies.ui.common.scrollingthumbnail.model.ThumbnailUiEntity
 import com.example.popularmovies.ui.common.scrollingthumbnail.model.ThumbnailClickListener
 import com.example.popularmovies.viewmodel.SingleLiveEvent
 
 class ScrollingThumbnailsViewUiModel @JvmOverloads constructor(
 
-    thumbnails: List<Thumbnail>? = null
+        thumbnailUiEntities: List<ThumbnailUiEntity>? = null
 
 ): ThumbnailClickListener {
 
-    val thumbnailsLiveData = MutableLiveData<List<Thumbnail>>()
+    val thumbnailsLiveData = MutableLiveData<List<ThumbnailUiEntity>>()
     val clickListenerLiveEvent = SingleLiveEvent<Int>()
 
     init {
 
-        thumbnails?.let {
+        thumbnailUiEntities?.let {
             thumbnailsLiveData.value = it
         }
     }
@@ -26,9 +26,9 @@ class ScrollingThumbnailsViewUiModel @JvmOverloads constructor(
         clickListenerLiveEvent.value = position
     }
 
-    fun setThumbnails(thumbnails: List<Thumbnail>){
+    fun setThumbnails(thumbnailUiEntities: List<ThumbnailUiEntity>){
 
-        thumbnailsLiveData.value = thumbnails
+        thumbnailsLiveData.value = thumbnailUiEntities
     }
 
 }

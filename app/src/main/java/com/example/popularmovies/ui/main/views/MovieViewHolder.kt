@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.popularmovies.BuildConfig
 import com.example.popularmovies.R
-import com.example.popularmovies.data.main.models.MovieModel
+import com.example.popularmovies.data.main.models.MovieEntity
 import com.example.popularmovies.util.dateAsString
 
 class MovieViewHolder(
@@ -28,9 +28,9 @@ class MovieViewHolder(
         fun onMovieClicked(position: Int)
     }
 
-    fun bind(movieModel: MovieModel?, position: Int) {
+    fun bind(movieEntity: MovieEntity?, position: Int) {
 
-        movieModel?.let {
+        movieEntity?.let {
             title.text = it.title
             yearTv.text = dateAsString(it.releaseDate, PATTERN_YEAR)
             overviewTv.text = it.overview

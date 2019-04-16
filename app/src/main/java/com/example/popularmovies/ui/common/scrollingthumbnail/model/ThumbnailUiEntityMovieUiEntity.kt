@@ -1,11 +1,11 @@
 package com.example.popularmovies.ui.common.scrollingthumbnail.model
 
-data class ThumbnailCast(
+data class ThumbnailUiEntityMovieUiEntity(
 
         val imagePath: String,
 
         val title: String,
 
-        val desc: String? = null
+        val desc: String?
 
-) : Thumbnail
+) : ThumbnailUiEntity

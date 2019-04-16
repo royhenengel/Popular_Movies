@@ -1,20 +1,15 @@
 package com.example.popularmovies.ui.details.movie.viewmodel
 
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.popularmovies.data.details.model.movie.MovieDetailsModel
 import com.example.popularmovies.data.MoviesRepository
-import com.example.popularmovies.data.details.model.cast.CastModel
-import com.example.popularmovies.data.main.models.MovieModel
-import com.example.popularmovies.ui.common.scrollingthumbnail.model.ScrollingThumbnailClickListener
-import com.example.popularmovies.ui.common.scrollingthumbnail.model.Thumbnail
+import com.example.popularmovies.data.details.model.cast.CastEntity
+import com.example.popularmovies.ui.common.scrollingthumbnail.model.ThumbnailUiEntity
 import com.example.popularmovies.ui.common.scrollingthumbnail.viewmodel.ScrollingThumbnailsViewUiModel
 import com.example.popularmovies.ui.details.movie.entity.MovieDetailsUiEntity
 import com.example.popularmovies.ui.details.movie.entity.mapper.CastEntityToCastThumbnailMapper
 import com.example.popularmovies.ui.details.movie.entity.mapper.MovieDetailsEntityToUiEntityMapper
 import com.example.popularmovies.viewmodel.SingleLiveEvent
-import kotlinx.android.synthetic.main.fragment_movie_details.*
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
@@ -31,12 +26,12 @@ class MovieDetailsFragmentViewModel @Inject constructor(
     val movieDetailsUiEntityLiveData = MutableLiveData<MovieDetailsUiEntity>()
     val movieCastUiModelLiveData = MutableLiveData<ScrollingThumbnailsViewUiModel>()
 
-    val castThumbnailClickedLiveEvent = SingleLiveEvent<CastModel>()
+    val castThumbnailClickedLiveEvent = SingleLiveEvent<CastEntity>()
 
     private val uiScope = CoroutineScope(Dispatchers.Main)
     private val getMovieDetailsJob: Job = Job()
 
-    private lateinit var castList: List<CastModel>
+    private lateinit var castList: List<CastEntity>
 
     override fun onCleared() {
         super.onCleared()
@@ -68,9 +63,9 @@ class MovieDetailsFragmentViewModel @Inject constructor(
         castThumbnailClickedLiveEvent.value = thumbnailClicked
     }
 
-    private fun mapCastItemsToThumbnails(castItems: List<CastModel>): List<Thumbnail> {
+    private fun mapCastItemsToThumbnails(castItems: List<CastEntity>): List<ThumbnailUiEntity> {
 
-        val thumbnails = arrayListOf<Thumbnail>()
+        val thumbnails = arrayListOf<ThumbnailUiEntity>()
         for (item in castItems) {
             thumbnails.add(castEntityToCastThumbnailMapper.apply(item))
         }
