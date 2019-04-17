@@ -112,6 +112,14 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
 
     override suspend fun getCastDetails(castId: Int): CastDetailsEntity {
 
+        // TODO Handle error fetching data
+        val response = moviesService.getCastDetailsAsync(
+            endpoint = BuildConfig.ENDPOINT_PERSON,
+            castId = castId,
+            key = BuildConfig.API_KEY,
+            language = MOVIE_LANGUAGE
+        ).await()
+
         return CastDetailsEntity(castId)
     }
 

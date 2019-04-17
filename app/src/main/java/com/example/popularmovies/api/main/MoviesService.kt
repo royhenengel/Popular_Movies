@@ -1,5 +1,6 @@
 package com.example.popularmovies.api.main
 
+import com.example.popularmovies.api.details.entity.cast.ResponseCastDetails
 import com.example.popularmovies.api.details.entity.cast.ResponseMovieCast
 import com.example.popularmovies.api.details.entity.movie.ResponseMovieDetails
 import com.example.popularmovies.api.main.entity.ResponseMoviesList
@@ -20,29 +21,38 @@ interface MoviesService {
 
     ): Deferred<ResponseMoviesList>
 
-    @GET("{$PATH_ENDPOINT}/{$PATH_MOVIE_ID}")
+    @GET("{$PATH_ENDPOINT}/{$PATH_ID}")
     fun getMovieDetailsAsync(
-            @Path(PATH_ENDPOINT, encoded = true) endpoint: String,
-            @Path(PATH_MOVIE_ID, encoded = true) movieId: Int,
-            @Query(QUERY_API_KEY) key: String,
-            @Query(QUERY_LANGUAGE) language: String
+        @Path(PATH_ENDPOINT, encoded = true) endpoint: String,
+        @Path(PATH_ID, encoded = true) movieId: Int,
+        @Query(QUERY_API_KEY) key: String,
+        @Query(QUERY_LANGUAGE) language: String
 
     ) : Deferred<ResponseMovieDetails>
 
-    @GET("{$PATH_ENDPOINT}/{$PATH_MOVIE_ID}/casts")
+    @GET("{$PATH_ENDPOINT}/{$PATH_ID}/casts")
     fun getMovieCastAsync(
-            @Path(PATH_ENDPOINT, encoded = true) endpoint: String,
-            @Path(PATH_MOVIE_ID, encoded = true) movieId: Int,
-            @Query(QUERY_API_KEY) key: String,
-            @Query(QUERY_LANGUAGE) language: String
+        @Path(PATH_ENDPOINT, encoded = true) endpoint: String,
+        @Path(PATH_ID, encoded = true) movieId: Int,
+        @Query(QUERY_API_KEY) key: String,
+        @Query(QUERY_LANGUAGE) language: String
 
     ) : Deferred<ResponseMovieCast>
+
+    @GET("{$PATH_ENDPOINT}/{$PATH_ID}")
+    fun getCastDetailsAsync(
+        @Path(PATH_ENDPOINT, encoded = true) endpoint: String,
+        @Path(PATH_ID, encoded = true) castId: Int,
+        @Query(QUERY_API_KEY) key: String,
+        @Query(QUERY_LANGUAGE) language: String
+
+    ) : Deferred<ResponseCastDetails>
 
     companion object {
 
         private const val PATH_ENDPOINT = "endpoint"
         private const val PATH_CATEGORY = "category"
-        private const val PATH_MOVIE_ID = "movie_id"
+        private const val PATH_ID = "id"
 
         private const val QUERY_API_KEY = "api_key"
         private const val QUERY_LANGUAGE = "language"
