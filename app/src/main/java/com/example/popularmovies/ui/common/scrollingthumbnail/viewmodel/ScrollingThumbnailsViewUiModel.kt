@@ -1,8 +1,8 @@
 package com.example.popularmovies.ui.common.scrollingthumbnail.viewmodel
 
 import androidx.lifecycle.MutableLiveData
-import com.example.popularmovies.ui.common.scrollingthumbnail.model.ThumbnailUiEntity
-import com.example.popularmovies.ui.common.scrollingthumbnail.model.ThumbnailClickListener
+import com.example.popularmovies.ui.common.scrollingthumbnail.entity.ThumbnailUiEntity
+import com.example.popularmovies.ui.common.scrollingthumbnail.entity.ThumbnailClickListener
 import com.example.popularmovies.viewmodel.SingleLiveEvent
 
 class ScrollingThumbnailsViewUiModel @JvmOverloads constructor(

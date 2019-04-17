@@ -3,9 +3,9 @@ package com.example.popularmovies.data
 import androidx.lifecycle.LiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import com.example.popularmovies.data.details.model.cast.CastEntity
-import com.example.popularmovies.data.details.model.movie.MovieDetailsEntity
-import com.example.popularmovies.data.main.models.MovieEntity
+import com.example.popularmovies.data.details.entity.cast.CastEntity
+import com.example.popularmovies.data.details.entity.movie.MovieDetailsEntity
+import com.example.popularmovies.data.main.entity.MovieEntity
 import com.example.popularmovies.data.main.source.remote.MoviesRemoteDataSource
 import com.example.popularmovies.data.main.source.remote.MoviesRemoteDataSourceFactory
 import javax.inject.Inject

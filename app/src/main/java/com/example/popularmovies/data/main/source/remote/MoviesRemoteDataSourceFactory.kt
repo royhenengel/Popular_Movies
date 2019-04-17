@@ -1,7 +1,7 @@
 package com.example.popularmovies.data.main.source.remote
 
 import androidx.paging.DataSource
-import com.example.popularmovies.data.main.models.MovieEntity
+import com.example.popularmovies.data.main.entity.MovieEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 

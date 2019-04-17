@@ -1,9 +1,9 @@
 package com.example.popularmovies.ui.details.movie.entity.mapper
 
 import androidx.arch.core.util.Function
-import com.example.popularmovies.data.details.model.cast.CastEntity
-import com.example.popularmovies.ui.common.scrollingthumbnail.model.ThumbnailUiEntity
-import com.example.popularmovies.ui.common.scrollingthumbnail.model.ThumbnailUiEntityCastUiEntity
+import com.example.popularmovies.data.details.entity.cast.CastEntity
+import com.example.popularmovies.ui.common.scrollingthumbnail.entity.ThumbnailUiEntity
+import com.example.popularmovies.ui.common.scrollingthumbnail.entity.ThumbnailUiEntityCastUiEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 

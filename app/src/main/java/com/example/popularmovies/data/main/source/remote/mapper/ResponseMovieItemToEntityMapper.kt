@@ -1,8 +1,8 @@
 package com.example.popularmovies.data.main.source.remote.mapper
 
 import androidx.arch.core.util.Function
-import com.example.popularmovies.api.main.models.ResponseMovieItem
-import com.example.popularmovies.data.main.models.MovieEntity
+import com.example.popularmovies.api.main.entity.ResponseMovieItem
+import com.example.popularmovies.data.main.entity.MovieEntity
 import com.example.popularmovies.util.*
 import javax.inject.Inject
 import javax.inject.Singleton

@@ -3,8 +3,8 @@ package com.example.popularmovies.ui.details.movie.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.popularmovies.data.MoviesRepository
-import com.example.popularmovies.data.details.model.cast.CastEntity
-import com.example.popularmovies.ui.common.scrollingthumbnail.model.ThumbnailUiEntity
+import com.example.popularmovies.data.details.entity.cast.CastEntity
+import com.example.popularmovies.ui.common.scrollingthumbnail.entity.ThumbnailUiEntity
 import com.example.popularmovies.ui.common.scrollingthumbnail.viewmodel.ScrollingThumbnailsViewUiModel
 import com.example.popularmovies.ui.details.movie.entity.MovieDetailsUiEntity
 import com.example.popularmovies.ui.details.movie.entity.mapper.CastEntityToCastThumbnailMapper

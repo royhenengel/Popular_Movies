@@ -2,7 +2,7 @@ package com.example.popularmovies.ui.details.movie.entity.mapper
 
 import androidx.arch.core.util.Function
 import com.example.popularmovies.BuildConfig
-import com.example.popularmovies.data.details.model.movie.MovieDetailsEntity
+import com.example.popularmovies.data.details.entity.movie.MovieDetailsEntity
 import com.example.popularmovies.ui.details.movie.entity.MovieDetailsUiEntity
 import com.example.popularmovies.util.dateAsString
 import javax.inject.Inject

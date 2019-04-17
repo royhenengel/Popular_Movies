@@ -14,9 +14,9 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.example.popularmovies.R
-import com.example.popularmovies.data.details.model.cast.CastEntity
+import com.example.popularmovies.data.details.entity.cast.CastEntity
 import com.example.popularmovies.di.Injectable
-import com.example.popularmovies.ui.common.scrollingthumbnail.model.ScrollingThumbnailClickListener
+import com.example.popularmovies.ui.common.scrollingthumbnail.entity.ScrollingThumbnailClickListener
 import com.example.popularmovies.ui.common.scrollingthumbnail.viewmodel.ScrollingThumbnailsViewUiModel
 import com.example.popularmovies.ui.details.movie.entity.MovieDetailsUiEntity
 import com.example.popularmovies.ui.details.movie.viewmodel.MovieDetailsFragmentViewModel

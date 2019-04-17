@@ -2,9 +2,9 @@ package com.example.popularmovies.data.main.source.remote
 
 import com.example.popularmovies.BuildConfig
 import com.example.popularmovies.api.main.MoviesService
-import com.example.popularmovies.data.details.model.cast.CastEntity
-import com.example.popularmovies.data.details.model.movie.MovieDetailsEntity
-import com.example.popularmovies.data.main.models.MovieEntity
+import com.example.popularmovies.data.details.entity.cast.CastEntity
+import com.example.popularmovies.data.details.entity.movie.MovieDetailsEntity
+import com.example.popularmovies.data.main.entity.MovieEntity
 import com.example.popularmovies.data.main.source.remote.mapper.MovieDetailsResponseToEntityMapper
 import com.example.popularmovies.data.main.source.remote.mapper.ResponseCastItemToEntityMapper
 import com.example.popularmovies.data.main.source.remote.mapper.ResponseMovieItemToEntityMapper

@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.popularmovies.BuildConfig
 import com.example.popularmovies.R
-import com.example.popularmovies.ui.common.scrollingthumbnail.model.ThumbnailUiEntityCastUiEntity
-import com.example.popularmovies.ui.common.scrollingthumbnail.model.ThumbnailClickListener
+import com.example.popularmovies.ui.common.scrollingthumbnail.entity.ThumbnailUiEntityCastUiEntity
+import com.example.popularmovies.ui.common.scrollingthumbnail.entity.ThumbnailClickListener
 
 class ThumbnailCastViewHolder(
 

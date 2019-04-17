@@ -2,12 +2,12 @@ package com.example.popularmovies.data.main.source.remote
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
-import com.example.popularmovies.api.details.model.cast.ResponseMovieCast
-import com.example.popularmovies.api.details.model.movie.ResponseMovieDetails
-import com.example.popularmovies.api.main.models.ResponseMoviesList
-import com.example.popularmovies.data.details.model.cast.CastEntity
-import com.example.popularmovies.data.details.model.movie.MovieDetailsEntity
-import com.example.popularmovies.data.main.models.MovieEntity
+import com.example.popularmovies.api.details.entity.cast.ResponseMovieCast
+import com.example.popularmovies.api.details.entity.movie.ResponseMovieDetails
+import com.example.popularmovies.api.main.entity.ResponseMoviesList
+import com.example.popularmovies.data.details.entity.cast.CastEntity
+import com.example.popularmovies.data.details.entity.movie.MovieDetailsEntity
+import com.example.popularmovies.data.main.entity.MovieEntity
 import com.example.popularmovies.data.main.source.remote.mapper.MovieDetailsResponseToEntityMapper
 import com.example.popularmovies.data.main.source.remote.mapper.ResponseCastItemToEntityMapper
 import com.example.popularmovies.data.main.source.remote.mapper.ResponseMovieItemToEntityMapper
