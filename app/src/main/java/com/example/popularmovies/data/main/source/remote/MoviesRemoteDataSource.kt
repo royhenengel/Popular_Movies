@@ -5,6 +5,7 @@ import androidx.paging.PageKeyedDataSource
 import com.example.popularmovies.api.details.entity.cast.ResponseMovieCast
 import com.example.popularmovies.api.details.entity.movie.ResponseMovieDetails
 import com.example.popularmovies.api.main.entity.ResponseMoviesList
+import com.example.popularmovies.data.details.entity.cast.CastDetailsEntity
 import com.example.popularmovies.data.details.entity.cast.CastEntity
 import com.example.popularmovies.data.details.entity.movie.MovieDetailsEntity
 import com.example.popularmovies.data.main.entity.MovieEntity
@@ -33,6 +34,8 @@ abstract class MoviesRemoteDataSource(
     abstract suspend fun getMovieDetails(movieId: Int): MovieDetailsEntity
 
     abstract suspend fun getMovieCast(movieId: Int): List<CastEntity>
+
+    abstract suspend fun getCastDetails(castId: Int): CastDetailsEntity
 
     protected fun keyAfter(params: LoadParams<Int>): Int? = if (params.key > 1) params.key + 1 else null
 

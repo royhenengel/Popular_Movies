@@ -3,6 +3,7 @@ package com.example.popularmovies.data
 import androidx.lifecycle.LiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
+import com.example.popularmovies.data.details.entity.cast.CastDetailsEntity
 import com.example.popularmovies.data.details.entity.cast.CastEntity
 import com.example.popularmovies.data.details.entity.movie.MovieDetailsEntity
 import com.example.popularmovies.data.main.entity.MovieEntity
@@ -38,6 +39,11 @@ class MoviesRepository @Inject constructor(
     suspend fun getMovieCast(movieId: Int): List<CastEntity>{
 
         return moviesRemoteDataSource.getMovieCast(movieId)
+    }
+
+    suspend fun getCastDetails(castId: Int): CastDetailsEntity {
+
+        return moviesRemoteDataSource.getCastDetails(castId)
     }
 
 }

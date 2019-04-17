@@ -2,6 +2,7 @@ package com.example.popularmovies.data.main.source.remote
 
 import com.example.popularmovies.BuildConfig
 import com.example.popularmovies.api.main.MoviesService
+import com.example.popularmovies.data.details.entity.cast.CastDetailsEntity
 import com.example.popularmovies.data.details.entity.cast.CastEntity
 import com.example.popularmovies.data.details.entity.movie.MovieDetailsEntity
 import com.example.popularmovies.data.main.entity.MovieEntity
@@ -107,6 +108,11 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
         ).await()
 
         return mapCastResponseItemsToModels(response)
+    }
+
+    override suspend fun getCastDetails(castId: Int): CastDetailsEntity {
+
+        return CastDetailsEntity(castId)
     }
 
 }
