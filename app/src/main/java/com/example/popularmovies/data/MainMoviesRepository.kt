@@ -46,4 +46,9 @@ class MoviesRepository @Inject constructor(
         return moviesRemoteDataSource.getCastDetails(castId)
     }
 
+    suspend fun getCastMovies(castId: Int): List<MovieEntity> {
+
+        return moviesRemoteDataSource.getCastMovies(castId)
+    }
+
 }

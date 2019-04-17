@@ -41,6 +41,8 @@ abstract class MoviesRemoteDataSource(
 
     abstract suspend fun getCastDetails(castId: Int): CastDetailsEntity
 
+    abstract suspend fun getCastMovies(castId: Int): List<MovieEntity>
+
     protected fun keyAfter(params: LoadParams<Int>): Int? = if (params.key > 1) params.key + 1 else null
 
     protected fun keyBefore(params: LoadParams<Int>): Int? = if (params.key > 1) params.key - 1 else null

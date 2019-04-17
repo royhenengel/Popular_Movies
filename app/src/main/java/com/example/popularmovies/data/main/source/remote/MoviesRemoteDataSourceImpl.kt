@@ -136,4 +136,9 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
         return mapResponseCastDetailsToEntity(response)
     }
 
+    override suspend fun getCastMovies(castId: Int): List<MovieEntity> {
+
+        return mutableListOf()
+    }
+
 }
