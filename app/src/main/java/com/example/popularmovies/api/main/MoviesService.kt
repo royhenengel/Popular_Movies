@@ -1,6 +1,7 @@
 package com.example.popularmovies.api.main
 
 import com.example.popularmovies.api.details.entity.cast.ResponseCastDetails
+import com.example.popularmovies.api.details.entity.cast.ResponseCastMovies
 import com.example.popularmovies.api.details.entity.cast.ResponseMovieCast
 import com.example.popularmovies.api.details.entity.movie.ResponseMovieDetails
 import com.example.popularmovies.api.main.entity.ResponseMoviesList
@@ -47,6 +48,15 @@ interface MoviesService {
         @Query(QUERY_LANGUAGE) language: String
 
     ) : Deferred<ResponseCastDetails>
+
+    @GET("{$PATH_ENDPOINT}/{$PATH_ID}/movie_credits")
+    fun getMoviesCreditsAsync(
+        @Path(PATH_ENDPOINT, encoded = true) endpoint: String,
+        @Path(PATH_ID, encoded = true) castId: Int,
+        @Query(QUERY_API_KEY) key: String,
+        @Query(QUERY_LANGUAGE) language: String
+
+    ) : Deferred<ResponseCastMovies>
 
     companion object {
 

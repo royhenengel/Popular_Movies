@@ -138,6 +138,15 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
 
     override suspend fun getCastMovies(castId: Int): List<MovieEntity> {
 
+        // TODO Handle error fetching data
+        val response = moviesService.getMoviesCreditsAsync(
+            endpoint = BuildConfig.ENDPOINT_PERSON,
+            castId = castId,
+            key = BuildConfig.API_KEY,
+            language = MOVIE_LANGUAGE
+        ).await()
+
+        val string = ""
         return mutableListOf()
     }
 
