@@ -7,6 +7,7 @@ import com.example.popularmovies.data.details.entity.cast.CastEntity
 import com.example.popularmovies.data.details.entity.movie.MovieDetailsEntity
 import com.example.popularmovies.data.main.entity.MovieEntity
 import com.example.popularmovies.data.main.source.remote.mapper.MovieDetailsResponseToEntityMapper
+import com.example.popularmovies.data.main.source.remote.mapper.ResponseCastDetailsToEntityMapper
 import com.example.popularmovies.data.main.source.remote.mapper.ResponseCastItemToEntityMapper
 import com.example.popularmovies.data.main.source.remote.mapper.ResponseMovieItemToEntityMapper
 import kotlinx.coroutines.GlobalScope
@@ -17,15 +18,27 @@ import javax.inject.Singleton
 @Singleton
 class MoviesRemoteDataSourceImpl @Inject constructor(
 
-        responseMovieItemToEntityMapper: ResponseMovieItemToEntityMapper,
+    responseMovieItemToEntityMapper: ResponseMovieItemToEntityMapper,
 
-        responseCastItemToEntityMapper: ResponseCastItemToEntityMapper,
+    responseCastItemToEntityMapper: ResponseCastItemToEntityMapper,
 
-        movieDetailsResponseToEntityMapper: MovieDetailsResponseToEntityMapper,
+    responseCastDetailsToEntityMapper: ResponseCastDetailsToEntityMapper,
 
-        private val moviesService: MoviesService
+    movieDetailsResponseToEntityMapper: MovieDetailsResponseToEntityMapper,
 
-) : MoviesRemoteDataSource(responseMovieItemToEntityMapper, movieDetailsResponseToEntityMapper, responseCastItemToEntityMapper) {
+    private val moviesService: MoviesService
+
+) : MoviesRemoteDataSource(
+
+    responseMovieItemToEntityMapper,
+
+    movieDetailsResponseToEntityMapper,
+
+    responseCastItemToEntityMapper,
+
+    responseCastDetailsToEntityMapper
+
+) {
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, MovieEntity>) {
 
@@ -84,14 +97,14 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getMovieDetails(movieId: Int) : MovieDetailsEntity {
+    override suspend fun getMovieDetails(movieId: Int): MovieDetailsEntity {
 
         // TODO Handle error fetching data
         val response = moviesService.getMovieDetailsAsync(
-                endpoint = BuildConfig.ENDPOINT_MOVIES,
-                movieId = movieId,
-                key = BuildConfig.API_KEY,
-                language = MOVIE_LANGUAGE
+            endpoint = BuildConfig.ENDPOINT_MOVIES,
+            movieId = movieId,
+            key = BuildConfig.API_KEY,
+            language = MOVIE_LANGUAGE
         ).await()
 
         return mapMovieDetailsResponseToModel(response)
@@ -101,10 +114,10 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
 
         // TODO Handle error fetching data
         val response = moviesService.getMovieCastAsync(
-                endpoint = BuildConfig.ENDPOINT_MOVIES,
-                movieId = movieId,
-                key = BuildConfig.API_KEY,
-                language = MOVIE_LANGUAGE
+            endpoint = BuildConfig.ENDPOINT_MOVIES,
+            movieId = movieId,
+            key = BuildConfig.API_KEY,
+            language = MOVIE_LANGUAGE
         ).await()
 
         return mapCastResponseItemsToModels(response)
@@ -120,7 +133,7 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
             language = MOVIE_LANGUAGE
         ).await()
 
-        return CastDetailsEntity(castId)
+        return mapResponseCastDetailsToEntity(response)
     }
 
 }

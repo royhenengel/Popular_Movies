@@ -2,6 +2,7 @@ package com.example.popularmovies.data.main.source.remote
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
+import com.example.popularmovies.api.details.entity.cast.ResponseCastDetails
 import com.example.popularmovies.api.details.entity.cast.ResponseMovieCast
 import com.example.popularmovies.api.details.entity.movie.ResponseMovieDetails
 import com.example.popularmovies.api.main.entity.ResponseMoviesList
@@ -10,16 +11,19 @@ import com.example.popularmovies.data.details.entity.cast.CastEntity
 import com.example.popularmovies.data.details.entity.movie.MovieDetailsEntity
 import com.example.popularmovies.data.main.entity.MovieEntity
 import com.example.popularmovies.data.main.source.remote.mapper.MovieDetailsResponseToEntityMapper
+import com.example.popularmovies.data.main.source.remote.mapper.ResponseCastDetailsToEntityMapper
 import com.example.popularmovies.data.main.source.remote.mapper.ResponseCastItemToEntityMapper
 import com.example.popularmovies.data.main.source.remote.mapper.ResponseMovieItemToEntityMapper
 
 abstract class MoviesRemoteDataSource(
 
-        private val responseMovieItemToEntityMapper: ResponseMovieItemToEntityMapper,
+    private val responseMovieItemToEntityMapper: ResponseMovieItemToEntityMapper,
 
-        private val movieDetailsResponseToEntityMapper: MovieDetailsResponseToEntityMapper,
+    private val movieDetailsResponseToEntityMapper: MovieDetailsResponseToEntityMapper,
 
-        private val responseCastItemToEntityMapper: ResponseCastItemToEntityMapper
+    private val responseCastItemToEntityMapper: ResponseCastItemToEntityMapper,
+
+    private val responseCastDetailsToEntityMapper: ResponseCastDetailsToEntityMapper
 
 ) : PageKeyedDataSource<Int, MovieEntity>() {
 
@@ -72,6 +76,11 @@ abstract class MoviesRemoteDataSource(
         }
 
         return castModelsList
+    }
+
+    protected fun mapResponseCastDetailsToEntity(response: ResponseCastDetails): CastDetailsEntity {
+
+        return responseCastDetailsToEntityMapper.apply(response)
     }
 
     enum class STATE {
