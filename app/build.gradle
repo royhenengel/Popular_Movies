@@ -53,7 +53,7 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$version_dagger"
     kapt "com.google.dagger:dagger-android-processor:$version_dagger"
 
-    // Auto Value
+    // Auto Value (needed for Dagger)
     kapt "com.google.auto.value:auto-value:$version_auto_value"
     implementation "com.google.auto.value:auto-value-annotations:$version_auto_value"
 
