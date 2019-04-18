@@ -2,9 +2,9 @@ package com.example.popularmovies.data.main.source.remote
 
 import com.example.popularmovies.BuildConfig
 import com.example.popularmovies.api.main.MoviesService
-import com.example.popularmovies.data.details.entity.cast.CastDetailsEntity
-import com.example.popularmovies.data.details.entity.cast.CastEntity
-import com.example.popularmovies.data.details.entity.movie.CastMovieEntity
+import com.example.popularmovies.data.details.entity.cast.PersonDetailsEntity
+import com.example.popularmovies.data.details.entity.cast.ActorInMovieEntity
+import com.example.popularmovies.data.details.entity.movie.MovieActorInEntity
 import com.example.popularmovies.data.details.entity.movie.MovieDetailsEntity
 import com.example.popularmovies.data.main.entity.MovieEntity
 import com.example.popularmovies.data.main.source.remote.mapper.*
@@ -112,7 +112,7 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
         return mapMovieDetailsResponseToModel(response)
     }
 
-    override suspend fun getMovieCast(movieId: Int): List<CastEntity> {
+    override suspend fun getMovieCast(movieId: Int): List<ActorInMovieEntity> {
 
         // TODO Handle error fetching data
         val response = moviesService.getMovieCastAsync(
@@ -125,7 +125,7 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
         return mapCastResponseItemsToModels(response)
     }
 
-    override suspend fun getCastDetails(castId: Int): CastDetailsEntity {
+    override suspend fun getCastDetails(castId: Int): PersonDetailsEntity {
 
         // TODO Handle error fetching data
         val response = moviesService.getCastDetailsAsync(
@@ -138,7 +138,7 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
         return mapResponseCastDetailsToEntity(response)
     }
 
-    override suspend fun getCastMovies(castId: Int): List<CastMovieEntity> {
+    override suspend fun getCastMovies(castId: Int): List<MovieActorInEntity> {
 
         // TODO Handle error fetching data
         val response = moviesService.getMoviesCreditsAsync(

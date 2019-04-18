@@ -3,7 +3,7 @@ package com.example.popularmovies.ui.details.movie.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.popularmovies.data.MoviesRepository
-import com.example.popularmovies.data.details.entity.cast.CastEntity
+import com.example.popularmovies.data.details.entity.cast.ActorInMovieEntity
 import com.example.popularmovies.ui.common.scrollingthumbnail.entity.ThumbnailUiEntity
 import com.example.popularmovies.ui.common.scrollingthumbnail.viewmodel.ScrollingThumbnailsViewUiModel
 import com.example.popularmovies.ui.details.movie.entity.MovieDetailsUiEntity
@@ -26,12 +26,12 @@ class MovieDetailsFragmentViewModel @Inject constructor(
     val movieDetailsUiEntityLiveData = MutableLiveData<MovieDetailsUiEntity>()
     val movieCastUiModelLiveData = MutableLiveData<ScrollingThumbnailsViewUiModel>()
 
-    val castThumbnailClickedLiveEvent = SingleLiveEvent<CastEntity>()
+    val castThumbnailClickedLiveEvent = SingleLiveEvent<ActorInMovieEntity>()
 
     private val uiScope = CoroutineScope(Dispatchers.Main)
     private val getMovieDetailsJob: Job = Job()
 
-    private lateinit var castList: List<CastEntity>
+    private lateinit var actorInMovieList: List<ActorInMovieEntity>
 
     override fun onCleared() {
         super.onCleared()
@@ -47,8 +47,8 @@ class MovieDetailsFragmentViewModel @Inject constructor(
             val castTask = async(Dispatchers.IO) { repository.getMovieCast(movieId) }
 
             val uiEntity = movieDetailsEntityToUiEntityMapper.apply(detailsTask.await())
-            castList = castTask.await()
-            val thumbnails = mapCastItemsToThumbnails(castList)
+            actorInMovieList = castTask.await()
+            val thumbnails = mapCastItemsToThumbnails(actorInMovieList)
 
             val scrollingThumbnailsViewUiModel = ScrollingThumbnailsViewUiModel(thumbnails)
 
@@ -59,14 +59,14 @@ class MovieDetailsFragmentViewModel @Inject constructor(
 
     fun onThumbnailClicked(position: Int) {
 
-        val thumbnailClicked = castList[position]
+        val thumbnailClicked = actorInMovieList[position]
         castThumbnailClickedLiveEvent.value = thumbnailClicked
     }
 
-    private fun mapCastItemsToThumbnails(castItems: List<CastEntity>): List<ThumbnailUiEntity> {
+    private fun mapCastItemsToThumbnails(actorInMovieItems: List<ActorInMovieEntity>): List<ThumbnailUiEntity> {
 
         val thumbnails = arrayListOf<ThumbnailUiEntity>()
-        for (item in castItems) {
+        for (item in actorInMovieItems) {
             thumbnails.add(castEntityToCastThumbnailMapper.apply(item))
         }
 

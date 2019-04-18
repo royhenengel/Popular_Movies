@@ -1,6 +1,6 @@
 package com.example.popularmovies.data.details.entity.cast
 
-data class CastEntity(
+data class ActorInMovieEntity(
 
         val id: Int,
 

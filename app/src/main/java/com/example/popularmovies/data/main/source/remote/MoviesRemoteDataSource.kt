@@ -7,9 +7,9 @@ import com.example.popularmovies.api.details.entity.cast.ResponseCastMovies
 import com.example.popularmovies.api.details.entity.cast.ResponseMovieCast
 import com.example.popularmovies.api.details.entity.movie.ResponseMovieDetails
 import com.example.popularmovies.api.main.entity.ResponseMoviesList
-import com.example.popularmovies.data.details.entity.cast.CastDetailsEntity
-import com.example.popularmovies.data.details.entity.cast.CastEntity
-import com.example.popularmovies.data.details.entity.movie.CastMovieEntity
+import com.example.popularmovies.data.details.entity.cast.PersonDetailsEntity
+import com.example.popularmovies.data.details.entity.cast.ActorInMovieEntity
+import com.example.popularmovies.data.details.entity.movie.MovieActorInEntity
 import com.example.popularmovies.data.details.entity.movie.MovieDetailsEntity
 import com.example.popularmovies.data.main.entity.MovieEntity
 import com.example.popularmovies.data.main.source.remote.mapper.*
@@ -38,11 +38,11 @@ abstract class MoviesRemoteDataSource(
 
     abstract suspend fun getMovieDetails(movieId: Int): MovieDetailsEntity
 
-    abstract suspend fun getMovieCast(movieId: Int): List<CastEntity>
+    abstract suspend fun getMovieCast(movieId: Int): List<ActorInMovieEntity>
 
-    abstract suspend fun getCastDetails(castId: Int): CastDetailsEntity
+    abstract suspend fun getCastDetails(castId: Int): PersonDetailsEntity
 
-    abstract suspend fun getCastMovies(castId: Int): List<CastMovieEntity>
+    abstract suspend fun getCastMovies(castId: Int): List<MovieActorInEntity>
 
     protected fun keyAfter(params: LoadParams<Int>): Int? = if (params.key > 1) params.key + 1 else null
 
@@ -67,9 +67,9 @@ abstract class MoviesRemoteDataSource(
         return movieDetailsResponseToEntityMapper.apply(response)
     }
 
-    protected fun mapCastResponseItemsToModels(response: ResponseMovieCast): MutableList<CastEntity> {
+    protected fun mapCastResponseItemsToModels(response: ResponseMovieCast): MutableList<ActorInMovieEntity> {
 
-        val castModelsList = arrayListOf<CastEntity>()
+        val castModelsList = arrayListOf<ActorInMovieEntity>()
         if (response.responseCastMemberItemList != null) {
             for (responseCastItem in response.responseCastMemberItemList) {
                 if (responseCastItem?.id != null) {
@@ -81,14 +81,14 @@ abstract class MoviesRemoteDataSource(
         return castModelsList
     }
 
-    protected fun mapResponseCastDetailsToEntity(response: ResponseCastDetails): CastDetailsEntity {
+    protected fun mapResponseCastDetailsToEntity(response: ResponseCastDetails): PersonDetailsEntity {
 
         return responseCastDetailsToEntityMapper.apply(response)
     }
 
-    protected fun mapResponseCastMoviesToEntities(response: ResponseCastMovies): List<CastMovieEntity>{
+    protected fun mapResponseCastMoviesToEntities(response: ResponseCastMovies): List<MovieActorInEntity>{
 
-        val castMovieEntities = arrayListOf<CastMovieEntity>()
+        val castMovieEntities = arrayListOf<MovieActorInEntity>()
         if (response.responseCastMovieList != null) {
             for (responseCastItem in response.responseCastMovieList) {
                 if (responseCastItem?.id != null) {

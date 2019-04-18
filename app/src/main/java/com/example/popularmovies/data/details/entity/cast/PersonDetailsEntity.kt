@@ -2,7 +2,7 @@ package com.example.popularmovies.data.details.entity.cast
 
 import java.util.*
 
-data class CastDetailsEntity(
+data class PersonDetailsEntity(
 
     val id: Int,
 

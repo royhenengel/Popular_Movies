@@ -14,7 +14,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.example.popularmovies.R
-import com.example.popularmovies.data.details.entity.cast.CastEntity
+import com.example.popularmovies.data.details.entity.cast.ActorInMovieEntity
 import com.example.popularmovies.di.Injectable
 import com.example.popularmovies.ui.common.scrollingthumbnail.entity.ScrollingThumbnailClickListener
 import com.example.popularmovies.ui.common.scrollingthumbnail.viewmodel.ScrollingThumbnailsViewUiModel
@@ -105,9 +105,9 @@ class MovieDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickList
         castScrollingThumbnailsV.setUiModel(castUiModel, this)
     }
 
-    private fun handleThumbnailClickedEvent(castEntity: CastEntity) {
+    private fun handleThumbnailClickedEvent(actorInMovieEntity: ActorInMovieEntity) {
 
-        Toast.makeText(context, "${castEntity.name} clicked", Toast.LENGTH_LONG).show()
+        Toast.makeText(context, "${actorInMovieEntity.name} clicked", Toast.LENGTH_LONG).show()
     }
 
     /** TODO - Show all the layout only when both terms are met
