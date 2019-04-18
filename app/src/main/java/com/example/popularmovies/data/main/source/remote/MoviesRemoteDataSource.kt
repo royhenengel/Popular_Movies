@@ -51,8 +51,8 @@ abstract class MoviesRemoteDataSource(
     protected fun mapPopularMovieResponseItemsToModels(response: ResponseMoviesList): MutableList<MovieEntity> {
 
         val movieModelsList = arrayListOf<MovieEntity>()
-        if (response.results != null) {
-            for (responseMovieItem in response.results) {
+        if (response.resultsList != null) {
+            for (responseMovieItem in response.resultsList) {
                 if (responseMovieItem?.id != null) {
                     movieModelsList.add(responseMovieItemToEntityMapper.apply(responseMovieItem))
                 }
