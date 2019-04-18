@@ -25,8 +25,8 @@ class MainMoviesFragmentViewModel @Inject constructor(
     private fun getEntityFromUiEntity(movieUiEntity: MovieUiEntity): MovieEntity? {
 
         val pagedList = moviesLiveData.value
-        for (entity in pagedList!!){
-            if(entity.id == movieUiEntity.id)
+        for (entity in pagedList!!) {
+            if (entity.id == movieUiEntity.id)
                 return entity
         }
 

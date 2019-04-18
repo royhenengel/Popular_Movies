@@ -6,7 +6,6 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.example.popularmovies.R
 import com.example.popularmovies.data.main.entity.MovieEntity
-import com.example.popularmovies.ui.main.entity.MovieUiEntity
 import com.example.popularmovies.ui.main.entity.mapper.MovieEntityToUiEntityMapper
 
 

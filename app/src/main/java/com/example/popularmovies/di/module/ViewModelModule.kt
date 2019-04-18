@@ -11,19 +11,19 @@ import dagger.Module
 import dagger.multibindings.IntoMap
 
 @Module
-abstract class ViewModelModule{
+abstract class ViewModelModule {
 
     @Binds
-    abstract fun bindViewModelFactory(factory: MoviesViewModelFactory) : ViewModelProvider.Factory
+    internal abstract fun bindViewModelFactory(factory: MoviesViewModelFactory): ViewModelProvider.Factory
 
     @Binds
     @IntoMap
     @ViewModelKey(MainMoviesFragmentViewModel::class)
-    abstract fun bindMainMoviesFragmentViewModel(viewModel: MainMoviesFragmentViewModel) : ViewModel
+    internal abstract fun bindMainMoviesFragmentViewModel(viewModel: MainMoviesFragmentViewModel): ViewModel
 
     @Binds
     @IntoMap
     @ViewModelKey(MovieDetailsFragmentViewModel::class)
-    abstract fun bindMainMovieDetailsFragmentViewModel(viewModel: MovieDetailsFragmentViewModel) : ViewModel
+    internal abstract fun bindMainMovieDetailsFragmentViewModel(viewModel: MovieDetailsFragmentViewModel): ViewModel
 
 }

@@ -2,7 +2,10 @@ package com.example.popularmovies.di
 
 import android.app.Application
 import com.example.popularmovies.MoviesApp
-import com.example.popularmovies.di.module.*
+import com.example.popularmovies.di.module.ActivityBuildersModule
+import com.example.popularmovies.di.module.ApiModule
+import com.example.popularmovies.di.module.DataModule
+import com.example.popularmovies.di.module.ViewModelModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule

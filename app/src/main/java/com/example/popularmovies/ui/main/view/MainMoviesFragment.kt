@@ -46,7 +46,7 @@ class MainMoviesFragment : Fragment(), Injectable, MovieViewHolder.MovieClickLis
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        fragmentViewModel = ViewModelProviders.of(this,viewModelFactory).get(MainMoviesFragmentViewModel::class.java)
+        fragmentViewModel = ViewModelProviders.of(this, viewModelFactory).get(MainMoviesFragmentViewModel::class.java)
 
         observe()
     }
@@ -58,12 +58,12 @@ class MainMoviesFragment : Fragment(), Injectable, MovieViewHolder.MovieClickLis
 
     private fun initViews(view: View) {
 
-        moviesRv = view.findViewById<RecyclerView>(R.id.fragment_main_movies_rv).apply{
+        moviesRv = view.findViewById<RecyclerView>(R.id.fragment_main_movies_rv).apply {
 
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
 
-            moviesAdapter = MainMoviesAdapter(movieEntityToUiEntityMapper,this@MainMoviesFragment)
+            moviesAdapter = MainMoviesAdapter(movieEntityToUiEntityMapper, this@MainMoviesFragment)
             adapter = moviesAdapter
         }
     }
@@ -74,7 +74,7 @@ class MainMoviesFragment : Fragment(), Injectable, MovieViewHolder.MovieClickLis
         fragmentViewModel.onMovieClickedLiveEvent.observe(this, Observer { handleMovieClickedEvent(it) })
     }
 
-    private fun handleMovieClickedEvent(movieEntity: MovieEntity){
+    private fun handleMovieClickedEvent(movieEntity: MovieEntity) {
 
         val action = MainMoviesFragmentDirections.actionDestMainToDestMovieDetails(movieEntity.id)
         findNavController().navigate(action)
