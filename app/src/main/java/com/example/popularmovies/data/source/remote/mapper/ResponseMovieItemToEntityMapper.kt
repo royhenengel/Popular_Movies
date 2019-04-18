@@ -1,4 +1,4 @@
-package com.example.popularmovies.data.main.source.remote.mapper
+package com.example.popularmovies.data.source.remote.mapper
 
 import androidx.arch.core.util.Function
 import com.example.popularmovies.api.main.entity.ResponseMovieItem

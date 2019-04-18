@@ -1,4 +1,4 @@
-package com.example.popularmovies.data.main.source.remote
+package com.example.popularmovies.data.source.remote
 
 import androidx.paging.DataSource
 import com.example.popularmovies.data.main.entity.MovieEntity

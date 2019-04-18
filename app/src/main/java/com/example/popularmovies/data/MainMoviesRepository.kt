@@ -8,8 +8,8 @@ import com.example.popularmovies.data.details.entity.cast.ActorInMovieEntity
 import com.example.popularmovies.data.details.entity.movie.MovieActorInEntity
 import com.example.popularmovies.data.details.entity.movie.MovieDetailsEntity
 import com.example.popularmovies.data.main.entity.MovieEntity
-import com.example.popularmovies.data.main.source.remote.MoviesRemoteDataSource
-import com.example.popularmovies.data.main.source.remote.MoviesRemoteDataSourceFactory
+import com.example.popularmovies.data.source.remote.MoviesRemoteDataSource
+import com.example.popularmovies.data.source.remote.MoviesRemoteDataSourceFactory
 import javax.inject.Inject
 import javax.inject.Singleton
 

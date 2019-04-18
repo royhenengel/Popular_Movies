@@ -1,4 +1,4 @@
-package com.example.popularmovies.data.main.source.remote
+package com.example.popularmovies.data.source.remote
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
@@ -12,7 +12,7 @@ import com.example.popularmovies.data.details.entity.cast.ActorInMovieEntity
 import com.example.popularmovies.data.details.entity.movie.MovieActorInEntity
 import com.example.popularmovies.data.details.entity.movie.MovieDetailsEntity
 import com.example.popularmovies.data.main.entity.MovieEntity
-import com.example.popularmovies.data.main.source.remote.mapper.*
+import com.example.popularmovies.data.source.remote.mapper.*
 
 abstract class MoviesRemoteDataSource(
 
