@@ -3,17 +3,16 @@ package com.example.popularmovies.data.main.source.remote
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.example.popularmovies.api.details.entity.cast.ResponseCastDetails
+import com.example.popularmovies.api.details.entity.cast.ResponseCastMovies
 import com.example.popularmovies.api.details.entity.cast.ResponseMovieCast
 import com.example.popularmovies.api.details.entity.movie.ResponseMovieDetails
 import com.example.popularmovies.api.main.entity.ResponseMoviesList
 import com.example.popularmovies.data.details.entity.cast.CastDetailsEntity
 import com.example.popularmovies.data.details.entity.cast.CastEntity
+import com.example.popularmovies.data.details.entity.movie.CastMovieEntity
 import com.example.popularmovies.data.details.entity.movie.MovieDetailsEntity
 import com.example.popularmovies.data.main.entity.MovieEntity
-import com.example.popularmovies.data.main.source.remote.mapper.MovieDetailsResponseToEntityMapper
-import com.example.popularmovies.data.main.source.remote.mapper.ResponseCastDetailsToEntityMapper
-import com.example.popularmovies.data.main.source.remote.mapper.ResponseCastItemToEntityMapper
-import com.example.popularmovies.data.main.source.remote.mapper.ResponseMovieItemToEntityMapper
+import com.example.popularmovies.data.main.source.remote.mapper.*
 
 abstract class MoviesRemoteDataSource(
 
@@ -23,7 +22,9 @@ abstract class MoviesRemoteDataSource(
 
     private val responseCastItemToEntityMapper: ResponseCastItemToEntityMapper,
 
-    private val responseCastDetailsToEntityMapper: ResponseCastDetailsToEntityMapper
+    private val responseCastDetailsToEntityMapper: ResponseCastDetailsToEntityMapper,
+
+    private val responseCastMovieItemToEntityMapper: ResponseCastMovieItemToEntityMapper
 
 ) : PageKeyedDataSource<Int, MovieEntity>() {
 
@@ -41,7 +42,7 @@ abstract class MoviesRemoteDataSource(
 
     abstract suspend fun getCastDetails(castId: Int): CastDetailsEntity
 
-    abstract suspend fun getCastMovies(castId: Int): List<MovieEntity>
+    abstract suspend fun getCastMovies(castId: Int): List<CastMovieEntity>
 
     protected fun keyAfter(params: LoadParams<Int>): Int? = if (params.key > 1) params.key + 1 else null
 
@@ -83,6 +84,20 @@ abstract class MoviesRemoteDataSource(
     protected fun mapResponseCastDetailsToEntity(response: ResponseCastDetails): CastDetailsEntity {
 
         return responseCastDetailsToEntityMapper.apply(response)
+    }
+
+    protected fun mapResponseCastMoviesToEntities(response: ResponseCastMovies): List<CastMovieEntity>{
+
+        val castMovieEntities = arrayListOf<CastMovieEntity>()
+        if (response.cast != null) {
+            for (responseCastItem in response.cast) {
+                if (responseCastItem?.id != null) {
+                    castMovieEntities.add(responseCastMovieItemToEntityMapper.apply(responseCastItem))
+                }
+            }
+        }
+
+        return castMovieEntities
     }
 
     enum class STATE {

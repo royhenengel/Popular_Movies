@@ -4,12 +4,10 @@ import com.example.popularmovies.BuildConfig
 import com.example.popularmovies.api.main.MoviesService
 import com.example.popularmovies.data.details.entity.cast.CastDetailsEntity
 import com.example.popularmovies.data.details.entity.cast.CastEntity
+import com.example.popularmovies.data.details.entity.movie.CastMovieEntity
 import com.example.popularmovies.data.details.entity.movie.MovieDetailsEntity
 import com.example.popularmovies.data.main.entity.MovieEntity
-import com.example.popularmovies.data.main.source.remote.mapper.MovieDetailsResponseToEntityMapper
-import com.example.popularmovies.data.main.source.remote.mapper.ResponseCastDetailsToEntityMapper
-import com.example.popularmovies.data.main.source.remote.mapper.ResponseCastItemToEntityMapper
-import com.example.popularmovies.data.main.source.remote.mapper.ResponseMovieItemToEntityMapper
+import com.example.popularmovies.data.main.source.remote.mapper.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,6 +24,8 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
 
     movieDetailsResponseToEntityMapper: MovieDetailsResponseToEntityMapper,
 
+    responseCastMovieItemToEntityMapper: ResponseCastMovieItemToEntityMapper,
+
     private val moviesService: MoviesService
 
 ) : MoviesRemoteDataSource(
@@ -36,7 +36,9 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
 
     responseCastItemToEntityMapper,
 
-    responseCastDetailsToEntityMapper
+    responseCastDetailsToEntityMapper,
+
+    responseCastMovieItemToEntityMapper
 
 ) {
 
@@ -136,7 +138,7 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
         return mapResponseCastDetailsToEntity(response)
     }
 
-    override suspend fun getCastMovies(castId: Int): List<MovieEntity> {
+    override suspend fun getCastMovies(castId: Int): List<CastMovieEntity> {
 
         // TODO Handle error fetching data
         val response = moviesService.getMoviesCreditsAsync(
@@ -146,8 +148,7 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
             language = MOVIE_LANGUAGE
         ).await()
 
-        val string = ""
-        return mutableListOf()
+        return mapResponseCastMoviesToEntities(response)
     }
 
 }

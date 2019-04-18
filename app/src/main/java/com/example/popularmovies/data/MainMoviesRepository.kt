@@ -5,6 +5,7 @@ import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.example.popularmovies.data.details.entity.cast.CastDetailsEntity
 import com.example.popularmovies.data.details.entity.cast.CastEntity
+import com.example.popularmovies.data.details.entity.movie.CastMovieEntity
 import com.example.popularmovies.data.details.entity.movie.MovieDetailsEntity
 import com.example.popularmovies.data.main.entity.MovieEntity
 import com.example.popularmovies.data.main.source.remote.MoviesRemoteDataSource
@@ -46,7 +47,7 @@ class MoviesRepository @Inject constructor(
         return moviesRemoteDataSource.getCastDetails(castId)
     }
 
-    suspend fun getCastMovies(castId: Int): List<MovieEntity> {
+    suspend fun getCastMovies(castId: Int): List<CastMovieEntity> {
 
         return moviesRemoteDataSource.getCastMovies(castId)
     }
