@@ -10,7 +10,7 @@ data class ResponseMoviesList(
     @SerializedName("total_pages")
     val totalPages: Int? = null,
 
-    @SerializedName("resultsList")
+    @SerializedName("results")
     val resultsList: List<ResponseMovieItem?>? = null,
 
     @SerializedName("total_results")
