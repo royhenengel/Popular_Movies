@@ -8,7 +8,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class MovieDetailsResponseToEntityMapper @Inject constructor() : Function<ResponseMovieDetails, MovieDetailsEntity> {
+class ResponseMovieDetailsToEntityMapper @Inject constructor() : Function<ResponseMovieDetails, MovieDetailsEntity> {
 
     override fun apply(movieDetailsResponse: ResponseMovieDetails): MovieDetailsEntity {
 

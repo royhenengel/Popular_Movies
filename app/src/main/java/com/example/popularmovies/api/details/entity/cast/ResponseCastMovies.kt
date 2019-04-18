@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class ResponseCastMovies(
 
     @SerializedName("cast")
-    val responseCastMovieList: List<ResponseCastMovieItem?>? = null,
+    val responseMovieActorInList: List<ResponseMovieActorInItem?>? = null,
 
     @SerializedName("id")
     val id: Int? = null,

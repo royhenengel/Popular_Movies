@@ -18,13 +18,13 @@ abstract class MoviesRemoteDataSource(
 
     private val responseMovieItemToEntityMapper: ResponseMovieItemToEntityMapper,
 
-    private val movieDetailsResponseToEntityMapper: MovieDetailsResponseToEntityMapper,
+    private val responseMovieDetailsToEntityMapper: ResponseMovieDetailsToEntityMapper,
 
-    private val responseCastItemToEntityMapper: ResponseCastItemToEntityMapper,
+    private val responseActorInMovieItemToEntityMapper: ResponseActorInMovieItemToEntityMapper,
 
-    private val responseCastDetailsToEntityMapper: ResponseCastDetailsToEntityMapper,
+    private val responsePersonDetailsToEntityMapper: ResponsePersonDetailsToEntityMapper,
 
-    private val responseCastMovieItemToEntityMapper: ResponseCastMovieItemToEntityMapper
+    private val responseMovieActorInItemToEntityMapper: ResponseMovieActorInItemToEntityMapper
 
 ) : PageKeyedDataSource<Int, MovieEntity>() {
 
@@ -64,16 +64,16 @@ abstract class MoviesRemoteDataSource(
 
     protected fun mapMovieDetailsResponseToModel(response: ResponseMovieDetails): MovieDetailsEntity {
 
-        return movieDetailsResponseToEntityMapper.apply(response)
+        return responseMovieDetailsToEntityMapper.apply(response)
     }
 
     protected fun mapCastResponseItemsToModels(response: ResponseMovieCast): MutableList<ActorInMovieEntity> {
 
         val castModelsList = arrayListOf<ActorInMovieEntity>()
-        if (response.responseCastMemberItemList != null) {
-            for (responseCastItem in response.responseCastMemberItemList) {
+        if (response.responseActorInMovieItemList != null) {
+            for (responseCastItem in response.responseActorInMovieItemList) {
                 if (responseCastItem?.id != null) {
-                    castModelsList.add(responseCastItemToEntityMapper.apply(responseCastItem))
+                    castModelsList.add(responseActorInMovieItemToEntityMapper.apply(responseCastItem))
                 }
             }
         }
@@ -83,16 +83,16 @@ abstract class MoviesRemoteDataSource(
 
     protected fun mapResponseCastDetailsToEntity(response: ResponseCastDetails): PersonDetailsEntity {
 
-        return responseCastDetailsToEntityMapper.apply(response)
+        return responsePersonDetailsToEntityMapper.apply(response)
     }
 
     protected fun mapResponseCastMoviesToEntities(response: ResponseCastMovies): List<MovieActorInEntity>{
 
         val castMovieEntities = arrayListOf<MovieActorInEntity>()
-        if (response.responseCastMovieList != null) {
-            for (responseCastItem in response.responseCastMovieList) {
+        if (response.responseMovieActorInList != null) {
+            for (responseCastItem in response.responseMovieActorInList) {
                 if (responseCastItem?.id != null) {
-                    castMovieEntities.add(responseCastMovieItemToEntityMapper.apply(responseCastItem))
+                    castMovieEntities.add(responseMovieActorInItemToEntityMapper.apply(responseCastItem))
                 }
             }
         }

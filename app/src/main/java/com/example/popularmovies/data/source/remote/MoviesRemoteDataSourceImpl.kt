@@ -18,13 +18,13 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
 
     responseMovieItemToEntityMapper: ResponseMovieItemToEntityMapper,
 
-    responseCastItemToEntityMapper: ResponseCastItemToEntityMapper,
+    responseActorInMovieItemToEntityMapper: ResponseActorInMovieItemToEntityMapper,
 
-    responseCastDetailsToEntityMapper: ResponseCastDetailsToEntityMapper,
+    responsePersonDetailsToEntityMapper: ResponsePersonDetailsToEntityMapper,
 
-    movieDetailsResponseToEntityMapper: MovieDetailsResponseToEntityMapper,
+    responseMovieDetailsToEntityMapper: ResponseMovieDetailsToEntityMapper,
 
-    responseCastMovieItemToEntityMapper: ResponseCastMovieItemToEntityMapper,
+    responseMovieActorInItemToEntityMapper: ResponseMovieActorInItemToEntityMapper,
 
     private val moviesService: MoviesService
 
@@ -32,13 +32,13 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
 
     responseMovieItemToEntityMapper,
 
-    movieDetailsResponseToEntityMapper,
+    responseMovieDetailsToEntityMapper,
 
-    responseCastItemToEntityMapper,
+    responseActorInMovieItemToEntityMapper,
 
-    responseCastDetailsToEntityMapper,
+    responsePersonDetailsToEntityMapper,
 
-    responseCastMovieItemToEntityMapper
+    responseMovieActorInItemToEntityMapper
 
 ) {
 
