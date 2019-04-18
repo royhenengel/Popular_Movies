@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.popularmovies.R
 import com.example.popularmovies.data.main.entity.MovieEntity
 import com.example.popularmovies.di.Injectable
+import com.example.popularmovies.ui.main.entity.MovieUiEntity
+import com.example.popularmovies.ui.main.entity.mapper.MovieEntityToUiEntityMapper
 import com.example.popularmovies.ui.main.viewmodel.MainMoviesFragmentViewModel
 import javax.inject.Inject
 
@@ -21,6 +23,9 @@ class MainMoviesFragment : Fragment(), Injectable, MovieViewHolder.MovieClickLis
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    @Inject
+    lateinit var movieEntityToUiEntityMapper: MovieEntityToUiEntityMapper
 
     private lateinit var fragmentViewModel: MainMoviesFragmentViewModel
 
@@ -42,14 +47,13 @@ class MainMoviesFragment : Fragment(), Injectable, MovieViewHolder.MovieClickLis
         super.onActivityCreated(savedInstanceState)
 
         fragmentViewModel = ViewModelProviders.of(this,viewModelFactory).get(MainMoviesFragmentViewModel::class.java)
-        fragmentViewModel.start()
 
         observe()
     }
 
-    override fun onMovieClicked(position: Int) {
+    override fun onMovieClicked(uiEntity: MovieUiEntity) {
 
-        fragmentViewModel.onMovieClicked(position)
+        fragmentViewModel.onMovieClicked(uiEntity)
     }
 
     private fun initViews(view: View) {
@@ -59,7 +63,7 @@ class MainMoviesFragment : Fragment(), Injectable, MovieViewHolder.MovieClickLis
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
 
-            moviesAdapter = MainMoviesAdapter(this@MainMoviesFragment)
+            moviesAdapter = MainMoviesAdapter(movieEntityToUiEntityMapper,this@MainMoviesFragment)
             adapter = moviesAdapter
         }
     }

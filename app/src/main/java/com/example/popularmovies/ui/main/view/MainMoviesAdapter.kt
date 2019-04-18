@@ -7,13 +7,16 @@ import androidx.recyclerview.widget.DiffUtil
 import com.example.popularmovies.R
 import com.example.popularmovies.data.main.entity.MovieEntity
 import com.example.popularmovies.ui.main.entity.MovieUiEntity
+import com.example.popularmovies.ui.main.entity.mapper.MovieEntityToUiEntityMapper
 
 
 class MainMoviesAdapter(
 
+    private val movieEntityToUiEntityMapper: MovieEntityToUiEntityMapper,
+
     private val movieClickListener: MovieViewHolder.MovieClickListener
 
-) : PagedListAdapter<MovieUiEntity, MovieViewHolder>(DIFF_CALLBACK) {
+) : PagedListAdapter<MovieEntity, MovieViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
 
@@ -23,18 +26,19 @@ class MainMoviesAdapter(
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
 
-        holder.bind(getItem(position), position)
+        val uiEntity = movieEntityToUiEntityMapper.apply(getItem(position)!!)
+        holder.bind(uiEntity)
     }
 
     companion object {
 
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<MovieUiEntity>() {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<MovieEntity>() {
 
-            override fun areItemsTheSame(oldItem: MovieUiEntity, newItem: MovieUiEntity): Boolean {
+            override fun areItemsTheSame(oldItem: MovieEntity, newItem: MovieEntity): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: MovieUiEntity, newItem: MovieUiEntity): Boolean {
+            override fun areContentsTheSame(oldItem: MovieEntity, newItem: MovieEntity): Boolean {
                 return oldItem == newItem
             }
         }

@@ -24,10 +24,10 @@ class MovieViewHolder(
     private val thumbnailIv: ImageView = itemView.findViewById(R.id.item_movie_iv_image)
 
     interface MovieClickListener {
-        fun onMovieClicked(position: Int)
+        fun onMovieClicked(uiEntity: MovieUiEntity)
     }
 
-    fun bind(movieEntity: MovieUiEntity?, position: Int) {
+    fun bind(movieEntity: MovieUiEntity?) {
 
         movieEntity?.let {
             title.text = it.title
@@ -39,7 +39,7 @@ class MovieViewHolder(
                 .load("${BuildConfig.MOVIES_IMAGE_BASE_URL}${it.thumbnailPath}")
                 .into(thumbnailIv)
 
-            itemView.setOnClickListener { movieClickListener?.onMovieClicked(position) }
+            itemView.setOnClickListener { movieClickListener?.onMovieClicked(movieEntity) }
         }
     }
 
