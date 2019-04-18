@@ -3,19 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/thumbnail_cast_cl_root"
-    android:layout_width="120dp"
+    android:layout_width="100dp"
     android:layout_height="wrap_content"
-    android:background="@android:color/transparent"
-    android:paddingStart="8dp"
-    android:paddingEnd="8dp">
+    android:background="@android:color/transparent" >
 
     <ImageView
-        android:id="@+id/thumbnail_cast_iv_image"
+        android:id="@+id/thumbnail_iv_image"
         android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_height="150dp"
         android:contentDescription="@string/thumbnail_image"
         android:scaleType="centerInside"
-        app:layout_constraintBottom_toTopOf="@+id/thumbnail_cast_tv_title"
+        app:layout_constraintBottom_toTopOf="@+id/thumbnail_tv_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,7 +22,7 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/thumbnail_cast_tv_title"
+        android:id="@+id/thumbnail_tv_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -34,14 +32,14 @@
         android:maxLines="1"
         android:ellipsize="end"
         android:gravity="center"
-        app:layout_constraintBottom_toTopOf="@+id/thumbnail_cast_tv_desc"
+        app:layout_constraintBottom_toTopOf="@+id/thumbnail_tv_desc"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/thumbnail_cast_iv_image"
+        app:layout_constraintTop_toBottomOf="@+id/thumbnail_iv_image"
         tools:text="Loren Iposum" />
 
     <TextView
-        android:id="@+id/thumbnail_cast_tv_desc"
+        android:id="@+id/thumbnail_tv_desc"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
 
@@ -53,7 +51,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/thumbnail_cast_tv_title"
+        app:layout_constraintTop_toBottomOf="@+id/thumbnail_tv_title"
         tools:text="as Loren Iposum" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,10 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.popularmovies.BuildConfig
 import com.example.popularmovies.R
-import com.example.popularmovies.ui.common.scrollingthumbnail.entity.ThumbnailUiEntityCastUiEntity
+import com.example.popularmovies.ui.common.scrollingthumbnail.entity.ThumbnailUiEntity
 import com.example.popularmovies.ui.common.scrollingthumbnail.entity.ThumbnailClickListener
 
-class ThumbnailCastViewHolder(
+class ThumbnailViewHolder(
 
         itemView: View,
 
@@ -18,11 +18,11 @@ class ThumbnailCastViewHolder(
 
 ) : RecyclerView.ViewHolder(itemView) {
 
-    private val titleTv = itemView.findViewById<TextView>(R.id.thumbnail_cast_tv_title)
-    private val descTv = itemView.findViewById<TextView>(R.id.thumbnail_cast_tv_desc)
-    private val imageIv = itemView.findViewById<ImageView>(R.id.thumbnail_cast_iv_image)
+    private val titleTv = itemView.findViewById<TextView>(R.id.thumbnail_tv_title)
+    private val descTv = itemView.findViewById<TextView>(R.id.thumbnail_tv_desc)
+    private val imageIv = itemView.findViewById<ImageView>(R.id.thumbnail_iv_image)
 
-    fun bind(thumbnailCastUiEntity: ThumbnailUiEntityCastUiEntity, position: Int) {
+    fun bind(thumbnailCastUiEntity: ThumbnailUiEntity, position: Int) {
 
         thumbnailCastUiEntity.let {
             titleTv.text = it.title
