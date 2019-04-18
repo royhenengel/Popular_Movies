@@ -1,3 +1,11 @@
 package com.example.popularmovies.ui.common.scrollingthumbnail.entity
 
-interface ThumbnailUiEntity
+data class ThumbnailUiEntity(
+
+        val imagePath: String,
+
+        val title: String,
+
+        val desc: String? = null
+
+) : ThumbnailUiEntity

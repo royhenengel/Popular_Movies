@@ -7,7 +7,7 @@ import com.example.popularmovies.data.details.entity.cast.ActorInMovieEntity
 import com.example.popularmovies.ui.common.scrollingthumbnail.entity.ThumbnailUiEntity
 import com.example.popularmovies.ui.common.scrollingthumbnail.viewmodel.ScrollingThumbnailsViewUiModel
 import com.example.popularmovies.ui.details.movie.entity.MovieDetailsUiEntity
-import com.example.popularmovies.ui.details.movie.entity.mapper.CastEntityToCastThumbnailMapper
+import com.example.popularmovies.ui.details.movie.entity.mapper.ActorInMovieEntityToThumbnailUiEntityMapper
 import com.example.popularmovies.ui.details.movie.entity.mapper.MovieDetailsEntityToUiEntityMapper
 import com.example.popularmovies.viewmodel.SingleLiveEvent
 import kotlinx.coroutines.*
@@ -15,11 +15,11 @@ import javax.inject.Inject
 
 class MovieDetailsFragmentViewModel @Inject constructor(
 
-        private val repository: MoviesRepository,
+    private val repository: MoviesRepository,
 
-        private val castEntityToCastThumbnailMapper: CastEntityToCastThumbnailMapper,
+    private val actorInMovieEntityToThumbnailUiEntityMapper: ActorInMovieEntityToThumbnailUiEntityMapper,
 
-        private val movieDetailsEntityToUiEntityMapper: MovieDetailsEntityToUiEntityMapper
+    private val movieDetailsEntityToUiEntityMapper: MovieDetailsEntityToUiEntityMapper
 
 ) : ViewModel() {
 
@@ -48,7 +48,7 @@ class MovieDetailsFragmentViewModel @Inject constructor(
 
             val uiEntity = movieDetailsEntityToUiEntityMapper.apply(detailsTask.await())
             actorInMovieList = castTask.await()
-            val thumbnails = mapCastItemsToThumbnails(actorInMovieList)
+            val thumbnails = mapActorsInMovieToThumbnails(actorInMovieList)
 
             val scrollingThumbnailsViewUiModel = ScrollingThumbnailsViewUiModel(thumbnails)
 
@@ -63,11 +63,11 @@ class MovieDetailsFragmentViewModel @Inject constructor(
         castThumbnailClickedLiveEvent.value = thumbnailClicked
     }
 
-    private fun mapCastItemsToThumbnails(actorInMovieItems: List<ActorInMovieEntity>): List<ThumbnailUiEntity> {
+    private fun mapActorsInMovieToThumbnails(actorInMovieItems: List<ActorInMovieEntity>): List<ThumbnailUiEntity> {
 
         val thumbnails = arrayListOf<ThumbnailUiEntity>()
         for (item in actorInMovieItems) {
-            thumbnails.add(castEntityToCastThumbnailMapper.apply(item))
+            thumbnails.add(actorInMovieEntityToThumbnailUiEntityMapper.apply(item))
         }
 
         return thumbnails
