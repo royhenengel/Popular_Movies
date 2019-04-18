@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.popularmovies.ui.common.scrollingthumbnail.entity.ScrollingThumbnailClickListener
+import com.example.popularmovies.ui.common.scrollingthumbnail.entity.ThumbnailUiEntity
 import com.example.popularmovies.ui.common.scrollingthumbnail.viewmodel.ScrollingThumbnailsViewUiModel
 
 class ScrollingThumbnailsView @JvmOverloads constructor(

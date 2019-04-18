@@ -8,4 +8,4 @@ data class ThumbnailUiEntity(
 
         val desc: String? = null
 
-) : ThumbnailUiEntity
+)
