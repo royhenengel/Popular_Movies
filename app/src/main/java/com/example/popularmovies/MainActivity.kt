@@ -30,11 +30,6 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         initNavUi()
     }
 
-    override fun onBackPressed() {
-
-        findNavController(R.id.main_nav_host).popBackStack()
-    }
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
