@@ -7,8 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.popularmovies.BuildConfig
 import com.example.popularmovies.R
-import com.example.popularmovies.data.main.entity.MovieEntity
-import com.example.popularmovies.util.dateAsString
+import com.example.popularmovies.ui.main.entity.MovieUiEntity
 
 class MovieViewHolder(
 
@@ -28,30 +27,20 @@ class MovieViewHolder(
         fun onMovieClicked(position: Int)
     }
 
-    fun bind(movieEntity: MovieEntity?, position: Int) {
+    fun bind(movieEntity: MovieUiEntity?, position: Int) {
 
         movieEntity?.let {
             title.text = it.title
-            yearTv.text = dateAsString(it.releaseDate, PATTERN_YEAR)
+            yearTv.text = it.releaseDate
             overviewTv.text = it.overview
             scoreTv.text = it.score.toString()
 
-            if (it.thumbnailPath != null) {
-                Glide.with(thumbnailIv.context)
-                    .load("${BuildConfig.MOVIES_IMAGE_BASE_URL}${it.thumbnailPath}")
-                    .into(thumbnailIv)
-            }
-            else {
-                Glide.with(thumbnailIv.context)
-                    .clear(thumbnailIv)
-            }
+            Glide.with(thumbnailIv.context)
+                .load("${BuildConfig.MOVIES_IMAGE_BASE_URL}${it.thumbnailPath}")
+                .into(thumbnailIv)
 
             itemView.setOnClickListener { movieClickListener?.onMovieClicked(position) }
         }
     }
 
-    companion object {
-
-        private const val PATTERN_YEAR = "yyyy"
-    }
 }

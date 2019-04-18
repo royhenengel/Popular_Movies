@@ -6,13 +6,14 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.example.popularmovies.R
 import com.example.popularmovies.data.main.entity.MovieEntity
+import com.example.popularmovies.ui.main.entity.MovieUiEntity
 
 
 class MainMoviesAdapter(
 
     private val movieClickListener: MovieViewHolder.MovieClickListener
 
-) : PagedListAdapter<MovieEntity, MovieViewHolder>(DIFF_CALLBACK) {
+) : PagedListAdapter<MovieUiEntity, MovieViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
 
@@ -27,13 +28,13 @@ class MainMoviesAdapter(
 
     companion object {
 
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<MovieEntity>() {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<MovieUiEntity>() {
 
-            override fun areItemsTheSame(oldItem: MovieEntity, newItem: MovieEntity): Boolean {
+            override fun areItemsTheSame(oldItem: MovieUiEntity, newItem: MovieUiEntity): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: MovieEntity, newItem: MovieEntity): Boolean {
+            override fun areContentsTheSame(oldItem: MovieUiEntity, newItem: MovieUiEntity): Boolean {
                 return oldItem == newItem
             }
         }
