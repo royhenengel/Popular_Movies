@@ -1,21 +1,20 @@
 package com.example.popularmovies.data.main.source.remote.mapper
 
 import androidx.arch.core.util.Function
-import com.example.popularmovies.api.details.entity.cast.CastMovieItem
+import com.example.popularmovies.api.details.entity.cast.ResponseCastMovieItem
 import com.example.popularmovies.data.details.entity.movie.CastMovieEntity
-import com.example.popularmovies.data.main.entity.MovieEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ResponseCastMovieItemToEntityMapper @Inject constructor() : Function<CastMovieItem, CastMovieEntity> {
+class ResponseCastMovieItemToEntityMapper @Inject constructor() : Function<ResponseCastMovieItem, CastMovieEntity> {
 
-    override fun apply(castMovieItem: CastMovieItem) : CastMovieEntity {
+    override fun apply(responseCastMovieItem: ResponseCastMovieItem) : CastMovieEntity {
 
         return CastMovieEntity(
-            id = castMovieItem.id ?: NULLABLE_INT_DEFAULT,
-            name = castMovieItem.title ?: NULLABLE_STRING_DEFAULT,
-            imagePath = castMovieItem.posterPath ?: NULLABLE_STRING_DEFAULT
+            id = responseCastMovieItem.id ?: NULLABLE_INT_DEFAULT,
+            name = responseCastMovieItem.title ?: NULLABLE_STRING_DEFAULT,
+            imagePath = responseCastMovieItem.posterPath ?: NULLABLE_STRING_DEFAULT
         )
     }
 

@@ -70,8 +70,8 @@ abstract class MoviesRemoteDataSource(
     protected fun mapCastResponseItemsToModels(response: ResponseMovieCast): MutableList<CastEntity> {
 
         val castModelsList = arrayListOf<CastEntity>()
-        if (response.cast != null) {
-            for (responseCastItem in response.cast) {
+        if (response.responseCastMemberItemList != null) {
+            for (responseCastItem in response.responseCastMemberItemList) {
                 if (responseCastItem?.id != null) {
                     castModelsList.add(responseCastItemToEntityMapper.apply(responseCastItem))
                 }
@@ -89,8 +89,8 @@ abstract class MoviesRemoteDataSource(
     protected fun mapResponseCastMoviesToEntities(response: ResponseCastMovies): List<CastMovieEntity>{
 
         val castMovieEntities = arrayListOf<CastMovieEntity>()
-        if (response.cast != null) {
-            for (responseCastItem in response.cast) {
+        if (response.responseCastMovieList != null) {
+            for (responseCastItem in response.responseCastMovieList) {
                 if (responseCastItem?.id != null) {
                     castMovieEntities.add(responseCastMovieItemToEntityMapper.apply(responseCastItem))
                 }

@@ -4,12 +4,13 @@ import com.google.gson.annotations.SerializedName
 
 data class ResponseMovieCast(
 
-	@field:SerializedName("cast")
-	val cast: List<CastItem?>? = null,
+    @SerializedName("cast")
+    val responseCastMemberItemList: List<ResponseCastMemberItem?>? = null,
 
-	@field:SerializedName("id")
-	val id: Int? = null,
+    @SerializedName("id")
+    val id: Int? = null,
 
-	@field:SerializedName("crew")
-	val crew: List<CrewItem?>? = null
+    @SerializedName("responseCastMovieCrewList")
+    val responseMovieCrewItemList: List<ResponseMovieCrewItem?>? = null
+
 )
