@@ -15,11 +15,11 @@ import javax.inject.Inject
 
 class MovieDetailsFragmentViewModel @Inject constructor(
 
-    private val repository: MoviesRepository,
+        private val repository: MoviesRepository,
 
-    private val actorInMovieEntityToThumbnailUiEntityMapper: ActorInMovieEntityToThumbnailUiEntityMapper,
+        private val actorInMovieEntityToThumbnailUiEntityMapper: ActorInMovieEntityToThumbnailUiEntityMapper,
 
-    private val movieDetailsEntityToUiEntityMapper: MovieDetailsEntityToUiEntityMapper
+        private val movieDetailsEntityToUiEntityMapper: MovieDetailsEntityToUiEntityMapper
 
 ) : ViewModel() {
 
@@ -36,7 +36,7 @@ class MovieDetailsFragmentViewModel @Inject constructor(
     override fun onCleared() {
         super.onCleared()
 
-        getMovieDetailsJob?.cancel()
+        getMovieDetailsJob.cancel()
     }
 
     fun start(movieId: Int) {
@@ -49,7 +49,6 @@ class MovieDetailsFragmentViewModel @Inject constructor(
             val uiEntity = movieDetailsEntityToUiEntityMapper.apply(detailsTask.await())
             actorInMovieList = castTask.await()
             val thumbnails = mapActorsInMovieToThumbnails(actorInMovieList)
-
             val scrollingThumbnailsViewUiModel = ScrollingThumbnailsViewUiModel(thumbnails)
 
             movieCastUiModelLiveData.value = scrollingThumbnailsViewUiModel
@@ -63,10 +62,10 @@ class MovieDetailsFragmentViewModel @Inject constructor(
         castThumbnailClickedLiveEvent.value = thumbnailClicked
     }
 
-    private fun mapActorsInMovieToThumbnails(actorInMovieItems: List<ActorInMovieEntity>): List<ThumbnailUiEntity> {
+    private fun mapActorsInMovieToThumbnails(actorInMovieList: List<ActorInMovieEntity>): List<ThumbnailUiEntity> {
 
         val thumbnails = arrayListOf<ThumbnailUiEntity>()
-        for (item in actorInMovieItems) {
+        for (item in actorInMovieList) {
             thumbnails.add(actorInMovieEntityToThumbnailUiEntityMapper.apply(item))
         }
 
