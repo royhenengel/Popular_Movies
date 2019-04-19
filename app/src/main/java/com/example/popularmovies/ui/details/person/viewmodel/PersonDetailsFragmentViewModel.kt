@@ -2,7 +2,9 @@ package com.example.popularmovies.ui.details.person.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.popularmovies.BuildConfig
 import com.example.popularmovies.data.MoviesRepository
+import com.example.popularmovies.data.details.entity.cast.PersonDetailsEntity
 import com.example.popularmovies.data.details.entity.movie.MovieActorInEntity
 import com.example.popularmovies.ui.common.scrollingthumbnail.entity.ThumbnailUiEntity
 import com.example.popularmovies.ui.common.scrollingthumbnail.viewmodel.ScrollingThumbnailsViewUiModel
@@ -27,10 +29,12 @@ class PersonDetailsFragmentViewModel @Inject constructor(
     val movieThumbnailsUiModelLiveData = MutableLiveData<ScrollingThumbnailsViewUiModel>()
 
     val movieActorInClickedLiveEvent = SingleLiveEvent<MovieActorInEntity>()
+    val openInBrowserLiveEvent = SingleLiveEvent<String>()
 
     private val uiScope = CoroutineScope(Dispatchers.Main)
     private val getPersonDetailsJob: Job = Job()
 
+    private lateinit var personDetailsEntity: PersonDetailsEntity
     private lateinit var movieActorInList: List<MovieActorInEntity>
 
     fun start(personId: Int) {
@@ -40,7 +44,8 @@ class PersonDetailsFragmentViewModel @Inject constructor(
             val detailsTask = async(Dispatchers.IO) { repository.getCastDetails(personId) }
             val moviesActorInTask = async(Dispatchers.IO) { repository.getCastMovies(personId) }
 
-            val uiEntity = personDetailsEntityToUiEntityMapper.apply(detailsTask.await())
+            personDetailsEntity = detailsTask.await()
+            val uiEntity = personDetailsEntityToUiEntityMapper.apply(personDetailsEntity)
 
             movieActorInList = moviesActorInTask.await()
             val thumbnails = mapMoviesActorInToThumbnails(movieActorInList)
@@ -61,6 +66,12 @@ class PersonDetailsFragmentViewModel @Inject constructor(
 
         val thumbnailClicked = movieActorInList[position]
         movieActorInClickedLiveEvent.value = thumbnailClicked
+    }
+
+    fun onOpenInBrowserClicked() {
+
+        val url = "${BuildConfig.IMDB_BASE_URL}${personDetailsEntity.imdbId}"
+        openInBrowserLiveEvent.value = url
     }
 
     private fun mapMoviesActorInToThumbnails(movieActorInList: List<MovieActorInEntity>): List<ThumbnailUiEntity> {

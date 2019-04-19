@@ -18,6 +18,8 @@ android {
         buildConfigField "String", "ENDPOINT_MOVIES", "\"3/movie\""
 
         buildConfigField "String", "ENDPOINT_PERSON", "\"3/person\""
+
+        buildConfigField "String", "IMDB_BASE_URL", "\"http://www.imdb.com/name/\""
     }
 
 }

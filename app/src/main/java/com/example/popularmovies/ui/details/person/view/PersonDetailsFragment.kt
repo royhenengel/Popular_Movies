@@ -1,6 +1,8 @@
 package com.example.popularmovies.ui.details.person.view
 
+import android.content.Intent
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
@@ -40,6 +42,7 @@ class PersonDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickLis
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+
         inflater.inflate(R.menu.menu_person_details, menu)
     }
 
@@ -53,7 +56,7 @@ class PersonDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickLis
             }
 
             R.id.action_open_in_browser -> {
-                Toast.makeText(context, "Open in browser clicked -> TBI", Toast.LENGTH_LONG).show()
+                fragmentFragmentViewModel.onOpenInBrowserClicked()
                 true
             }
 
@@ -83,6 +86,7 @@ class PersonDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickLis
         fragmentFragmentViewModel.personDetailsUiEntityLiveData.observe(this, Observer { handlePersonDetailsData(it) })
         fragmentFragmentViewModel.movieThumbnailsUiModelLiveData.observe(this, Observer { handleThumbnailsData(it) })
         fragmentFragmentViewModel.movieActorInClickedLiveEvent.observe(this, Observer { handleActorInMovieClickedEvent(it) })
+        fragmentFragmentViewModel.openInBrowserLiveEvent.observe(this, Observer { handleOpenInBrowserEvent(it) })
     }
 
     private fun handlePersonDetailsData(personDetailsUiEntity: PersonDetailsUiEntity) {
@@ -143,6 +147,14 @@ class PersonDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickLis
 
         personDetailsLoaderPb.visibility = View.GONE
         personDetailsViewsGroup.visibility = View.VISIBLE
+    }
+
+    private fun handleOpenInBrowserEvent(url: String) {
+
+        val intent = Intent(Intent.ACTION_VIEW).also {
+            it.data = Uri.parse(url)
+        }
+        startActivity(intent)
     }
 
 }

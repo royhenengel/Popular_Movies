@@ -18,7 +18,8 @@ class ResponsePersonDetailsToEntityMapper @Inject constructor() : Function<Respo
             birthday = dateFromString(responseCastDetails.birthday),
             deathDay = dateFromString(responseCastDetails.deathday),
             biography = responseCastDetails.biography ?: NULLABLE_STRING_DEFAULT,
-            imagePath = responseCastDetails.profilePath ?: NULLABLE_STRING_DEFAULT
+            imagePath = responseCastDetails.profilePath ?: NULLABLE_STRING_DEFAULT,
+            imdbId = responseCastDetails.imdbId ?: NULLABLE_STRING_DEFAULT
         )
     }
 

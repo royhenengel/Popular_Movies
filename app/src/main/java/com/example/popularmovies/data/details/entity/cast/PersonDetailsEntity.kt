@@ -14,6 +14,8 @@ data class PersonDetailsEntity(
 
     val biography: String,
 
-    val imagePath: String
+    val imagePath: String,
+
+    val imdbId: String
 
 )
