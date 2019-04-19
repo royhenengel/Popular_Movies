@@ -1,9 +1,8 @@
 package com.example.popularmovies.ui.main.view
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -34,7 +33,25 @@ class MainMoviesFragment : Fragment(), Injectable, MovieViewHolder.MovieClickLis
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
+        setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_main_movies, container, false)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_main_movies, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        return when(item.itemId){
+
+            R.id.action_filter_list -> {
+                Toast.makeText(context, "Filter list clicked -> TBI", Toast.LENGTH_LONG).show()
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

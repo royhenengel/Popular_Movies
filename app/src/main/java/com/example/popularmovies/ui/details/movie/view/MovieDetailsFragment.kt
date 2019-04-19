@@ -2,9 +2,8 @@ package com.example.popularmovies.ui.details.movie.view
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -34,7 +33,25 @@ class MovieDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickList
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
+        setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_movie_details, container, false)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_movie_details, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        return when(item.itemId){
+
+            R.id.action_home -> {
+                Toast.makeText(context, "Home clicked -> TBI", Toast.LENGTH_LONG).show()
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
