@@ -27,6 +27,7 @@ class MovieDetailsFragmentViewModel @Inject constructor(
     val movieCastUiModelLiveData = MutableLiveData<ScrollingThumbnailsViewUiModel>()
 
     val castThumbnailClickedLiveEvent = SingleLiveEvent<ActorInMovieEntity>()
+    val actionHomeLiveEvent = SingleLiveEvent<Any>()
 
     private val uiScope = CoroutineScope(Dispatchers.Main)
     private val getMovieDetailsJob: Job = Job()
@@ -60,6 +61,11 @@ class MovieDetailsFragmentViewModel @Inject constructor(
 
         val thumbnailClicked = actorInMovieList[position]
         castThumbnailClickedLiveEvent.value = thumbnailClicked
+    }
+
+    fun onToolbarHomeClicked() {
+
+        actionHomeLiveEvent.call()
     }
 
     private fun mapActorsInMovieToThumbnails(actorInMovieList: List<ActorInMovieEntity>): List<ThumbnailUiEntity> {

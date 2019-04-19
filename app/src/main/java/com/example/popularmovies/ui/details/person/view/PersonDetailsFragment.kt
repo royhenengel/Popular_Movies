@@ -5,7 +5,6 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -21,10 +20,8 @@ import com.example.popularmovies.data.details.entity.movie.MovieActorInEntity
 import com.example.popularmovies.di.Injectable
 import com.example.popularmovies.ui.common.scrollingthumbnail.entity.ScrollingThumbnailClickListener
 import com.example.popularmovies.ui.common.scrollingthumbnail.viewmodel.ScrollingThumbnailsViewUiModel
-import com.example.popularmovies.ui.details.movie.view.MovieDetailsFragmentDirections
 import com.example.popularmovies.ui.details.person.entity.PersonDetailsUiEntity
 import com.example.popularmovies.ui.details.person.viewmodel.PersonDetailsFragmentViewModel
-import kotlinx.android.synthetic.main.fragment_movie_details.*
 import kotlinx.android.synthetic.main.fragment_person_details.*
 import javax.inject.Inject
 
@@ -33,7 +30,7 @@ class PersonDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickLis
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private lateinit var fragmentFragmentViewModel: PersonDetailsFragmentViewModel
+    private lateinit var fragmentViewModel: PersonDetailsFragmentViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -48,15 +45,15 @@ class PersonDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickLis
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        return when(item.itemId){
+        return when (item.itemId) {
 
             R.id.action_home -> {
-                findNavController().popBackStack(R.id.dest_main, false)
+                fragmentViewModel.onToolbarHomeClicked()
                 true
             }
 
             R.id.action_open_in_browser -> {
-                fragmentFragmentViewModel.onOpenInBrowserClicked()
+                fragmentViewModel.onOpenInBrowserClicked()
                 true
             }
 
@@ -67,10 +64,11 @@ class PersonDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickLis
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        fragmentFragmentViewModel = ViewModelProviders.of(this, viewModelFactory).get(PersonDetailsFragmentViewModel::class.java)
+        fragmentViewModel =
+            ViewModelProviders.of(this, viewModelFactory).get(PersonDetailsFragmentViewModel::class.java)
 
         arguments?.let {
-            fragmentFragmentViewModel.start(PersonDetailsFragmentArgs.fromBundle(it).personId)
+            fragmentViewModel.start(PersonDetailsFragmentArgs.fromBundle(it).personId)
         }
 
         observe()
@@ -78,15 +76,16 @@ class PersonDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickLis
 
     override fun onThumbnailClicked(position: Int) {
 
-        fragmentFragmentViewModel.onThumbnailClicked(position)
+        fragmentViewModel.onThumbnailClicked(position)
     }
 
     private fun observe() {
 
-        fragmentFragmentViewModel.personDetailsUiEntityLiveData.observe(this, Observer { handlePersonDetailsData(it) })
-        fragmentFragmentViewModel.movieThumbnailsUiModelLiveData.observe(this, Observer { handleThumbnailsData(it) })
-        fragmentFragmentViewModel.movieActorInClickedLiveEvent.observe(this, Observer { handleActorInMovieClickedEvent(it) })
-        fragmentFragmentViewModel.openInBrowserLiveEvent.observe(this, Observer { handleOpenInBrowserEvent(it) })
+        fragmentViewModel.personDetailsUiEntityLiveData.observe(this, Observer { handlePersonDetailsData(it) })
+        fragmentViewModel.movieThumbnailsUiModelLiveData.observe(this, Observer { handleThumbnailsData(it) })
+        fragmentViewModel.movieActorInClickedLiveEvent.observe(this, Observer { handleActorInMovieClickedEvent(it) })
+        fragmentViewModel.openInBrowserLiveEvent.observe(this, Observer { handleOpenInBrowserEvent(it) })
+        fragmentViewModel.actionHomeLiveEvent.observe(this, Observer { handleActionHomeEvent() })
     }
 
     private fun handlePersonDetailsData(personDetailsUiEntity: PersonDetailsUiEntity) {
@@ -97,32 +96,32 @@ class PersonDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickLis
             personDetailsBiographyTv.text = it.biography
 
             Glide.with(context!!)
-                    .load(it.imageUrl)
-                    .listener(object : RequestListener<Drawable> {
+                .load(it.imageUrl)
+                .listener(object : RequestListener<Drawable> {
 
-                        override fun onLoadFailed(
-                                e: GlideException?,
-                                model: Any?,
-                                target: Target<Drawable>?,
-                                isFirstResource: Boolean
-                        ): Boolean {
-                            // TODO Handle error loading image
-                            return true
-                        }
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        // TODO Handle error loading image
+                        return true
+                    }
 
-                        override fun onResourceReady(
-                                resource: Drawable?,
-                                model: Any?,
-                                target: Target<Drawable>?,
-                                dataSource: DataSource?,
-                                isFirstResource: Boolean
-                        ): Boolean {
-                            personDetailsImageIv.background = resource
-                            showLayout()
-                            return true
-                        }
-                    })
-                    .into(personDetailsImageIv)
+                    override fun onResourceReady(
+                        resource: Drawable?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        personDetailsImageIv.background = resource
+                        showLayout()
+                        return true
+                    }
+                })
+                .into(personDetailsImageIv)
         }
     }
 
@@ -134,9 +133,24 @@ class PersonDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickLis
 
     private fun handleActorInMovieClickedEvent(movieActorInEntity: MovieActorInEntity) {
 
-        val action = PersonDetailsFragmentDirections.actionDestPersonDetailsToDestMovieDetails(movieActorInEntity.id,
-                true)
+        val action = PersonDetailsFragmentDirections.actionDestPersonDetailsToDestMovieDetails(
+            movieActorInEntity.id,
+            true
+        )
         findNavController().navigate(action)
+    }
+
+    private fun handleActionHomeEvent() {
+
+        findNavController().popBackStack(R.id.dest_main, false)
+    }
+
+    private fun handleOpenInBrowserEvent(url: String) {
+
+        val intent = Intent(Intent.ACTION_VIEW).also {
+            it.data = Uri.parse(url)
+        }
+        startActivity(intent)
     }
 
     /** TODO - Show all the layout only when both terms are met
@@ -147,14 +161,6 @@ class PersonDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickLis
 
         personDetailsLoaderPb.visibility = View.GONE
         personDetailsViewsGroup.visibility = View.VISIBLE
-    }
-
-    private fun handleOpenInBrowserEvent(url: String) {
-
-        val intent = Intent(Intent.ACTION_VIEW).also {
-            it.data = Uri.parse(url)
-        }
-        startActivity(intent)
     }
 
 }

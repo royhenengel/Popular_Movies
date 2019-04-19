@@ -30,6 +30,7 @@ class PersonDetailsFragmentViewModel @Inject constructor(
 
     val movieActorInClickedLiveEvent = SingleLiveEvent<MovieActorInEntity>()
     val openInBrowserLiveEvent = SingleLiveEvent<String>()
+    val actionHomeLiveEvent = SingleLiveEvent<Any>()
 
     private val uiScope = CoroutineScope(Dispatchers.Main)
     private val getPersonDetailsJob: Job = Job()
@@ -72,6 +73,11 @@ class PersonDetailsFragmentViewModel @Inject constructor(
 
         val url = "${BuildConfig.IMDB_BASE_URL}${personDetailsEntity.imdbId}"
         openInBrowserLiveEvent.value = url
+    }
+
+    fun onToolbarHomeClicked() {
+
+        actionHomeLiveEvent.call()
     }
 
     private fun mapMoviesActorInToThumbnails(movieActorInList: List<MovieActorInEntity>): List<ThumbnailUiEntity> {

@@ -3,7 +3,6 @@ package com.example.popularmovies.ui.details.movie.view
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -22,6 +21,7 @@ import com.example.popularmovies.ui.common.scrollingthumbnail.viewmodel.Scrollin
 import com.example.popularmovies.ui.details.movie.entity.MovieDetailsUiEntity
 import com.example.popularmovies.ui.details.movie.viewmodel.MovieDetailsFragmentViewModel
 import kotlinx.android.synthetic.main.fragment_movie_details.*
+import kotlinx.android.synthetic.main.fragment_person_details.*
 import javax.inject.Inject
 
 class MovieDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickListener {
@@ -52,7 +52,7 @@ class MovieDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickList
         return when(item.itemId){
 
             R.id.action_home -> {
-                findNavController().popBackStack(R.id.dest_main, false)
+                fragmentViewModel.onToolbarHomeClicked()
                 true
             }
 
@@ -84,6 +84,7 @@ class MovieDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickList
         fragmentViewModel.movieDetailsUiEntityLiveData.observe(this, Observer { handleEntityData(it) })
         fragmentViewModel.movieCastUiModelLiveData.observe(this, Observer { handleCastUiModelData(it) })
         fragmentViewModel.castThumbnailClickedLiveEvent.observe(this, Observer { handleThumbnailClickedEvent(it) })
+        fragmentViewModel.actionHomeLiveEvent.observe(this, Observer { handleActionHomeEvent() })
     }
 
     private fun handleEntityData(uiEntity: MovieDetailsUiEntity) {
@@ -135,6 +136,11 @@ class MovieDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickList
 
         val action = MovieDetailsFragmentDirections.actionDestMovieDetailsToDestPersonDetails(actorInMovieEntity.id)
         findNavController().navigate(action)
+    }
+
+    private fun handleActionHomeEvent() {
+
+        findNavController().popBackStack(R.id.dest_main, false)
     }
 
     /** TODO - Show all the layout only when both terms are met
