@@ -26,9 +26,39 @@
             android:name="com.example.popularmovies.ui.details.movie.view.MovieDetailsFragment"
             android:label="@string/movie_details"
             tools:layout="@layout/fragment_movie_details">
+
         <argument
             android:name="movie_id"
             app:argType="integer" />
+
+        <action
+            android:id="@+id/action_dest_movie_details_to_dest_person_details"
+            app:destination="@id/dest_person_details"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/dest_person_details"
+        android:name="com.example.popularmovies.ui.details.person.view.PersonDetailsFragment"
+        android:label="@string/person_details"
+        tools:layout="@layout/fragment_person_details">
+
+        <action
+            android:id="@+id/action_dest_person_details_to_dest_movie_details"
+            app:destination="@id/dest_movie_details"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+        <argument
+            android:name="person_id"
+            app:argType="integer" />
+
     </fragment>
 
 </navigation>

@@ -20,4 +20,5 @@
     </string>
     <string name="movie_image">movie image</string>
     <string name="thumbnail_image">Thumbnail Image</string>
+    <string name="person_details">Person Details</string>
 </resources>
