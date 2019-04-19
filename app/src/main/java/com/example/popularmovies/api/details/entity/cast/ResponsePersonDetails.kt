@@ -2,7 +2,7 @@ package com.example.popularmovies.api.details.entity.cast
 
 import com.google.gson.annotations.SerializedName
 
-data class ResponseCastDetails(
+data class ResponsePersonDetails(
 
     @SerializedName("birthday")
     val birthday: String? = null,

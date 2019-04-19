@@ -122,7 +122,7 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
             language = MOVIE_LANGUAGE
         ).await()
 
-        return mapCastResponseItemsToModels(response)
+        return mapActorsInMovieResponseItemsToEntities(response)
     }
 
     override suspend fun getCastDetails(castId: Int): PersonDetailsEntity {
@@ -135,7 +135,7 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
             language = MOVIE_LANGUAGE
         ).await()
 
-        return mapResponseCastDetailsToEntity(response)
+        return mapResponsePersonDetailsToEntity(response)
     }
 
     override suspend fun getCastMovies(castId: Int): List<MovieActorInEntity> {
@@ -148,7 +148,7 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
             language = MOVIE_LANGUAGE
         ).await()
 
-        return mapResponseCastMoviesToEntities(response)
+        return mapResponseMoviesActorInToEntities(response)
     }
 
 }

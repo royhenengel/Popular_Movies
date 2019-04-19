@@ -2,9 +2,9 @@ package com.example.popularmovies.data.source.remote
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
-import com.example.popularmovies.api.details.entity.cast.ResponseCastDetails
-import com.example.popularmovies.api.details.entity.cast.ResponseCastMovies
-import com.example.popularmovies.api.details.entity.cast.ResponseMovieCast
+import com.example.popularmovies.api.details.entity.cast.ResponsePersonDetails
+import com.example.popularmovies.api.details.entity.cast.ResponseMoviesActorIn
+import com.example.popularmovies.api.details.entity.cast.ResponseActorsInMovie
 import com.example.popularmovies.api.details.entity.movie.ResponseMovieDetails
 import com.example.popularmovies.api.main.entity.ResponseMoviesList
 import com.example.popularmovies.data.details.entity.cast.PersonDetailsEntity
@@ -67,11 +67,11 @@ abstract class MoviesRemoteDataSource(
         return responseMovieDetailsToEntityMapper.apply(response)
     }
 
-    protected fun mapCastResponseItemsToModels(response: ResponseMovieCast): MutableList<ActorInMovieEntity> {
+    protected fun mapActorsInMovieResponseItemsToEntities(responseActorsIn: ResponseActorsInMovie): MutableList<ActorInMovieEntity> {
 
         val castModelsList = arrayListOf<ActorInMovieEntity>()
-        if (response.responseActorInMovieItemList != null) {
-            for (responseCastItem in response.responseActorInMovieItemList) {
+        if (responseActorsIn.responseActorsInMovieList != null) {
+            for (responseCastItem in responseActorsIn.responseActorsInMovieList) {
                 if (responseCastItem?.id != null) {
                     castModelsList.add(responseActorInMovieItemToEntityMapper.apply(responseCastItem))
                 }
@@ -81,16 +81,16 @@ abstract class MoviesRemoteDataSource(
         return castModelsList
     }
 
-    protected fun mapResponseCastDetailsToEntity(response: ResponseCastDetails): PersonDetailsEntity {
+    protected fun mapResponsePersonDetailsToEntity(response: ResponsePersonDetails): PersonDetailsEntity {
 
         return responsePersonDetailsToEntityMapper.apply(response)
     }
 
-    protected fun mapResponseCastMoviesToEntities(response: ResponseCastMovies): List<MovieActorInEntity>{
+    protected fun mapResponseMoviesActorInToEntities(responseActorIn: ResponseMoviesActorIn): List<MovieActorInEntity>{
 
         val castMovieEntities = arrayListOf<MovieActorInEntity>()
-        if (response.responseMovieActorInList != null) {
-            for (responseCastItem in response.responseMovieActorInList) {
+        if (responseActorIn.responseMovieActorInList != null) {
+            for (responseCastItem in responseActorIn.responseMovieActorInList) {
                 if (responseCastItem?.id != null) {
                     castMovieEntities.add(responseMovieActorInItemToEntityMapper.apply(responseCastItem))
                 }

@@ -1,8 +1,8 @@
 package com.example.popularmovies.api.main
 
-import com.example.popularmovies.api.details.entity.cast.ResponseCastDetails
-import com.example.popularmovies.api.details.entity.cast.ResponseCastMovies
-import com.example.popularmovies.api.details.entity.cast.ResponseMovieCast
+import com.example.popularmovies.api.details.entity.cast.ResponsePersonDetails
+import com.example.popularmovies.api.details.entity.cast.ResponseMoviesActorIn
+import com.example.popularmovies.api.details.entity.cast.ResponseActorsInMovie
 import com.example.popularmovies.api.details.entity.movie.ResponseMovieDetails
 import com.example.popularmovies.api.main.entity.ResponseMoviesList
 import kotlinx.coroutines.Deferred
@@ -38,7 +38,7 @@ interface MoviesService {
         @Query(QUERY_API_KEY) key: String,
         @Query(QUERY_LANGUAGE) language: String
 
-    ) : Deferred<ResponseMovieCast>
+    ) : Deferred<ResponseActorsInMovie>
 
     @GET("{$PATH_ENDPOINT}/{$PATH_ID}")
     fun getCastDetailsAsync(
@@ -47,7 +47,7 @@ interface MoviesService {
         @Query(QUERY_API_KEY) key: String,
         @Query(QUERY_LANGUAGE) language: String
 
-    ) : Deferred<ResponseCastDetails>
+    ) : Deferred<ResponsePersonDetails>
 
     @GET("{$PATH_ENDPOINT}/{$PATH_ID}/movie_credits")
     fun getMoviesCreditsAsync(
@@ -56,7 +56,7 @@ interface MoviesService {
         @Query(QUERY_API_KEY) key: String,
         @Query(QUERY_LANGUAGE) language: String
 
-    ) : Deferred<ResponseCastMovies>
+    ) : Deferred<ResponseMoviesActorIn>
 
     companion object {
 

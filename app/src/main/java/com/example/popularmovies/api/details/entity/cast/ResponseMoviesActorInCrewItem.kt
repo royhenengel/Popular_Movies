@@ -2,7 +2,7 @@ package com.example.popularmovies.api.details.entity.cast
 
 import com.google.gson.annotations.SerializedName
 
-data class ResponseCastMovieCrewItem(
+data class ResponseMoviesActorInCrewItem(
 
     @SerializedName("overview")
     val overview: String? = null,

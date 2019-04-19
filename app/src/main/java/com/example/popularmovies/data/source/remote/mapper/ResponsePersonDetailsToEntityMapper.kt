@@ -1,25 +1,25 @@
 package com.example.popularmovies.data.source.remote.mapper
 
 import androidx.arch.core.util.Function
-import com.example.popularmovies.api.details.entity.cast.ResponseCastDetails
+import com.example.popularmovies.api.details.entity.cast.ResponsePersonDetails
 import com.example.popularmovies.data.details.entity.cast.PersonDetailsEntity
 import com.example.popularmovies.util.dateFromString
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ResponsePersonDetailsToEntityMapper @Inject constructor() : Function<ResponseCastDetails, PersonDetailsEntity> {
+class ResponsePersonDetailsToEntityMapper @Inject constructor() : Function<ResponsePersonDetails, PersonDetailsEntity> {
 
-    override fun apply(responseCastDetails: ResponseCastDetails): PersonDetailsEntity {
+    override fun apply(responsePersonDetails: ResponsePersonDetails): PersonDetailsEntity {
 
         return PersonDetailsEntity(
-            id = responseCastDetails.id ?: NULLABLE_INT_DEFAULT,
-            name = responseCastDetails.name ?: NULLABLE_STRING_DEFAULT,
-            birthday = dateFromString(responseCastDetails.birthday),
-            deathDay = dateFromString(responseCastDetails.deathday),
-            biography = responseCastDetails.biography ?: NULLABLE_STRING_DEFAULT,
-            imagePath = responseCastDetails.profilePath ?: NULLABLE_STRING_DEFAULT,
-            imdbId = responseCastDetails.imdbId ?: NULLABLE_STRING_DEFAULT
+            id = responsePersonDetails.id ?: NULLABLE_INT_DEFAULT,
+            name = responsePersonDetails.name ?: NULLABLE_STRING_DEFAULT,
+            birthday = dateFromString(responsePersonDetails.birthday),
+            deathDay = dateFromString(responsePersonDetails.deathday),
+            biography = responsePersonDetails.biography ?: NULLABLE_STRING_DEFAULT,
+            imagePath = responsePersonDetails.profilePath ?: NULLABLE_STRING_DEFAULT,
+            imdbId = responsePersonDetails.imdbId ?: NULLABLE_STRING_DEFAULT
         )
     }
 
