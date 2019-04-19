@@ -13,7 +13,7 @@ import com.example.popularmovies.viewmodel.SingleLiveEvent
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
-class PersonDetailsViewModel @Inject constructor(
+class PersonDetailsFragmentViewModel @Inject constructor(
 
         private val repository: MoviesRepository,
 
@@ -49,6 +49,12 @@ class PersonDetailsViewModel @Inject constructor(
             movieThumbnailsUiModelLiveData.value = scrollingThumbnailsViewUiModel
             personDetailsUiEntityLiveData.value = uiEntity
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+
+        getPersonDetailsJob.cancel()
     }
 
     fun onThumbnailClicked(position: Int) {
