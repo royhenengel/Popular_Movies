@@ -30,6 +30,7 @@ class MovieDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickList
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var fragmentViewModel: MovieDetailsFragmentViewModel
+    private var showToolbarHomeBtn: Boolean = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -38,7 +39,12 @@ class MovieDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickList
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+
         inflater.inflate(R.menu.menu_movie_details, menu)
+
+        if (!showToolbarHomeBtn){
+            menu.findItem(R.id.action_home).isVisible = false
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -46,7 +52,7 @@ class MovieDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickList
         return when(item.itemId){
 
             R.id.action_home -> {
-                Toast.makeText(context, "Home clicked -> TBI", Toast.LENGTH_LONG).show()
+                findNavController().popBackStack(R.id.dest_main, false)
                 true
             }
 
@@ -60,6 +66,7 @@ class MovieDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickList
         fragmentViewModel = ViewModelProviders.of(this, viewModelFactory).get(MovieDetailsFragmentViewModel::class.java)
 
         arguments?.let {
+            showToolbarHomeBtn = MovieDetailsFragmentArgs.fromBundle(it).showToolbarHomeBtn
             fragmentViewModel.start(MovieDetailsFragmentArgs.fromBundle(it).movieId)
 
         }

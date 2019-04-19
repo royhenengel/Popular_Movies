@@ -48,7 +48,7 @@ class PersonDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickLis
         return when(item.itemId){
 
             R.id.action_home -> {
-                Toast.makeText(context, "Home clicked -> TBI", Toast.LENGTH_LONG).show()
+                findNavController().popBackStack(R.id.dest_main, false)
                 true
             }
 
@@ -130,7 +130,8 @@ class PersonDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickLis
 
     private fun handleActorInMovieClickedEvent(movieActorInEntity: MovieActorInEntity) {
 
-        val action = PersonDetailsFragmentDirections.actionDestPersonDetailsToDestMovieDetails(movieActorInEntity.id)
+        val action = PersonDetailsFragmentDirections.actionDestPersonDetailsToDestMovieDetails(movieActorInEntity.id,
+                true)
         findNavController().navigate(action)
     }
 

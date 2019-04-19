@@ -93,7 +93,8 @@ class MainMoviesFragment : Fragment(), Injectable, MovieViewHolder.MovieClickLis
 
     private fun handleMovieClickedEvent(movieEntity: MovieEntity) {
 
-        val action = MainMoviesFragmentDirections.actionDestMainToDestMovieDetails(movieEntity.id)
+        val action = MainMoviesFragmentDirections.actionDestMainToDestMovieDetails(movieEntity.id,
+                false)
         findNavController().navigate(action)
     }
 
