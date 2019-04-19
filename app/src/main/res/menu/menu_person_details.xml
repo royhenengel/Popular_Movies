@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="com.example.popularmovies.MainActivity">
+
+    <item
+        android:id="@+id/action_home"
+        android:icon="@drawable/ic_open_in_browser"
+        android:orderInCategory="100"
+        android:title="@string/action_home"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_view_on_imdb"
+        android:icon="@drawable/ic_home"
+        android:orderInCategory="200"
+        android:title="@string/action_view_on_imdb"
+        app:showAsAction="never" />
+
+</menu>
