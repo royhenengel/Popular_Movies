@@ -2,12 +2,13 @@ package com.example.popularmovies.data.source.remote
 
 import com.example.popularmovies.BuildConfig
 import com.example.popularmovies.api.main.MoviesService
-import com.example.popularmovies.data.details.entity.cast.PersonDetailsEntity
 import com.example.popularmovies.data.details.entity.cast.ActorInMovieEntity
+import com.example.popularmovies.data.details.entity.cast.PersonDetailsEntity
 import com.example.popularmovies.data.details.entity.movie.MovieActorInEntity
 import com.example.popularmovies.data.details.entity.movie.MovieDetailsEntity
 import com.example.popularmovies.data.main.entity.MovieEntity
 import com.example.popularmovies.data.source.remote.mapper.*
+import io.reactivex.Single
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -125,30 +126,24 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
         return mapActorsInMovieResponseItemsToEntities(response)
     }
 
-    override suspend fun getCastDetails(castId: Int): PersonDetailsEntity {
+    override fun getCastDetails(castId: Int): Single<PersonDetailsEntity> {
 
-        // TODO Handle error fetching data
-        val response = moviesService.getCastDetailsAsync(
+        return moviesService.getCastDetailsAsync(
             endpoint = BuildConfig.ENDPOINT_PERSON,
             castId = castId,
             key = BuildConfig.API_KEY,
             language = MOVIE_LANGUAGE
-        ).await()
-
-        return mapResponsePersonDetailsToEntity(response)
+        ).map { response -> mapResponsePersonDetailsToEntity(response) }
     }
 
-    override suspend fun getCastMovies(castId: Int): List<MovieActorInEntity> {
+    override fun getCastMovies(castId: Int): Single<List<MovieActorInEntity>> {
 
-        // TODO Handle error fetching data
-        val response = moviesService.getMoviesCreditsAsync(
+        return moviesService.getMoviesCreditsAsync(
             endpoint = BuildConfig.ENDPOINT_PERSON,
             castId = castId,
             key = BuildConfig.API_KEY,
             language = MOVIE_LANGUAGE
-        ).await()
-
-        return mapResponseMoviesActorInToEntities(response)
+        ).map { response -> mapResponseMoviesActorInToEntities(response) }
     }
 
 }

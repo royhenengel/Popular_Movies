@@ -12,16 +12,20 @@ import com.example.popularmovies.ui.details.person.entity.PersonDetailsUiEntity
 import com.example.popularmovies.ui.details.person.entity.mapper.MovieActorInEntityToThumbnailUiEntityMapper
 import com.example.popularmovies.ui.details.person.entity.mapper.PersonDetailsEntityToUiEntityMapper
 import com.example.popularmovies.viewmodel.SingleLiveEvent
-import kotlinx.coroutines.*
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.functions.BiFunction
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class PersonDetailsFragmentViewModel @Inject constructor(
 
-        private val repository: MoviesRepository,
+    private val repository: MoviesRepository,
 
-        private val personDetailsEntityToUiEntityMapper: PersonDetailsEntityToUiEntityMapper,
+    private val personDetailsEntityToUiEntityMapper: PersonDetailsEntityToUiEntityMapper,
 
-        private val movieActorInEntityToThumbnailUiEntityMapper: MovieActorInEntityToThumbnailUiEntityMapper
+    private val movieActorInEntityToThumbnailUiEntityMapper: MovieActorInEntityToThumbnailUiEntityMapper
 
 ) : ViewModel() {
 
@@ -30,37 +34,43 @@ class PersonDetailsFragmentViewModel @Inject constructor(
 
     val movieActorInClickedLiveEvent = SingleLiveEvent<MovieActorInEntity>()
     val openInBrowserLiveEvent = SingleLiveEvent<String>()
-    val actionHomeLiveEvent = SingleLiveEvent<Any>()
-
-    private val uiScope = CoroutineScope(Dispatchers.Main)
-    private val getPersonDetailsJob: Job = Job()
+    val actionHomeLiveEvent = SingleLiveEvent<Unit>()
 
     private lateinit var personDetailsEntity: PersonDetailsEntity
     private lateinit var movieActorInList: List<MovieActorInEntity>
 
+    private var disposable: Disposable? = null
+
     fun start(personId: Int) {
 
-        uiScope.launch {
+        val detailsSingle = repository.getPersonDetails(personId)
+        val moviesActorInSingle = repository.getPersonMovies(personId)
 
-            val detailsTask = async(Dispatchers.IO) { repository.getCastDetails(personId) }
-            val moviesActorInTask = async(Dispatchers.IO) { repository.getCastMovies(personId) }
+        disposable = Single.zip(detailsSingle, moviesActorInSingle,
+            BiFunction<PersonDetailsEntity, List<MovieActorInEntity>, RxZipResult> { details, movies ->
+                personDetailsEntity = details
+                movieActorInList = movies
 
-            personDetailsEntity = detailsTask.await()
-            val uiEntity = personDetailsEntityToUiEntityMapper.apply(personDetailsEntity)
+                val uiEntity = personDetailsEntityToUiEntityMapper.apply(personDetailsEntity)
+                val thumbnails = mapMoviesActorInToThumbnails(movieActorInList)
+                RxZipResult(uiEntity, thumbnails)
+            })
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    movieThumbnailsUiModelLiveData.value = ScrollingThumbnailsViewUiModel(it.thumbnails)
+                    personDetailsUiEntityLiveData.value = it.personDetailsUiEntity
+                },
+                {
 
-            movieActorInList = moviesActorInTask.await()
-            val thumbnails = mapMoviesActorInToThumbnails(movieActorInList)
-            val scrollingThumbnailsViewUiModel = ScrollingThumbnailsViewUiModel(thumbnails)
-
-            movieThumbnailsUiModelLiveData.value = scrollingThumbnailsViewUiModel
-            personDetailsUiEntityLiveData.value = uiEntity
-        }
+                })
     }
 
     override fun onCleared() {
         super.onCleared()
 
-        getPersonDetailsJob.cancel()
+        disposable?.dispose()
     }
 
     fun onThumbnailClicked(position: Int) {
@@ -89,5 +99,13 @@ class PersonDetailsFragmentViewModel @Inject constructor(
 
         return thumbnails
     }
+
+    private data class RxZipResult(
+
+        val personDetailsUiEntity: PersonDetailsUiEntity,
+
+        val thumbnails: List<ThumbnailUiEntity>
+
+    )
 
 }

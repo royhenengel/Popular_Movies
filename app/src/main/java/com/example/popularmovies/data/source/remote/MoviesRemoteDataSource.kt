@@ -13,6 +13,7 @@ import com.example.popularmovies.data.details.entity.movie.MovieActorInEntity
 import com.example.popularmovies.data.details.entity.movie.MovieDetailsEntity
 import com.example.popularmovies.data.main.entity.MovieEntity
 import com.example.popularmovies.data.source.remote.mapper.*
+import io.reactivex.Single
 
 abstract class MoviesRemoteDataSource(
 
@@ -40,9 +41,9 @@ abstract class MoviesRemoteDataSource(
 
     abstract suspend fun getMovieCast(movieId: Int): List<ActorInMovieEntity>
 
-    abstract suspend fun getCastDetails(castId: Int): PersonDetailsEntity
+    abstract fun getCastDetails(castId: Int): Single<PersonDetailsEntity>
 
-    abstract suspend fun getCastMovies(castId: Int): List<MovieActorInEntity>
+    abstract fun getCastMovies(castId: Int): Single<List<MovieActorInEntity>>
 
     protected fun keyAfter(params: LoadParams<Int>): Int? = if (params.key > 1) params.key + 1 else null
 

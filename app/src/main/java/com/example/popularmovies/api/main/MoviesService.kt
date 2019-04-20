@@ -5,6 +5,7 @@ import com.example.popularmovies.api.details.entity.cast.ResponseMoviesActorIn
 import com.example.popularmovies.api.details.entity.cast.ResponseActorsInMovie
 import com.example.popularmovies.api.details.entity.movie.ResponseMovieDetails
 import com.example.popularmovies.api.main.entity.ResponseMoviesList
+import io.reactivex.Single
 import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -47,7 +48,7 @@ interface MoviesService {
         @Query(QUERY_API_KEY) key: String,
         @Query(QUERY_LANGUAGE) language: String
 
-    ) : Deferred<ResponsePersonDetails>
+    ) : Single<ResponsePersonDetails>
 
     @GET("{$PATH_ENDPOINT}/{$PATH_ID}/movie_credits")
     fun getMoviesCreditsAsync(
@@ -56,7 +57,7 @@ interface MoviesService {
         @Query(QUERY_API_KEY) key: String,
         @Query(QUERY_LANGUAGE) language: String
 
-    ) : Deferred<ResponseMoviesActorIn>
+    ) : Single<ResponseMoviesActorIn>
 
     companion object {
 
