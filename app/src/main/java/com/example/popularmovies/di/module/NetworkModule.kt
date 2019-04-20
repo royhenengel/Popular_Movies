@@ -11,6 +11,7 @@ import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 private const val TAG_LOGGING_INTERCEPTOR = "OkHttp"
@@ -23,6 +24,7 @@ object NetworkModule {
     fun provideRetrofit(
         httpUrl: HttpUrl,
         gsonConverterFactory: GsonConverterFactory,
+        rxJavaCallAdapterFactory: RxJava2CallAdapterFactory,
         coroutinesAdapter: CoroutineCallAdapterFactory,
         client: OkHttpClient
     ): Retrofit {
@@ -31,6 +33,7 @@ object NetworkModule {
             .baseUrl(httpUrl)
             .client(client)
             .addConverterFactory(gsonConverterFactory)
+            .addCallAdapterFactory(rxJavaCallAdapterFactory)
             .addCallAdapterFactory(coroutinesAdapter)
             .build()
     }
@@ -47,6 +50,13 @@ object NetworkModule {
     fun provideGsonConverterFactory(gson: Gson): GsonConverterFactory {
 
         return GsonConverterFactory.create(gson)
+    }
+
+    @Provides
+    @JvmStatic
+    fun provideRxJavaCallAdapterFactory(): RxJava2CallAdapterFactory {
+
+        return RxJava2CallAdapterFactory.create()
     }
 
     @Provides
