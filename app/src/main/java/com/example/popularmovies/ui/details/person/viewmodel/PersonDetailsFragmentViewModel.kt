@@ -43,6 +43,7 @@ class PersonDetailsFragmentViewModel @Inject constructor(
     private lateinit var movieActorInList: List<MovieActorInEntity>
 
     private var disposable: Disposable? = null
+    private var isDataInitialized = false
 
     fun start(personId: Int) {
 
@@ -85,13 +86,17 @@ class PersonDetailsFragmentViewModel @Inject constructor(
 
     fun onOpenInBrowserClicked() {
 
-        val url = "${BuildConfig.IMDB_BASE_URL}${personDetailsEntity.imdbId}"
-        openInBrowserLiveEvent.value = url
+        if (isDataInitialized){
+            val url = "${BuildConfig.IMDB_BASE_URL}${personDetailsEntity.imdbId}"
+            openInBrowserLiveEvent.value = url
+        }
     }
 
     fun onToolbarHomeClicked() {
 
-        actionHomeLiveEvent.call()
+        if (isDataInitialized){
+            actionHomeLiveEvent.call()
+        }
     }
 
     fun onLoadPersonImageError(glideException: GlideException?) {
