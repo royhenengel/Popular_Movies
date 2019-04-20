@@ -2,6 +2,7 @@ package com.example.popularmovies.ui.details.person.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.bumptech.glide.load.engine.GlideException
 import com.example.popularmovies.BuildConfig
 import com.example.popularmovies.data.MoviesRepository
 import com.example.popularmovies.data.details.entity.cast.PersonDetailsEntity
@@ -17,6 +18,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 import javax.inject.Inject
 
 class PersonDetailsFragmentViewModel @Inject constructor(
@@ -35,6 +37,7 @@ class PersonDetailsFragmentViewModel @Inject constructor(
     val movieActorInClickedLiveEvent = SingleLiveEvent<MovieActorInEntity>()
     val openInBrowserLiveEvent = SingleLiveEvent<String>()
     val actionHomeLiveEvent = SingleLiveEvent<Unit>()
+    val onErrorLiveEvent = SingleLiveEvent<String>()
 
     private lateinit var personDetailsEntity: PersonDetailsEntity
     private lateinit var movieActorInList: List<MovieActorInEntity>
@@ -63,7 +66,8 @@ class PersonDetailsFragmentViewModel @Inject constructor(
                     personDetailsUiEntityLiveData.value = it.personDetailsUiEntity
                 },
                 {
-
+                    Timber.e(it, MESSAGE_INTERNAL_ERROR)
+                    onErrorLiveEvent.value = MESSAGE_USER_ERROR
                 })
     }
 
@@ -90,6 +94,11 @@ class PersonDetailsFragmentViewModel @Inject constructor(
         actionHomeLiveEvent.call()
     }
 
+    fun onLoadPersonImageError(glideException: GlideException?) {
+
+        Timber.e(glideException, MESSAGE_ERROR_LOADING_IMAGE)
+    }
+
     private fun mapMoviesActorInToThumbnails(movieActorInList: List<MovieActorInEntity>): List<ThumbnailUiEntity> {
 
         val thumbnails = arrayListOf<ThumbnailUiEntity>()
@@ -107,5 +116,12 @@ class PersonDetailsFragmentViewModel @Inject constructor(
         val thumbnails: List<ThumbnailUiEntity>
 
     )
+
+    companion object{
+
+        private const val MESSAGE_INTERNAL_ERROR = "Error getting data for person details fragment"
+        private const val MESSAGE_USER_ERROR = "Error loading data.\nPlease check your internet connection\nand try again"
+        private const val MESSAGE_ERROR_LOADING_IMAGE = "Error loading person details image"
+    }
 
 }

@@ -11,16 +11,16 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="16dp"
-        android:descendantFocusability="blocksDescendants">
+        android:descendantFocusability="blocksDescendants"
+        android:paddingBottom="16dp">
 
         <ImageView
             android:id="@+id/personDetailsImageIv"
             android:layout_width="120dp"
             android:layout_height="180dp"
-            android:contentDescription="@string/movie_image"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:contentDescription="@string/movie_image"
             android:scaleType="centerCrop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -44,8 +44,8 @@
             android:id="@+id/personDetailsBirthdayTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/dark_grey"
             android:layout_marginTop="8dp"
+            android:textColor="@color/dark_grey"
             app:layout_constraintStart_toStartOf="@+id/personDetailsNameTv"
             app:layout_constraintTop_toBottomOf="@+id/personDetailsNameTv"
             tools:text="10/04/1974" />
@@ -90,14 +90,6 @@
             app:layout_constraintTop_toBottomOf="@+id/personDetailsDivider"
             tools:listitem="@layout/item_thumbnail" />
 
-        <androidx.constraintlayout.widget.Group
-            android:id="@+id/personDetailsViewsGroup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="invisible"
-            app:constraint_referenced_ids="personDetailsBiographyTv,personDetailsNameTv,personDetailsImageIv,personDetailsBirthdayTv,personDetailsMoviesScrollingThumbnailsV,personDetailsDivider"
-            tools:visibility="visible"/>
-
         <ProgressBar
             android:id="@+id/personDetailsLoaderPb"
             android:layout_width="wrap_content"
@@ -107,7 +99,54 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="invisible"/>
+            tools:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/personDetailsErrorTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:textColor="@color/dark_grey"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/personDetailsErrorIv"
+            tools:text="Error"/>
+
+        <ImageView
+            android:id="@+id/personDetailsErrorIv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_error"
+            android:tint="@color/dark_grey"
+            app:layout_constraintBottom_toTopOf="@+id/personDetailsErrorTv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/personDetailsLayoutViewsGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            app:constraint_referenced_ids="personDetailsBiographyTv,personDetailsNameTv,personDetailsImageIv,personDetailsBirthdayTv,personDetailsMoviesScrollingThumbnailsV,personDetailsDivider"
+            tools:visibility="visible" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/personDetailsErrorViewsGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            app:constraint_referenced_ids="personDetailsErrorIv,personDetailsErrorTv" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

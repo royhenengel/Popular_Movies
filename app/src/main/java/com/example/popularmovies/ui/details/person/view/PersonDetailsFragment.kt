@@ -86,6 +86,15 @@ class PersonDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickLis
         fragmentViewModel.movieActorInClickedLiveEvent.observe(this, Observer { handleActorInMovieClickedEvent(it) })
         fragmentViewModel.openInBrowserLiveEvent.observe(this, Observer { handleOpenInBrowserEvent(it) })
         fragmentViewModel.actionHomeLiveEvent.observe(this, Observer { handleActionHomeEvent() })
+        fragmentViewModel.onErrorLiveEvent.observe(this, Observer { handleOnErrorEvent(it) })
+    }
+
+    private fun handleOnErrorEvent(message: String) {
+
+        personDetailsErrorTv.text = message
+
+        personDetailsLoaderPb.visibility = View.GONE
+        personDetailsErrorViewsGroup.visibility = View.VISIBLE
     }
 
     private fun handlePersonDetailsData(personDetailsUiEntity: PersonDetailsUiEntity) {
@@ -105,7 +114,7 @@ class PersonDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickLis
                         target: Target<Drawable>?,
                         isFirstResource: Boolean
                     ): Boolean {
-                        // TODO Handle error loading image
+                        fragmentViewModel.onLoadPersonImageError(e)
                         return true
                     }
 
@@ -153,14 +162,14 @@ class PersonDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickLis
         startActivity(intent)
     }
 
-    /** TODO - Show all the layout only when both terms are met
+    /**
      * Show fragment layout only if both movie details has be received and background image has been
      * downloaded and set
      */
     private fun showLayout() {
 
         personDetailsLoaderPb.visibility = View.GONE
-        personDetailsViewsGroup.visibility = View.VISIBLE
+        personDetailsLayoutViewsGroup.visibility = View.VISIBLE
     }
 
 }
