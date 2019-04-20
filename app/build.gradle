@@ -79,6 +79,11 @@ dependencies {
     // Glide
     implementation "com.github.bumptech.glide:glide:$version_glide"
 
+    // RxJava
+    implementation "io.reactivex.rxjava2:rxjava:$version_rxjava"
+    implementation "io.reactivex.rxjava2:rxandroid:$version_rxandroid"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$version_rxadapter"
+
     // Test
     testImplementation "junit:junit:$version_junit"
     androidTestImplementation "androidx.test:runner:$version_testRunner"
