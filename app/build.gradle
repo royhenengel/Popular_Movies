@@ -84,6 +84,9 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxandroid:$version_rxandroid"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$version_rxadapter"
 
+    // Timber
+    implementation "com.jakewharton.timber:timber:$version_timber"
+
     // Test
     testImplementation "junit:junit:$version_junit"
     androidTestImplementation "androidx.test:runner:$version_testRunner"

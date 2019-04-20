@@ -6,6 +6,7 @@ import com.example.popularmovies.di.AppInjector
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
+import timber.log.Timber
 import javax.inject.Inject
 
 class MoviesApp : Application(), HasActivityInjector {
@@ -17,6 +18,7 @@ class MoviesApp : Application(), HasActivityInjector {
         super.onCreate()
 
         initDi()
+        initTimber()
     }
 
     override fun activityInjector(): AndroidInjector<Activity> {
@@ -27,6 +29,11 @@ class MoviesApp : Application(), HasActivityInjector {
     private fun initDi() {
 
          AppInjector.init(this)
+    }
+
+    private fun initTimber() {
+
+        if (BuildConfig.DEBUG) run { Timber.plant(Timber.DebugTree()) }
     }
 
 }
