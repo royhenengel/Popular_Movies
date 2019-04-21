@@ -38,6 +38,12 @@ class PersonDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickLis
         return inflater.inflate(R.layout.fragment_person_details, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        initViews()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
 
         inflater.inflate(R.menu.menu_person_details, menu)
@@ -79,22 +85,20 @@ class PersonDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickLis
         fragmentViewModel.onThumbnailClicked(position)
     }
 
+    private fun initViews() {
+
+        personDetailsActionTryAgainBtn.setOnClickListener { fragmentViewModel.onTryAgainBtnClicked() }
+    }
+
     private fun observe() {
 
         fragmentViewModel.personDetailsUiEntityLiveData.observe(this, Observer { handlePersonDetailsData(it) })
         fragmentViewModel.movieThumbnailsUiModelLiveData.observe(this, Observer { handleThumbnailsData(it) })
+        fragmentViewModel.stateLiveData.observe(this, Observer { handleStateData(it) })
         fragmentViewModel.movieActorInClickedLiveEvent.observe(this, Observer { handleActorInMovieClickedEvent(it) })
         fragmentViewModel.openInBrowserLiveEvent.observe(this, Observer { handleOpenInBrowserEvent(it) })
         fragmentViewModel.actionHomeLiveEvent.observe(this, Observer { handleActionHomeEvent() })
         fragmentViewModel.onErrorLiveEvent.observe(this, Observer { handleOnErrorEvent(it) })
-    }
-
-    private fun handleOnErrorEvent(message: String) {
-
-        personDetailsErrorTv.text = message
-
-        personDetailsLoaderPb.visibility = View.GONE
-        personDetailsErrorViewsGroup.visibility = View.VISIBLE
     }
 
     private fun handlePersonDetailsData(personDetailsUiEntity: PersonDetailsUiEntity) {
@@ -134,6 +138,18 @@ class PersonDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickLis
         }
     }
 
+    private fun handleStateData(state: PersonDetailsFragmentViewModel.STATE) {
+
+        when(state){
+
+            PersonDetailsFragmentViewModel.STATE.LOADING -> showLoading()
+
+            PersonDetailsFragmentViewModel.STATE.ERROR -> showError()
+
+            PersonDetailsFragmentViewModel.STATE.DONE -> showLayout()
+        }
+    }
+
     private fun handleThumbnailsData(uiModel: ScrollingThumbnailsViewUiModel) {
 
         personDetailsMoviesScrollingThumbnailsV.setClickListener(this)
@@ -147,6 +163,14 @@ class PersonDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickLis
             true
         )
         findNavController().navigate(action)
+    }
+
+    private fun handleOnErrorEvent(message: String) {
+
+        personDetailsErrorTv.text = message
+
+        personDetailsLoaderPb.visibility = View.GONE
+        personDetailsErrorViewsGroup.visibility = View.VISIBLE
     }
 
     private fun handleActionHomeEvent() {
@@ -163,13 +187,28 @@ class PersonDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickLis
     }
 
     /**
-     * Show fragment layout only if both movie details has be received and background image has been
+     * Show fragment layout only if both person details has be received and background image has been
      * downloaded and set
      */
     private fun showLayout() {
 
         personDetailsLoaderPb.visibility = View.GONE
+        personDetailsErrorViewsGroup.visibility = View.GONE
         personDetailsLayoutViewsGroup.visibility = View.VISIBLE
+    }
+
+    private fun showLoading(){
+
+        personDetailsErrorViewsGroup.visibility = View.GONE
+        personDetailsLayoutViewsGroup.visibility = View.GONE
+        personDetailsLoaderPb.visibility = View.VISIBLE
+    }
+
+    private fun showError(){
+
+        personDetailsLayoutViewsGroup.visibility = View.GONE
+        personDetailsLoaderPb.visibility = View.GONE
+        personDetailsErrorViewsGroup.visibility = View.VISIBLE
     }
 
 }

@@ -24,4 +24,5 @@
     <string name="action_filter">Filter</string>
     <string name="action_home">Home</string>
     <string name="action_view_on_imdb">View on IMDB</string>
+    <string name="text_try_again">Try again</string>
 </resources>

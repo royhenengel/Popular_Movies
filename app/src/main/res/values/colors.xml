@@ -7,4 +7,5 @@
     <color name="star_yellow">#ffde03</color>
     <color name="light_grey">#F5F5F5</color>
     <color name="white_title">#f1f5f8</color>
+    <color name="ripple_color_grey">#33AAAAAA</color>
 </resources>
