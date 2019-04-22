@@ -25,9 +25,9 @@ abstract class DetailsRemoteDataSource(
         private val responseMovieActorInItemToEntityMapper: ResponseMovieActorInItemToEntityMapper
 ) {
 
-    abstract suspend fun getMovieDetails(movieId: Int): MovieDetailsEntity
+    abstract fun getMovieDetails(movieId: Int): Single<MovieDetailsEntity>
 
-    abstract suspend fun getMovieCast(movieId: Int): List<ActorInMovieEntity>
+    abstract fun getMovieCast(movieId: Int): Single<List<ActorInMovieEntity>>
 
     abstract fun getCastDetails(castId: Int): Single<PersonDetailsEntity>
 

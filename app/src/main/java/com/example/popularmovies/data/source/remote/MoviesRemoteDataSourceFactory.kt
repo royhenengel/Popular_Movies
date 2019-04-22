@@ -21,7 +21,7 @@ class MoviesRemoteDataSourceFactory @Inject constructor(
 
     override fun create(): DataSource<Int, MovieEntity> {
 
-        val moviesRemoteDataSourceImpl = MoviesRemoteDataSourceImpl(responseMovieItemToEntityMapper, moviesService)
+        val moviesRemoteDataSourceImpl = MoviesRemoteDataSourceImpl(moviesService, responseMovieItemToEntityMapper)
 
         dataSource.postValue(moviesRemoteDataSourceImpl)
 

@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import com.example.popularmovies.BuildConfig
 import com.example.popularmovies.api.MoviesService
 import com.example.popularmovies.data.main.entity.MovieEntity
-import com.example.popularmovies.data.source.remote.mapper.*
+import com.example.popularmovies.data.source.remote.mapper.ResponseMovieItemToEntityMapper
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import javax.inject.Inject

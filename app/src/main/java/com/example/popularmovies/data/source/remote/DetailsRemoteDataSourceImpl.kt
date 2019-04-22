@@ -15,43 +15,38 @@ import javax.inject.Inject
 
 class DetailsRemoteDataSourceImpl @Inject constructor(
 
+        private val moviesService: MoviesService,
+
         responseMovieDetailsToEntityMapper: ResponseMovieDetailsToEntityMapper,
 
         responseActorInMovieItemToEntityMapper: ResponseActorInMovieItemToEntityMapper,
 
         responsePersonDetailsToEntityMapper: ResponsePersonDetailsToEntityMapper,
 
-        responseMovieActorInItemToEntityMapper: ResponseMovieActorInItemToEntityMapper,
-
-        private val moviesService: MoviesService
+        responseMovieActorInItemToEntityMapper: ResponseMovieActorInItemToEntityMapper
 
 ) : DetailsRemoteDataSource(responseMovieDetailsToEntityMapper, responseActorInMovieItemToEntityMapper,
         responsePersonDetailsToEntityMapper, responseMovieActorInItemToEntityMapper) {
 
-    override suspend fun getMovieDetails(movieId: Int): MovieDetailsEntity {
+    override fun getMovieDetails(movieId: Int): Single<MovieDetailsEntity> {
 
-        // TODO Handle error fetching data
-        val response = moviesService.getMovieDetailsAsync(
+        return moviesService.getMovieDetailsAsync(
                 endpoint = BuildConfig.ENDPOINT_MOVIES,
                 movieId = movieId,
                 key = BuildConfig.API_KEY,
                 language = LANGUAGE
-        ).await()
-
-        return mapMovieDetailsResponseToModel(response)
+        )
+                .map { response -> mapMovieDetailsResponseToModel(response) }
     }
 
-    override suspend fun getMovieCast(movieId: Int): List<ActorInMovieEntity> {
+    override fun getMovieCast(movieId: Int): Single<List<ActorInMovieEntity>> {
 
-        // TODO Handle error fetching data
-        val response = moviesService.getMovieCastAsync(
+        return moviesService.getMovieCastAsync(
                 endpoint = BuildConfig.ENDPOINT_MOVIES,
                 movieId = movieId,
                 key = BuildConfig.API_KEY,
                 language = LANGUAGE
-        ).await()
-
-        return mapActorsInMovieResponseItemsToEntities(response)
+        ).map { response -> mapActorsInMovieResponseItemsToEntities(response) }
     }
 
     override fun getCastDetails(castId: Int): Single<PersonDetailsEntity> {

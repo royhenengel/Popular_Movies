@@ -30,7 +30,7 @@ interface MoviesService {
             @Query(QUERY_API_KEY) key: String,
             @Query(QUERY_LANGUAGE) language: String
 
-    ) : Deferred<ResponseMovieDetails>
+    ) : Single<ResponseMovieDetails>
 
     @GET("{$PATH_ENDPOINT}/{$PATH_ID}/casts")
     fun getMovieCastAsync(
@@ -39,7 +39,7 @@ interface MoviesService {
             @Query(QUERY_API_KEY) key: String,
             @Query(QUERY_LANGUAGE) language: String
 
-    ) : Deferred<ResponseActorsInMovie>
+    ) : Single<ResponseActorsInMovie>
 
     @GET("{$PATH_ENDPOINT}/{$PATH_ID}")
     fun getCastDetailsAsync(

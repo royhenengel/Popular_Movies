@@ -41,12 +41,12 @@ class MoviesRepository @Inject constructor(
 
     private val moviesRemoteDataSource = moviesRemoteDataSourceFactory.dataSource
 
-    suspend fun getMovieDetails(movieId: Int): MovieDetailsEntity {
+    fun getMovieDetails(movieId: Int): Single<MovieDetailsEntity> {
 
         return detailsRemoteDataSource.getMovieDetails(movieId)
     }
 
-    suspend fun getMovieCast(movieId: Int): List<ActorInMovieEntity> {
+    fun getMovieCast(movieId: Int): Single<List<ActorInMovieEntity>> {
 
         return detailsRemoteDataSource.getMovieCast(movieId)
     }

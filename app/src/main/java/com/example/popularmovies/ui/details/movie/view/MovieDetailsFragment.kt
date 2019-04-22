@@ -21,7 +21,6 @@ import com.example.popularmovies.ui.common.scrollingthumbnail.viewmodel.Scrollin
 import com.example.popularmovies.ui.details.movie.entity.MovieDetailsUiEntity
 import com.example.popularmovies.ui.details.movie.viewmodel.MovieDetailsFragmentViewModel
 import kotlinx.android.synthetic.main.fragment_movie_details.*
-import kotlinx.android.synthetic.main.fragment_person_details.*
 import javax.inject.Inject
 
 class MovieDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickListener {
@@ -60,6 +59,12 @@ class MovieDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickList
         }
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        initView()
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
@@ -79,12 +84,18 @@ class MovieDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickList
         fragmentViewModel.onThumbnailClicked(position)
     }
 
+    private fun initView() {
+
+        movieDetailsActionTryAgainBtn.setOnClickListener { fragmentViewModel.onTryAgainBtnClicked() }
+    }
+
     private fun observe() {
 
         fragmentViewModel.movieDetailsUiEntityLiveData.observe(this, Observer { handleEntityData(it) })
         fragmentViewModel.movieCastUiModelLiveData.observe(this, Observer { handleCastUiModelData(it) })
         fragmentViewModel.castThumbnailClickedLiveEvent.observe(this, Observer { handleThumbnailClickedEvent(it) })
         fragmentViewModel.actionHomeLiveEvent.observe(this, Observer { handleActionHomeEvent() })
+        fragmentViewModel.stateLiveData.observe(this, Observer { handleStateData(it) })
     }
 
     private fun handleEntityData(uiEntity: MovieDetailsUiEntity) {
@@ -106,7 +117,7 @@ class MovieDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickList
                                 target: Target<Drawable>?,
                                 isFirstResource: Boolean
                         ): Boolean {
-                            // TODO Handle error loading image
+                            fragmentViewModel.onLoadImageError(e)
                             return true
                         }
 
@@ -143,19 +154,43 @@ class MovieDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickList
         findNavController().popBackStack(R.id.dest_main, false)
     }
 
-    /** TODO - Show all the layout only when both terms are met
+    private fun handleStateData(state: MovieDetailsFragmentViewModel.STATE) {
+
+        when(state){
+
+            MovieDetailsFragmentViewModel.STATE.LOADING -> showLoading()
+
+            MovieDetailsFragmentViewModel.STATE.ERROR -> showError()
+
+            MovieDetailsFragmentViewModel.STATE.LOADED -> showLayout()
+        }
+    }
+
+    /**
      * Show fragment layout only if both movie details has be received and background image has been
      * downloaded and set
      */
     private fun showLayout() {
 
-        loaderPb.visibility = View.GONE
-        movieDetailsViewsGroup.visibility = View.VISIBLE
+        movieDetailsLoaderPb.visibility = View.GONE
+        movieDetailsErrorViewsGroup.visibility = View.GONE
+        movieDetailsLayoutViewsGroup.visibility = View.VISIBLE
     }
 
-    companion object {
+    private fun showLoading(){
 
-        private const val MESSAGE_ARGS_NOT_RECEIVED = "Movie model wan't received, can't start fragment"
+        movieDetailsErrorViewsGroup.visibility = View.GONE
+        movieDetailsLayoutViewsGroup.visibility = View.GONE
+        movieDetailsLoaderPb.visibility = View.VISIBLE
+    }
+
+    private fun showError(){
+
+        movieDetailsErrorTv.text = fragmentViewModel.userErrorMessage
+
+        movieDetailsLoaderPb.visibility = View.GONE
+        movieDetailsLayoutViewsGroup.visibility = View.GONE
+        movieDetailsErrorViewsGroup.visibility = View.VISIBLE
     }
 
 }
