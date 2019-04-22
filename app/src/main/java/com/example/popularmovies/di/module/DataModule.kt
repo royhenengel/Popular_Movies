@@ -11,9 +11,6 @@ import dagger.Module
 abstract class DataModule {
 
     @Binds
-    abstract fun bindRemoteMoviesDataSource(moviesRemoteDataSourceImpl: MoviesRemoteDataSourceImpl): MoviesRemoteDataSource
-
-    @Binds
     abstract fun bindDetailsMoviesDataSource(detailsRemoteDataSource: DetailsRemoteDataSourceImpl): DetailsRemoteDataSource
 
 }

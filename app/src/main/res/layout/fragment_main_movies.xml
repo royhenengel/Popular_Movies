@@ -1,17 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/fragment_main_movies_root"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.main.view.MainMoviesFragment">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_main_movies_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.main.view.MainMoviesFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/fragment_main_movies_rv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/light_grey"
-            tools:listitem="@layout/item_main_movie"/>
+        android:id="@+id/fragment_main_movies_rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/light_grey"
+        android:visibility="invisible"
+        tools:visibility="visible"
+        tools:listitem="@layout/item_main_movie" />
+
+    <ProgressBar
+        android:id="@+id/mainMoviesLoaderPb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/mainMoviesErrorTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/dark_grey"
+        app:layout_constraintBottom_toTopOf="@+id/mainMoviesActionTryAgainBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainMoviesErrorIv"
+        tools:text="Error" />
+
+    <ImageView
+        android:id="@+id/mainMoviesErrorIv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_error"
+        android:tint="@color/dark_grey"
+        app:layout_constraintBottom_toTopOf="@+id/mainMoviesErrorTv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/mainMoviesActionTryAgainBtn"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/text_try_again"
+        android:textColor="@color/dark_grey"
+        app:backgroundTint="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainMoviesErrorTv"
+        app:rippleColor="@color/ripple_color_grey"
+        app:strokeColor="@color/dark_grey"
+        app:strokeWidth="2dp" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/mainMoviesErrorViewsGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="mainMoviesActionTryAgainBtn,mainMoviesErrorIv,mainMoviesErrorTv" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

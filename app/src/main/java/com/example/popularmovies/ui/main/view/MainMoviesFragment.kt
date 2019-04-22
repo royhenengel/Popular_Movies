@@ -12,10 +12,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.popularmovies.R
 import com.example.popularmovies.data.main.entity.MovieEntity
+import com.example.popularmovies.data.source.remote.MoviesRemoteDataSource
 import com.example.popularmovies.di.Injectable
 import com.example.popularmovies.ui.main.entity.MovieUiEntity
 import com.example.popularmovies.ui.main.entity.mapper.MovieEntityToUiEntityMapper
 import com.example.popularmovies.ui.main.viewmodel.MainMoviesFragmentViewModel
+import kotlinx.android.synthetic.main.fragment_main_movies.*
 import javax.inject.Inject
 
 class MainMoviesFragment : Fragment(), Injectable, MovieViewHolder.MovieClickListener {
@@ -83,12 +85,14 @@ class MainMoviesFragment : Fragment(), Injectable, MovieViewHolder.MovieClickLis
             moviesAdapter = MainMoviesAdapter(movieEntityToUiEntityMapper, this@MainMoviesFragment)
             adapter = moviesAdapter
         }
+        mainMoviesActionTryAgainBtn.setOnClickListener { fragmentViewModel.onTryAgainClicked() }
     }
 
     private fun observe() {
 
         fragmentViewModel.moviesLiveData.observe(this, Observer { moviesAdapter.submitList(it) })
         fragmentViewModel.onMovieClickedLiveEvent.observe(this, Observer { handleMovieClickedEvent(it) })
+        fragmentViewModel.stateLiveData.observe(this, Observer { handleStateData(it) })
     }
 
     private fun handleMovieClickedEvent(movieEntity: MovieEntity) {
@@ -96,6 +100,45 @@ class MainMoviesFragment : Fragment(), Injectable, MovieViewHolder.MovieClickLis
         val action = MainMoviesFragmentDirections.actionDestMainToDestMovieDetails(movieEntity.id,
                 false)
         findNavController().navigate(action)
+    }
+
+    private fun handleStateData(state: MainMoviesFragmentViewModel.STATE) {
+
+        when(state){
+
+            MainMoviesFragmentViewModel.STATE.LOADING -> showLoading()
+
+            MainMoviesFragmentViewModel.STATE.ERROR -> showError()
+
+            MainMoviesFragmentViewModel.STATE.LOADED -> showLayout()
+        }
+    }
+
+    /**
+     * Show fragment layout only if both movie details has be received and background image has been
+     * downloaded and set
+     */
+    private fun showLayout() {
+
+        mainMoviesLoaderPb.visibility = View.GONE
+        mainMoviesErrorViewsGroup.visibility = View.GONE
+        moviesRv.visibility = View.VISIBLE
+    }
+
+    private fun showLoading(){
+
+        moviesRv.visibility = View.GONE
+        mainMoviesErrorViewsGroup.visibility = View.GONE
+        mainMoviesLoaderPb.visibility = View.VISIBLE
+    }
+
+    private fun showError(){
+
+        mainMoviesErrorTv.text = fragmentViewModel.userErrorMessage
+
+        moviesRv.visibility = View.GONE
+        mainMoviesLoaderPb.visibility = View.GONE
+        mainMoviesErrorViewsGroup.visibility = View.VISIBLE
     }
 
 }
