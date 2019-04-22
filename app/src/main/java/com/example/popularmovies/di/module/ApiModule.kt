@@ -1,6 +1,6 @@
 package com.example.popularmovies.di.module
 
-import com.example.popularmovies.api.main.MoviesService
+import com.example.popularmovies.api.MoviesService
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit

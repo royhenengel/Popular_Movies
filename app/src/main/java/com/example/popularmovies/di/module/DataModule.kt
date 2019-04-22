@@ -1,5 +1,7 @@
 package com.example.popularmovies.di.module
 
+import com.example.popularmovies.data.source.remote.DetailsRemoteDataSource
+import com.example.popularmovies.data.source.remote.DetailsRemoteDataSourceImpl
 import com.example.popularmovies.data.source.remote.MoviesRemoteDataSource
 import com.example.popularmovies.data.source.remote.MoviesRemoteDataSourceImpl
 import dagger.Binds
@@ -10,5 +12,8 @@ abstract class DataModule {
 
     @Binds
     abstract fun bindRemoteMoviesDataSource(moviesRemoteDataSourceImpl: MoviesRemoteDataSourceImpl): MoviesRemoteDataSource
+
+    @Binds
+    abstract fun bindDetailsMoviesDataSource(detailsRemoteDataSource: DetailsRemoteDataSourceImpl): DetailsRemoteDataSource
 
 }
