@@ -1,5 +1,6 @@
 package com.example.popularmovies.data.source.remote
 
+import android.annotation.SuppressLint
 import com.example.popularmovies.BuildConfig
 import com.example.popularmovies.api.MoviesService
 import com.example.popularmovies.data.main.entity.MovieEntity
@@ -12,16 +13,13 @@ import javax.inject.Singleton
 @Singleton
 class MoviesRemoteDataSourceImpl @Inject constructor(
 
-        responseMovieItemToEntityMapper: ResponseMovieItemToEntityMapper,
+        private val moviesService: MoviesService,
 
-        private val moviesService: MoviesService
+        responseMovieItemToEntityMapper: ResponseMovieItemToEntityMapper
 
-) : MoviesRemoteDataSource(
+) : MoviesRemoteDataSource(responseMovieItemToEntityMapper) {
 
-        responseMovieItemToEntityMapper
-
-) {
-
+    @SuppressLint("CheckResult")
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, MovieEntity>) {
 
         stateLiveData.postValue(STATE.LOADING)
@@ -44,6 +42,7 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
 
     }
 
+    @SuppressLint("CheckResult")
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, MovieEntity>) {
 
         stateLiveData.postValue(STATE.LOADING)
@@ -65,6 +64,7 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
                 })
     }
 
+    @SuppressLint("CheckResult")
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, MovieEntity>) {
 
         stateLiveData.postValue(STATE.LOADING)

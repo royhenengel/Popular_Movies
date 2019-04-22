@@ -73,6 +73,6 @@ abstract class DetailsRemoteDataSource(
 
     companion object {
 
-        protected const val MOVIE_LANGUAGE = "en-US"
+        const val LANGUAGE = "en-US"
     }
 }

@@ -35,7 +35,7 @@ class DetailsRemoteDataSourceImpl @Inject constructor(
                 endpoint = BuildConfig.ENDPOINT_MOVIES,
                 movieId = movieId,
                 key = BuildConfig.API_KEY,
-                language = MoviesRemoteDataSource.MOVIE_LANGUAGE
+                language = LANGUAGE
         ).await()
 
         return mapMovieDetailsResponseToModel(response)
@@ -48,7 +48,7 @@ class DetailsRemoteDataSourceImpl @Inject constructor(
                 endpoint = BuildConfig.ENDPOINT_MOVIES,
                 movieId = movieId,
                 key = BuildConfig.API_KEY,
-                language = MoviesRemoteDataSource.MOVIE_LANGUAGE
+                language = LANGUAGE
         ).await()
 
         return mapActorsInMovieResponseItemsToEntities(response)
@@ -60,7 +60,7 @@ class DetailsRemoteDataSourceImpl @Inject constructor(
                 endpoint = BuildConfig.ENDPOINT_PERSON,
                 castId = castId,
                 key = BuildConfig.API_KEY,
-                language = MoviesRemoteDataSource.MOVIE_LANGUAGE
+                language = LANGUAGE
         ).map { response -> mapResponsePersonDetailsToEntity(response) }
     }
 
@@ -70,7 +70,7 @@ class DetailsRemoteDataSourceImpl @Inject constructor(
                 endpoint = BuildConfig.ENDPOINT_PERSON,
                 castId = castId,
                 key = BuildConfig.API_KEY,
-                language = MoviesRemoteDataSource.MOVIE_LANGUAGE
+                language = LANGUAGE
         ).map { response -> mapResponseMoviesActorInToEntities(response) }
     }
 

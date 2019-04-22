@@ -29,7 +29,7 @@ class ScrollingThumbnailAdapter(
 
     override fun onBindViewHolder(holder: ThumbnailViewHolder, position: Int) {
 
-        val thumbnailCastUiEntity: ThumbnailUiEntity = dataSet[position] as ThumbnailUiEntity
+        val thumbnailCastUiEntity: ThumbnailUiEntity = dataSet[position]
         holder.bind(thumbnailCastUiEntity, position)
     }
 
