@@ -71,7 +71,7 @@ class PersonDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickLis
         super.onActivityCreated(savedInstanceState)
 
         fragmentViewModel =
-            ViewModelProviders.of(this, viewModelFactory).get(PersonDetailsFragmentViewModel::class.java)
+                ViewModelProviders.of(this, viewModelFactory).get(PersonDetailsFragmentViewModel::class.java)
 
         arguments?.let {
             fragmentViewModel.start(PersonDetailsFragmentArgs.fromBundle(it).personId)
@@ -98,7 +98,6 @@ class PersonDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickLis
         fragmentViewModel.movieActorInClickedLiveEvent.observe(this, Observer { handleActorInMovieClickedEvent(it) })
         fragmentViewModel.openInBrowserLiveEvent.observe(this, Observer { handleOpenInBrowserEvent(it) })
         fragmentViewModel.actionHomeLiveEvent.observe(this, Observer { handleActionHomeEvent() })
-        fragmentViewModel.onErrorLiveEvent.observe(this, Observer { handleOnErrorEvent(it) })
     }
 
     private fun handlePersonDetailsData(personDetailsUiEntity: PersonDetailsUiEntity) {
@@ -109,44 +108,44 @@ class PersonDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickLis
             personDetailsBiographyTv.text = it.biography
 
             Glide.with(context!!)
-                .load(it.imageUrl)
-                .listener(object : RequestListener<Drawable> {
+                    .load(it.imageUrl)
+                    .listener(object : RequestListener<Drawable> {
 
-                    override fun onLoadFailed(
-                        e: GlideException?,
-                        model: Any?,
-                        target: Target<Drawable>?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        fragmentViewModel.onLoadPersonImageError(e)
-                        return true
-                    }
+                        override fun onLoadFailed(
+                                e: GlideException?,
+                                model: Any?,
+                                target: Target<Drawable>?,
+                                isFirstResource: Boolean
+                        ): Boolean {
+                            fragmentViewModel.onLoadPersonImageError(e)
+                            return true
+                        }
 
-                    override fun onResourceReady(
-                        resource: Drawable?,
-                        model: Any?,
-                        target: Target<Drawable>?,
-                        dataSource: DataSource?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        personDetailsImageIv.background = resource
-                        showLayout()
-                        return true
-                    }
-                })
-                .into(personDetailsImageIv)
+                        override fun onResourceReady(
+                                resource: Drawable?,
+                                model: Any?,
+                                target: Target<Drawable>?,
+                                dataSource: DataSource?,
+                                isFirstResource: Boolean
+                        ): Boolean {
+                            personDetailsImageIv.background = resource
+                            showLayout()
+                            return true
+                        }
+                    })
+                    .into(personDetailsImageIv)
         }
     }
 
     private fun handleStateData(state: PersonDetailsFragmentViewModel.STATE) {
 
-        when(state){
+        when (state) {
 
             PersonDetailsFragmentViewModel.STATE.LOADING -> showLoading()
 
             PersonDetailsFragmentViewModel.STATE.ERROR -> showError()
 
-            PersonDetailsFragmentViewModel.STATE.DONE -> showLayout()
+            PersonDetailsFragmentViewModel.STATE.LOADED -> showLayout()
         }
     }
 
@@ -159,18 +158,10 @@ class PersonDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickLis
     private fun handleActorInMovieClickedEvent(movieActorInEntity: MovieActorInEntity) {
 
         val action = PersonDetailsFragmentDirections.actionDestPersonDetailsToDestMovieDetails(
-            movieActorInEntity.id,
-            true
+                movieActorInEntity.id,
+                true
         )
         findNavController().navigate(action)
-    }
-
-    private fun handleOnErrorEvent(message: String) {
-
-        personDetailsErrorTv.text = message
-
-        personDetailsLoaderPb.visibility = View.GONE
-        personDetailsErrorViewsGroup.visibility = View.VISIBLE
     }
 
     private fun handleActionHomeEvent() {
@@ -197,14 +188,16 @@ class PersonDetailsFragment : Fragment(), Injectable, ScrollingThumbnailClickLis
         personDetailsLayoutViewsGroup.visibility = View.VISIBLE
     }
 
-    private fun showLoading(){
+    private fun showLoading() {
 
         personDetailsErrorViewsGroup.visibility = View.GONE
         personDetailsLayoutViewsGroup.visibility = View.GONE
         personDetailsLoaderPb.visibility = View.VISIBLE
     }
 
-    private fun showError(){
+    private fun showError() {
+
+        personDetailsErrorTv.text = fragmentViewModel.userErrorMessage
 
         personDetailsLayoutViewsGroup.visibility = View.GONE
         personDetailsLoaderPb.visibility = View.GONE

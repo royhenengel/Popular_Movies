@@ -23,11 +23,11 @@ import javax.inject.Inject
 
 class PersonDetailsFragmentViewModel @Inject constructor(
 
-    private val repository: MoviesRepository,
+        private val repository: MoviesRepository,
 
-    private val personDetailsEntityToUiEntityMapper: PersonDetailsEntityToUiEntityMapper,
+        private val personDetailsEntityToUiEntityMapper: PersonDetailsEntityToUiEntityMapper,
 
-    private val movieActorInEntityToThumbnailUiEntityMapper: MovieActorInEntityToThumbnailUiEntityMapper
+        private val movieActorInEntityToThumbnailUiEntityMapper: MovieActorInEntityToThumbnailUiEntityMapper
 
 ) : ViewModel() {
 
@@ -38,7 +38,8 @@ class PersonDetailsFragmentViewModel @Inject constructor(
     val movieActorInClickedLiveEvent = SingleLiveEvent<MovieActorInEntity>()
     val openInBrowserLiveEvent = SingleLiveEvent<String>()
     val actionHomeLiveEvent = SingleLiveEvent<Unit>()
-    val onErrorLiveEvent = SingleLiveEvent<String>()
+
+    val userErrorMessage = "Error loading data\nPlease check your internet connection\nand try again"
 
     private lateinit var personDetailsEntity: PersonDetailsEntity
     private lateinit var movieActorInList: List<MovieActorInEntity>
@@ -66,7 +67,7 @@ class PersonDetailsFragmentViewModel @Inject constructor(
 
     fun onOpenInBrowserClicked() {
 
-        if (stateLiveData.value == STATE.DONE){
+        if (stateLiveData.value == STATE.LOADED) {
             val url = "${BuildConfig.IMDB_BASE_URL}${personDetailsEntity.imdbId}"
             openInBrowserLiveEvent.value = url
         }
@@ -74,7 +75,7 @@ class PersonDetailsFragmentViewModel @Inject constructor(
 
     fun onToolbarHomeClicked() {
 
-        if (stateLiveData.value == STATE.DONE){
+        if (stateLiveData.value == STATE.LOADED) {
             actionHomeLiveEvent.call()
         }
     }
@@ -112,8 +113,7 @@ class PersonDetailsFragmentViewModel @Inject constructor(
                     setStateDone()
 
                 }, {
-                    Timber.e(it, MESSAGE_INTERNAL_ERROR)
-                    setStateError()
+                    setStateError(it)
 
                 })
     }
@@ -136,32 +136,31 @@ class PersonDetailsFragmentViewModel @Inject constructor(
 
     private fun setStateDone() {
 
-        stateLiveData.value = STATE.DONE
+        stateLiveData.value = STATE.LOADED
     }
 
-    private fun setStateError() {
+    private fun setStateError(throwable: Throwable) {
 
+        Timber.e(throwable, MESSAGE_INTERNAL_ERROR)
         stateLiveData.value = STATE.ERROR
-        onErrorLiveEvent.value = MESSAGE_USER_ERROR
     }
 
-    enum class STATE{
-        LOADING, ERROR, DONE
+    enum class STATE {
+        LOADING, ERROR, LOADED;
     }
 
     private data class RxZipResult(
 
-        val personDetailsUiEntity: PersonDetailsUiEntity,
+            val personDetailsUiEntity: PersonDetailsUiEntity,
 
-        val thumbnails: List<ThumbnailUiEntity>
+            val thumbnails: List<ThumbnailUiEntity>
 
     )
 
-    companion object{
+    companion object {
 
         private const val PATTERN_MESSAGE_GETTING_DATA = "Getting person details data with id: %d"
         private const val MESSAGE_INTERNAL_ERROR = "Error getting data for person details fragment"
-        private const val MESSAGE_USER_ERROR = "Error loading data\nPlease check your internet connection\nand try again"
         private const val MESSAGE_ERROR_LOADING_IMAGE = "Error loading person details image"
     }
 
