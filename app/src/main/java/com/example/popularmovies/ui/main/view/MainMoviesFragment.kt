@@ -8,11 +8,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.popularmovies.R
 import com.example.popularmovies.data.main.entity.MovieEntity
-import com.example.popularmovies.data.source.remote.MoviesRemoteDataSource
 import com.example.popularmovies.di.Injectable
 import com.example.popularmovies.ui.main.entity.MovieUiEntity
 import com.example.popularmovies.ui.main.entity.mapper.MovieEntityToUiEntityMapper
@@ -44,7 +44,7 @@ class MainMoviesFragment : Fragment(), Injectable, MovieViewHolder.MovieClickLis
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        return when(item.itemId){
+        return when (item.itemId) {
 
             R.id.action_filter_list -> {
                 Toast.makeText(context, "Filter list clicked -> TBI", Toast.LENGTH_LONG).show()
@@ -81,18 +81,23 @@ class MainMoviesFragment : Fragment(), Injectable, MovieViewHolder.MovieClickLis
 
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
-
-            moviesAdapter = MainMoviesAdapter(movieEntityToUiEntityMapper, this@MainMoviesFragment)
-            adapter = moviesAdapter
         }
+
         mainMoviesActionTryAgainBtn.setOnClickListener { fragmentViewModel.onTryAgainClicked() }
     }
 
     private fun observe() {
 
-        fragmentViewModel.moviesLiveData.observe(this, Observer { moviesAdapter.submitList(it) })
+        fragmentViewModel.moviesLiveData.observe(this, Observer { handleMoviesData(it) })
         fragmentViewModel.onMovieClickedLiveEvent.observe(this, Observer { handleMovieClickedEvent(it) })
         fragmentViewModel.stateLiveData.observe(this, Observer { handleStateData(it) })
+    }
+
+    private fun handleMoviesData(pagedList: PagedList<MovieEntity>?) {
+
+        moviesAdapter = MainMoviesAdapter(movieEntityToUiEntityMapper, this@MainMoviesFragment)
+        moviesRv.adapter = moviesAdapter
+        moviesAdapter.submitList(pagedList)
     }
 
     private fun handleMovieClickedEvent(movieEntity: MovieEntity) {
@@ -104,7 +109,7 @@ class MainMoviesFragment : Fragment(), Injectable, MovieViewHolder.MovieClickLis
 
     private fun handleStateData(state: MainMoviesFragmentViewModel.STATE) {
 
-        when(state){
+        when (state) {
 
             MainMoviesFragmentViewModel.STATE.LOADING -> showLoading()
 
@@ -125,14 +130,14 @@ class MainMoviesFragment : Fragment(), Injectable, MovieViewHolder.MovieClickLis
         moviesRv.visibility = View.VISIBLE
     }
 
-    private fun showLoading(){
+    private fun showLoading() {
 
         moviesRv.visibility = View.GONE
         mainMoviesErrorViewsGroup.visibility = View.GONE
         mainMoviesLoaderPb.visibility = View.VISIBLE
     }
 
-    private fun showError(){
+    private fun showError() {
 
         mainMoviesErrorTv.text = fragmentViewModel.userErrorMessage
 
