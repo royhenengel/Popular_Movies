@@ -26,10 +26,18 @@ class ScrollingThumbnailsView @JvmOverloads constructor(
     private var thumbnailClickListener: ScrollingThumbnailClickListener? = null
 
     init {
-        layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         setHasFixedSize(true)
-
+        layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         background = null
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+
+        // Clear view instance from live data observers array to avoid memory leaks due to usage of same
+        // LifecycleOwner object as the fragment
+        uiModel.thumbnailsLiveData.removeObservers(lifecycleOwner)
+        uiModel.clickListenerLiveEvent.removeObservers(lifecycleOwner)
     }
 
     fun setUiModel(scrollingThumbnailsViewUiModel: ScrollingThumbnailsViewUiModel, lifecycleOwner: LifecycleOwner) {
