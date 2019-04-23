@@ -37,7 +37,7 @@ class MoviesRepository @Inject constructor(
     }
 
     var dataSourceState: LiveData<MoviesRemoteDataSource.STATE> =
-            Transformations.switchMap(moviesRemoteDataSourceFactory.dataSource) { dataSource -> dataSource.stateLiveData }
+            Transformations.switchMap(moviesRemoteDataSourceFactory.dataSource) { dataSource -> dataSource.stateLiveData}
 
     private val moviesRemoteDataSource = moviesRemoteDataSourceFactory.dataSource
 

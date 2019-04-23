@@ -29,7 +29,6 @@ class MainMoviesFragment : Fragment(), Injectable, MovieViewHolder.MovieClickLis
     lateinit var movieEntityToUiEntityMapper: MovieEntityToUiEntityMapper
 
     private lateinit var fragmentViewModel: MainMoviesFragmentViewModel
-
     private lateinit var moviesRv: RecyclerView
     private lateinit var moviesAdapter: MainMoviesAdapter
 
@@ -66,6 +65,7 @@ class MainMoviesFragment : Fragment(), Injectable, MovieViewHolder.MovieClickLis
         super.onActivityCreated(savedInstanceState)
 
         fragmentViewModel = ViewModelProviders.of(this, viewModelFactory).get(MainMoviesFragmentViewModel::class.java)
+        fragmentViewModel.start()
 
         observe()
     }
