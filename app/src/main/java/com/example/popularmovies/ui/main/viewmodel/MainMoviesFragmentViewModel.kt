@@ -27,6 +27,7 @@ class MainMoviesFragmentViewModel @Inject constructor(
     fun start(){
 
         stateLiveData.value = STATE.LOADING
+        stateLiveData.removeSource(repository.dataSourceState)
         stateLiveData.addSource(repository.dataSourceState) { dataSourceState: MoviesRemoteDataSource.STATE ->
 
             when(dataSourceState){
