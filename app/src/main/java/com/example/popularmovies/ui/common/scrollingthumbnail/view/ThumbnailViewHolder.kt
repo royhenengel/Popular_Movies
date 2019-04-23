@@ -5,16 +5,17 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.popularmovies.BuildConfig
 import com.example.popularmovies.R
-import com.example.popularmovies.ui.common.scrollingthumbnail.entity.ThumbnailUiEntity
 import com.example.popularmovies.ui.common.scrollingthumbnail.entity.ThumbnailClickListener
+import com.example.popularmovies.ui.common.scrollingthumbnail.entity.ThumbnailUiEntity
 
 class ThumbnailViewHolder(
 
-        itemView: View,
+    itemView: View,
 
-        private val thumbnailClickListener: ThumbnailClickListener?
+    private val thumbnailClickListener: ThumbnailClickListener?
 
 ) : RecyclerView.ViewHolder(itemView) {
 
@@ -25,20 +26,29 @@ class ThumbnailViewHolder(
     fun bind(thumbnailCastUiEntity: ThumbnailUiEntity, position: Int) {
 
         thumbnailCastUiEntity.let {
+
+            Glide.with(itemView)
+                .load("${BuildConfig.MOVIES_IMAGE_BASE_URL}${it.imagePath}")
+                .apply(initRequestOptions())
+                .into(imageIv)
+
             titleTv.text = it.title
-            if (it.desc != null){
+
+            if (it.desc != null) {
                 descTv.text = it.desc
-            }
-            else {
+            } else {
                 descTv.visibility = View.GONE
             }
-
-            Glide.with(itemView.context)
-                    .load("${BuildConfig.MOVIES_IMAGE_BASE_URL}${it.imagePath}")
-                    .into(imageIv)
         }
 
         itemView.setOnClickListener { thumbnailClickListener?.onThumbnailClicked(position) }
+    }
+
+    private fun initRequestOptions(): RequestOptions {
+
+        return RequestOptions().apply(
+            RequestOptions.errorOf(R.drawable.placeholder_profile_photo)
+        )
     }
 
 }
