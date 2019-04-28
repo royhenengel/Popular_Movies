@@ -4,7 +4,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
 import com.example.popularmovies.BuildConfig
 import com.example.popularmovies.R
 import com.example.popularmovies.ui.main.entity.MovieUiEntity
@@ -13,7 +13,9 @@ class MovieViewHolder(
 
     itemView: View,
 
-    private val movieClickListener: MovieClickListener?
+    private val movieClickListener: MovieClickListener?,
+
+    private val glide: RequestManager
 
 ) : RecyclerView.ViewHolder(itemView) {
 
@@ -35,9 +37,7 @@ class MovieViewHolder(
             overviewTv.text = it.overview
             scoreTv.text = it.score.toString()
 
-            Glide.with(thumbnailIv.context)
-                .load("${BuildConfig.MOVIES_IMAGE_BASE_URL}${it.thumbnailPath}")
-                .into(thumbnailIv)
+            glide.load("${BuildConfig.MOVIES_IMAGE_BASE_URL}${it.thumbnailPath}").into(thumbnailIv)
 
             itemView.setOnClickListener { movieClickListener?.onMovieClicked(movieEntity) }
         }

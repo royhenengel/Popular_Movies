@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.popularmovies.R
 import com.example.popularmovies.data.main.entity.MovieEntity
 import com.example.popularmovies.di.Injectable
@@ -95,7 +96,8 @@ class MainMoviesFragment : Fragment(), Injectable, MovieViewHolder.MovieClickLis
 
     private fun handleMoviesData(pagedList: PagedList<MovieEntity>?) {
 
-        moviesAdapter = MainMoviesAdapter(movieEntityToUiEntityMapper, this@MainMoviesFragment)
+        moviesAdapter =
+            MainMoviesAdapter(movieEntityToUiEntityMapper, this@MainMoviesFragment, Glide.with(this))
         moviesRv.adapter = moviesAdapter
         moviesAdapter.submitList(pagedList)
     }
