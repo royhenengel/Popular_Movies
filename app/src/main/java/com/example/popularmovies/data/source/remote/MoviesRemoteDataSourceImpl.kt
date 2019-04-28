@@ -51,7 +51,7 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
                 category = CATEGORY.POPULAR.description,
                 key = BuildConfig.API_KEY,
                 language = MOVIE_LANGUAGE,
-                page = FIRST_PAGE
+                page = params.key
         )
                 .subscribeOn(Schedulers.io())
                 .map { response -> mapPopularMovieResponseItemsToModels(response) }
@@ -73,7 +73,7 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
                 category = CATEGORY.POPULAR.description,
                 key = BuildConfig.API_KEY,
                 language = MOVIE_LANGUAGE,
-                page = FIRST_PAGE
+                page = params.key
         )
                 .subscribeOn(Schedulers.io())
                 .map { response -> mapPopularMovieResponseItemsToModels(response) }
