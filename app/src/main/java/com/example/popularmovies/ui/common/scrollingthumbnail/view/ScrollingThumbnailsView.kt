@@ -6,6 +6,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.popularmovies.ui.common.scrollingthumbnail.entity.ScrollingThumbnailClickListener
 import com.example.popularmovies.ui.common.scrollingthumbnail.entity.ThumbnailUiEntity
 import com.example.popularmovies.ui.common.scrollingthumbnail.viewmodel.ScrollingThumbnailsViewUiModel
@@ -61,7 +62,7 @@ class ScrollingThumbnailsView @JvmOverloads constructor(
 
     private fun handleThumbnailsData(thumbnailUiEntities: List<ThumbnailUiEntity>) {
 
-        adapter = ScrollingThumbnailAdapter(thumbnailUiEntities, uiModel)
+        adapter = ScrollingThumbnailAdapter(thumbnailUiEntities, uiModel, Glide.with(this))
     }
 
     private fun handleThumbnailClickedEvent(positing: Int) {

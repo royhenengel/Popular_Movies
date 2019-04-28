@@ -4,7 +4,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
 import com.example.popularmovies.BuildConfig
 import com.example.popularmovies.R
@@ -15,7 +15,9 @@ class ThumbnailViewHolder(
 
     itemView: View,
 
-    private val thumbnailClickListener: ThumbnailClickListener?
+    private val thumbnailClickListener: ThumbnailClickListener?,
+
+    private val glideRequestManager: RequestManager
 
 ) : RecyclerView.ViewHolder(itemView) {
 
@@ -27,8 +29,7 @@ class ThumbnailViewHolder(
 
         thumbnailCastUiEntity.let {
 
-            Glide.with(itemView)
-                .load("${BuildConfig.MOVIES_IMAGE_BASE_URL}${it.imagePath}")
+            glideRequestManager.load("${BuildConfig.MOVIES_IMAGE_BASE_URL}${it.imagePath}")
                 .apply(initRequestOptions())
                 .into(imageIv)
 
