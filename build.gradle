@@ -24,6 +24,7 @@ buildscript {
     ext.version_ktx_navigation = '2.0.0'
     ext.version_ktx_coroutines = '1.1.1'
     ext.version_paging_library = '1.0.0'
+    ext.version_room = '1.1.1'
     ext.version_dagger = '2.17'
     ext.version_auto_value = '1.6.2'
     ext.version_retrofit = '2.4.0'

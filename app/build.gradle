@@ -68,6 +68,10 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$version_ktx_navigation"
     implementation "androidx.navigation:navigation-ui-ktx:$version_ktx_navigation"
 
+    // Room
+    implementation "android.arch.persistence.room:runtime:$version_room"
+    kapt "android.arch.persistence.room:compiler:$version_room"
+
     // Retrofit 2
     implementation "com.squareup.retrofit2:retrofit:$version_retrofit"
     implementation "com.squareup.retrofit2:converter-gson:$version_retrofit"
