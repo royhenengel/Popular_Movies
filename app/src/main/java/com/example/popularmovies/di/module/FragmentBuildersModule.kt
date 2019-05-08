@@ -10,13 +10,13 @@ import dagger.android.ContributesAndroidInjector
 abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
-    abstract fun contributeMainMoviesFragment(): MainMoviesFragment
+    internal abstract fun contributeMainMoviesFragment(): MainMoviesFragment
 
     @ContributesAndroidInjector
-    abstract fun contributeMovieDetailsFragment(): MovieDetailsFragment
+    internal abstract fun contributeMovieDetailsFragment(): MovieDetailsFragment
 
     @ContributesAndroidInjector
-    abstract fun contributePersonDetailsFragment(): PersonDetailsFragment
+    internal abstract fun contributePersonDetailsFragment(): PersonDetailsFragment
 
 }
 

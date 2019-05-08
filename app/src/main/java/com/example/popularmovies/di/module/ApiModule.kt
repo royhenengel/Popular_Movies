@@ -10,7 +10,7 @@ object ApiModule {
 
     @Provides
     @JvmStatic
-    fun provideMoviesService(retrofit: Retrofit) : MoviesService {
+    internal fun provideMoviesService(retrofit: Retrofit) : MoviesService {
 
         return retrofit.create(MoviesService::class.java)
     }

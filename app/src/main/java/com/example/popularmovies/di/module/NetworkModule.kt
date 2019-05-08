@@ -21,7 +21,7 @@ object NetworkModule {
 
     @Provides
     @JvmStatic
-    fun provideRetrofit(
+    internal fun provideRetrofit(
         httpUrl: HttpUrl,
         gsonConverterFactory: GsonConverterFactory,
         rxJavaCallAdapterFactory: RxJava2CallAdapterFactory,
@@ -40,49 +40,49 @@ object NetworkModule {
 
     @Provides
     @JvmStatic
-    fun provideGson(): Gson {
+    internal fun provideGson(): Gson {
 
         return GsonBuilder().create()
     }
 
     @Provides
     @JvmStatic
-    fun provideGsonConverterFactory(gson: Gson): GsonConverterFactory {
+    internal fun provideGsonConverterFactory(gson: Gson): GsonConverterFactory {
 
         return GsonConverterFactory.create(gson)
     }
 
     @Provides
     @JvmStatic
-    fun provideRxJavaCallAdapterFactory(): RxJava2CallAdapterFactory {
+    internal fun provideRxJavaCallAdapterFactory(): RxJava2CallAdapterFactory {
 
         return RxJava2CallAdapterFactory.create()
     }
 
     @Provides
     @JvmStatic
-    fun provideCoroutinesAdapterFactory(): CoroutineCallAdapterFactory {
+    internal fun provideCoroutinesAdapterFactory(): CoroutineCallAdapterFactory {
 
         return CoroutineCallAdapterFactory()
     }
 
     @Provides
     @JvmStatic
-    fun provideOkHttpClient(interceptor: HttpLoggingInterceptor): OkHttpClient {
+    internal fun provideOkHttpClient(interceptor: HttpLoggingInterceptor): OkHttpClient {
 
         return OkHttpClient.Builder().addInterceptor(interceptor).build()
     }
 
     @Provides
     @JvmStatic
-    fun provideInterceptor(): HttpLoggingInterceptor {
+    internal fun provideInterceptor(): HttpLoggingInterceptor {
 
         return HttpLoggingInterceptor { Log.d(TAG_LOGGING_INTERCEPTOR, it) }.setLevel(HttpLoggingInterceptor.Level.BODY)
     }
 
     @Provides
     @JvmStatic
-    fun provideHttpUrl(): HttpUrl {
+    internal fun provideHttpUrl(): HttpUrl {
 
         return HttpUrl.parse(BuildConfig.MOVIES_BASE_URL)!!
     }
