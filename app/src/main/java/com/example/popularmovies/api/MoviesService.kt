@@ -5,6 +5,7 @@ import com.example.popularmovies.api.details.entity.cast.ResponseMoviesActorIn
 import com.example.popularmovies.api.details.entity.cast.ResponseActorsInMovie
 import com.example.popularmovies.api.details.entity.movie.ResponseMovieDetails
 import com.example.popularmovies.api.main.entity.ResponseMoviesList
+import com.example.popularmovies.api.main.genre.ResponseGenres
 import io.reactivex.Single
 import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
@@ -58,6 +59,14 @@ interface MoviesService {
             @Query(QUERY_LANGUAGE) language: String
 
     ) : Single<ResponseMoviesActorIn>
+
+    @GET("{$PATH_ENDPOINT}/movie/list")
+    fun getMovieGenresAsync(
+            @Path(PATH_ENDPOINT, encoded = true) endpoint: String,
+            @Query(QUERY_API_KEY) key: String,
+            @Query(QUERY_LANGUAGE) language: String
+
+    ) : Single<ResponseGenres>
 
     companion object {
 
