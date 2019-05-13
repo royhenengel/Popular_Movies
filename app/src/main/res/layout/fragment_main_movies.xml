@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textColor="@color/dark_grey"
-        app:layout_constraintBottom_toTopOf="@+id/mainMoviesActionTryAgainBtn"
+        app:layout_constraintBottom_toTopOf="@+id/filter_dialog_btn_reset"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mainMoviesErrorIv"
@@ -52,7 +52,7 @@
         app:layout_constraintVertical_chainStyle="packed" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/mainMoviesActionTryAgainBtn"
+        android:id="@+id/filter_dialog_btn_reset"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -73,6 +73,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="mainMoviesActionTryAgainBtn,mainMoviesErrorIv,mainMoviesErrorTv" />
+        app:constraint_referenced_ids="filter_dialog_btn_reset,mainMoviesErrorIv,mainMoviesErrorTv" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/filter_dialog_cl_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="16dp"
+    tools:context=".ui.main.view.FilterDialogFragment">
+
+    <TextView
+        android:id="@+id/filter_dialog_tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/text_filter_options"
+        android:textColor="@color/dark_grey"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/guideline_start"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/filter_dialog_tv_category_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/text_category"
+        android:textColor="@color/dark_grey"
+        app:layout_constraintStart_toStartOf="@+id/filter_dialog_tv_sort_by_title"
+        app:layout_constraintTop_toBottomOf="@+id/filter_dialog_tv_sort_by_title" />
+
+    <Spinner
+        android:id="@+id/filter_dialog_spinner_sort_by"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/filter_dialog_tv_sort_by_title"
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+        app:layout_constraintTop_toTopOf="@+id/filter_dialog_tv_sort_by_title" />
+
+    <TextView
+        android:id="@+id/filter_dialog_tv_sort_by_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/text_sort_by"
+        android:textColor="@color/dark_grey"
+        app:layout_constraintStart_toStartOf="@+id/filter_dialog_tv_title"
+        app:layout_constraintTop_toBottomOf="@+id/filter_dialog_tv_title" />
+
+    <Spinner
+        android:id="@+id/filter_dialog_spinner_category"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/filter_dialog_tv_category_title"
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+        app:layout_constraintTop_toTopOf="@+id/filter_dialog_tv_category_title" />
+
+    <TextView
+        android:id="@+id/filter_dialog_tv_years_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/text_years"
+        android:textColor="@color/dark_grey"
+        app:layout_constraintStart_toStartOf="@+id/filter_dialog_tv_category_title"
+        app:layout_constraintTop_toBottomOf="@+id/filter_dialog_tv_category_title" />
+
+    <me.bendik.simplerangeview.SimpleRangeView
+        android:id="@+id/filter_dialog_rpb_years"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:count="10"
+        app:end="6"
+        app:endFixed="7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/filter_dialog_tv_years_title"
+        app:showFixedLine="true"
+        app:start="3"
+        app:startFixed="2" />
+
+    <TextView
+        android:id="@+id/filter_dialog_tv_rate_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/text_rate"
+        android:textColor="@color/dark_grey"
+        app:layout_constraintStart_toStartOf="@+id/filter_dialog_tv_years_title"
+        app:layout_constraintTop_toBottomOf="@+id/filter_dialog_rpb_years" />
+
+    <View
+        android:id="@+id/filter_dialog_buttons_divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="24dp"
+        android:background="@color/dark_grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/filter_dialog_rpb_rate" />
+
+    <me.bendik.simplerangeview.SimpleRangeView
+        android:id="@+id/filter_dialog_rpb_rate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:count="10"
+        app:end="6"
+        app:endFixed="7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/filter_dialog_tv_rate_title"
+        app:showFixedLine="true"
+        app:start="3"
+        app:startFixed="2" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/filter_dialog_btn_reset"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="90dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/text_reset"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="12sp"
+        app:backgroundTint="@android:color/transparent"
+        app:layout_constraintEnd_toStartOf="@+id/filter_dialog_btn_cancel"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/filter_dialog_btn_cancel"
+        app:rippleColor="@color/ripple_color_grey"
+        app:strokeColor="@android:color/transparent"
+        app:strokeWidth="2dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/filter_dialog_btn_cancel"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="90dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/text_cancel"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="12sp"
+        app:backgroundTint="@android:color/transparent"
+        app:layout_constraintEnd_toStartOf="@+id/filter_dialog_btn_apply"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/filter_dialog_btn_reset"
+        app:layout_constraintTop_toTopOf="@+id/filter_dialog_btn_apply"
+        app:rippleColor="@color/ripple_color_grey"
+        app:strokeColor="@android:color/transparent"
+        app:strokeWidth="2dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/filter_dialog_btn_apply"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="90dp"
+        android:layout_height="45dp"
+        android:text="@string/text_apply"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="12sp"
+        app:backgroundTint="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/filter_dialog_btn_cancel"
+        app:layout_constraintTop_toBottomOf="@+id/filter_dialog_buttons_divider"
+        app:rippleColor="@color/ripple_color_grey"
+        app:strokeColor="@android:color/transparent"
+        app:strokeWidth="2dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="16dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

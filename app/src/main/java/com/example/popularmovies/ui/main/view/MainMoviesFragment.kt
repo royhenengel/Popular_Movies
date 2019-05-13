@@ -2,7 +2,6 @@ package com.example.popularmovies.ui.main.view
 
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -48,7 +47,7 @@ class MainMoviesFragment : Fragment(), Injectable, MovieViewHolder.MovieClickLis
         return when (item.itemId) {
 
             R.id.action_filter_list -> {
-                Toast.makeText(context, "Filter list clicked -> TBI", Toast.LENGTH_LONG).show()
+                fragmentViewModel.onActionFilterBtnClicked()
                 true
             }
 
@@ -84,14 +83,15 @@ class MainMoviesFragment : Fragment(), Injectable, MovieViewHolder.MovieClickLis
             setHasFixedSize(true)
         }
 
-        mainMoviesActionTryAgainBtn.setOnClickListener { fragmentViewModel.onTryAgainClicked() }
+        filter_dialog_btn_reset.setOnClickListener { fragmentViewModel.onTryAgainClicked() }
     }
 
     private fun observe() {
 
         fragmentViewModel.moviesLiveData.observe(this, Observer { handleMoviesData(it) })
-        fragmentViewModel.onMovieClickedLiveEvent.observe(this, Observer { handleMovieClickedEvent(it) })
         fragmentViewModel.stateLiveData.observe(this, Observer { handleStateData(it) })
+        fragmentViewModel.onMovieClickedLiveEvent.observe(this, Observer { handleMovieClickedEvent(it) })
+        fragmentViewModel.onActionFilterClickedLiveEvent.observe(this, Observer { handleActionFilterEvent(it) })
     }
 
     private fun handleMoviesData(pagedList: PagedList<MovieEntity>?) {
@@ -107,6 +107,12 @@ class MainMoviesFragment : Fragment(), Injectable, MovieViewHolder.MovieClickLis
         val action = MainMoviesFragmentDirections.actionDestMainToDestMovieDetails(movieEntity.id,
                 false)
         findNavController().navigate(action)
+    }
+
+    private fun handleActionFilterEvent(it: Unit?) {
+
+        val filterDialogFragment = FilterDialogFragment.newInstance()
+        filterDialogFragment.show(childFragmentManager, FilterDialogFragment::class.java.simpleName)
     }
 
     private fun handleStateData(state: MainMoviesFragmentViewModel.STATE) {

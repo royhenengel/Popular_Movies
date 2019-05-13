@@ -21,6 +21,7 @@ class MainMoviesFragmentViewModel @Inject constructor(
     val stateLiveData = MediatorLiveData<STATE>()
 
     val onMovieClickedLiveEvent = SingleLiveEvent<MovieEntity>()
+    val onActionFilterClickedLiveEvent = SingleLiveEvent<Unit?>()
 
     val userErrorMessage = MESSAGE_USER_ERROR
 
@@ -39,6 +40,11 @@ class MainMoviesFragmentViewModel @Inject constructor(
                 MoviesRemoteDataSource.STATE.ERROR -> handleDataSourceStateError()
             }
         }
+    }
+
+    fun onActionFilterBtnClicked() {
+
+        onActionFilterClickedLiveEvent.call()
     }
 
     private fun handleDataSourceStateLoaded() {
