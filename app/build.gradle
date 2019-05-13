@@ -93,4 +93,7 @@ dependencies {
     androidTestImplementation "androidx.test:runner:$version_testRunner"
     androidTestImplementation "androidx.test.espresso:espresso-core:$version_espresso_core"
 
+    // Range seekbar
+    implementation "me.bendik.simplerangeview:simplerangeview:$version_range_seekbar"
+
 }

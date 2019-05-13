@@ -36,6 +36,7 @@ buildscript {
     ext.version_rxandroid = '2.0.2'
     ext.version_rxadapter = '2.3.0'
     ext.version_timber = '4.7.0'
+    ext.version_range_seekbar = '0.2.0'
 
     ext.version_junit = '4.12'
     ext.version_testRunner = '1.1.0-alpha4'
