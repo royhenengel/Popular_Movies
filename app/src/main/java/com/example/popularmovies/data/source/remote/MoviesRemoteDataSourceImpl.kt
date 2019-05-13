@@ -4,7 +4,10 @@ import android.annotation.SuppressLint
 import com.example.popularmovies.BuildConfig
 import com.example.popularmovies.api.MoviesService
 import com.example.popularmovies.data.main.entity.MovieEntity
+import com.example.popularmovies.data.main.entity.MovieGenreEntity
+import com.example.popularmovies.data.source.remote.mapper.ResponseMovieGenresItemToEntityMapper
 import com.example.popularmovies.data.source.remote.mapper.ResponseMovieItemToEntityMapper
+import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import javax.inject.Inject
@@ -15,9 +18,11 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
 
         private val moviesService: MoviesService,
 
+        responseMovieGenresItemToEntityMapper: ResponseMovieGenresItemToEntityMapper,
+
         responseMovieItemToEntityMapper: ResponseMovieItemToEntityMapper
 
-) : MoviesRemoteDataSource(responseMovieItemToEntityMapper) {
+) : MoviesRemoteDataSource(responseMovieItemToEntityMapper, responseMovieGenresItemToEntityMapper) {
 
     @SuppressLint("CheckResult")
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, MovieEntity>) {
@@ -31,7 +36,7 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
                 page = FIRST_PAGE
         )
                 .subscribeOn(Schedulers.io())
-                .map { response -> mapPopularMovieResponseItemsToModels(response) }
+                .map { response -> mapResponseMovieItemsToEntities(response) }
                 .subscribe({ movieModelList ->
                     callback.onResult(movieModelList, null, FIRST_PAGE + 1)
                     stateLiveData.postValue(STATE.LOADED)
@@ -54,7 +59,7 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
                 page = params.key
         )
                 .subscribeOn(Schedulers.io())
-                .map { response -> mapPopularMovieResponseItemsToModels(response) }
+                .map { response -> mapResponseMovieItemsToEntities(response) }
                 .subscribe({ movieModelList ->
                     callback.onResult(movieModelList, keyAfter(params))
                     stateLiveData.postValue(STATE.LOADED)
@@ -76,7 +81,7 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
                 page = params.key
         )
                 .subscribeOn(Schedulers.io())
-                .map { response -> mapPopularMovieResponseItemsToModels(response) }
+                .map { response -> mapResponseMovieItemsToEntities(response) }
                 .subscribe({ movieModelList ->
                     callback.onResult(movieModelList, keyBefore(params))
                     stateLiveData.postValue(STATE.LOADED)
@@ -84,6 +89,15 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
                     Timber.e(t)
                     stateLiveData.postValue(STATE.ERROR)
                 })
+    }
+
+    override fun getMovieGenres(): Single<List<MovieGenreEntity>> {
+
+        return moviesService.getMovieGenresAsync(
+            endpoint = BuildConfig.ENDPOINT_GENRES,
+            key = BuildConfig.API_KEY,
+            language = MOVIE_LANGUAGE
+        ).map { mapResponseMovieGenresItemsToEntities(it) }
     }
 
 }
