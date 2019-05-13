@@ -1,9 +1,13 @@
 package com.example.popularmovies.data.main.entity
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.util.*
 
+@Entity(tableName = "table_movies")
 data class MovieEntity(
 
+        @PrimaryKey
         val id: Int,
 
         val title: String?,
@@ -17,3 +21,4 @@ data class MovieEntity(
         val thumbnailPath: String?
 
 )
+
