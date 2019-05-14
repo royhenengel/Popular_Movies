@@ -18,11 +18,13 @@ class FilterDialogFragmentViewModel @Inject constructor(
 
     val genresListLiveData = MutableLiveData<Genres>()
     val categoriesLiveData = MutableLiveData<Categories>()
+    val sortByValuesLiveData = MutableLiveData<SortByValue>()
 
     fun start() {
 
         genresListLiveData.value = initGenres()
         categoriesLiveData.value = initCategories()
+        sortByValuesLiveData.value = initSortByValues()
     }
 
     fun onGenresSelected(position: Int) {
@@ -33,6 +35,11 @@ class FilterDialogFragmentViewModel @Inject constructor(
     fun onCategorySelected(position: Int) {
 
         categoriesLiveData.value?.selectedCategory = position
+    }
+
+    fun onSortByValueSelected(position: Int) {
+
+        sortByValuesLiveData.value?.selectValue = position
     }
 
     private fun initGenres(): Genres {
@@ -61,6 +68,18 @@ class FilterDialogFragmentViewModel @Inject constructor(
         return Categories(categoryNames, categoryPopularPosition)
     }
 
+    private fun initSortByValues(): SortByValue? {
+
+        val values = mutableListOf<String>()
+        val sortByValues = MoviesRemoteDataSource.SORTBY.values()
+
+        for (value in sortByValues) {
+            values.add(value.literal)
+        }
+
+        return SortByValue(values, DEFAULT_SELECT_LIST_POSITION)
+    }
+
     private fun getPopularCategoryPosition(categories: Array<MoviesRemoteDataSource.CATEGORY>): Int {
 
         for ((index, category) in categories.withIndex()) {
@@ -85,6 +104,14 @@ class FilterDialogFragmentViewModel @Inject constructor(
             val categoriesList: List<String>,
 
             var selectedCategory: Int
+
+    )
+
+    data class SortByValue(
+
+            val sortByList: List<String>,
+
+            var selectValue: Int
 
     )
 

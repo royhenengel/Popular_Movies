@@ -129,9 +129,31 @@ abstract class MoviesRemoteDataSource(
 
         fun fromDescription(desc: String): CATEGORY? {
 
-            for (category in values()){
-                if (category.description == desc){
+            for (category in values()) {
+                if (category.description == desc) {
                     return category
+                }
+            }
+
+            return null
+        }
+    }
+
+    enum class SORTBY(
+
+            val literal: String
+
+    ) {
+
+        DATE("Date"),
+        DESC("A-Z"),
+        ACS("Z-A");
+
+        fun fromLiteral(literal: String): SORTBY? {
+
+            for (value in values()) {
+                if (value.literal == literal) {
+                    return value
                 }
             }
 

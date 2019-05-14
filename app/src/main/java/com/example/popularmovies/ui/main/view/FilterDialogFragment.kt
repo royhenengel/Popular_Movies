@@ -24,6 +24,7 @@ class FilterDialogFragment : DialogFragment(), Injectable, AdapterView.OnItemSel
 
     private lateinit var genresSpinner: Spinner
     private lateinit var categoriesSpinner: Spinner
+    private lateinit var sortBySpinner: Spinner
 
     companion object {
 
@@ -68,15 +69,19 @@ class FilterDialogFragment : DialogFragment(), Injectable, AdapterView.OnItemSel
 
         genresSpinner = view.findViewById(R.id.filter_dialog_spinner_genre)
         categoriesSpinner = view.findViewById(R.id.filter_dialog_spinner_category)
+        sortBySpinner = view.findViewById(R.id.filter_dialog_spinner_sort_by)
+
+
     }
 
     private fun observe() {
 
-        fragmentViewModel.genresListLiveData.observe(this, Observer { handleGenresListData(it) })
-        fragmentViewModel.categoriesLiveData.observe(this, Observer { handleCategoriesListData(it) })
+        fragmentViewModel.genresListLiveData.observe(this, Observer { handleGenresData(it) })
+        fragmentViewModel.categoriesLiveData.observe(this, Observer { handleCategoriesData(it) })
+        fragmentViewModel.sortByValuesLiveData.observe(this, Observer { handleSortByData(it) })
     }
 
-    private fun handleGenresListData(genres: FilterDialogFragmentViewModel.Genres) {
+    private fun handleGenresData(genres: FilterDialogFragmentViewModel.Genres) {
 
         val dataAdapter = ArrayAdapter<String>(context!!, android.R.layout.simple_spinner_item, genres.genresList)
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -90,18 +95,13 @@ class FilterDialogFragment : DialogFragment(), Injectable, AdapterView.OnItemSel
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
-                onGenreSelected(position)
+                fragmentViewModel.onGenresSelected(position)
             }
 
         }
     }
 
-    private fun onGenreSelected(position: Int) {
-
-        fragmentViewModel.onGenresSelected(position)
-    }
-
-    private fun handleCategoriesListData(categories: FilterDialogFragmentViewModel.Categories) {
+    private fun handleCategoriesData(categories: FilterDialogFragmentViewModel.Categories) {
 
         val dataAdapter = ArrayAdapter<String>(context!!, android.R.layout.simple_spinner_item, categories.categoriesList)
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -115,15 +115,29 @@ class FilterDialogFragment : DialogFragment(), Injectable, AdapterView.OnItemSel
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
-                onCategorySelected(position)
+                fragmentViewModel.onCategorySelected(position)
             }
 
         }
     }
 
-    private fun onCategorySelected(position: Int) {
+    private fun handleSortByData(values: FilterDialogFragmentViewModel.SortByValue) {
 
-        fragmentViewModel.onCategorySelected(position)
+        val dataAdapter = ArrayAdapter<String>(context!!, android.R.layout.simple_spinner_item, values.sortByList)
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        sortBySpinner.adapter = dataAdapter
+        sortBySpinner.setSelection(values.selectValue)
+
+        sortBySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
+                fragmentViewModel.onSortByValueSelected(position)
+            }
+        }
     }
 
 }
