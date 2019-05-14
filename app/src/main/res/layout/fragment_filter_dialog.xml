@@ -12,7 +12,6 @@
         android:id="@+id/filter_dialog_tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:text="@string/text_filter_options"
         android:textColor="@color/dark_grey"
         android:textSize="16sp"
@@ -21,40 +20,62 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/filter_dialog_tv_category_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="@string/text_category"
-        android:textColor="@color/dark_grey"
-        app:layout_constraintStart_toStartOf="@+id/filter_dialog_tv_sort_by_title"
-        app:layout_constraintTop_toBottomOf="@+id/filter_dialog_tv_sort_by_title" />
-
-    <Spinner
-        android:id="@+id/filter_dialog_spinner_sort_by"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/filter_dialog_tv_sort_by_title"
-        app:layout_constraintEnd_toEndOf="@id/guideline_end"
-        app:layout_constraintTop_toTopOf="@+id/filter_dialog_tv_sort_by_title" />
-
-    <TextView
         android:id="@+id/filter_dialog_tv_sort_by_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="@string/text_sort_by"
         android:textColor="@color/dark_grey"
-        app:layout_constraintStart_toStartOf="@+id/filter_dialog_tv_title"
+        app:layout_constraintStart_toStartOf="@+id/guideline_start"
         app:layout_constraintTop_toBottomOf="@+id/filter_dialog_tv_title" />
 
     <Spinner
-        android:id="@+id/filter_dialog_spinner_category"
-        android:layout_width="250dp"
+        android:id="@+id/filter_dialog_spinner_sort_by"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/filter_dialog_tv_sort_by_title"
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+        app:layout_constraintStart_toStartOf="@+id/filter_dialog_spinner_category"
+        app:layout_constraintTop_toTopOf="@+id/filter_dialog_tv_sort_by_title" />
+
+    <TextView
+        android:id="@+id/filter_dialog_tv_category_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/text_category"
+        android:textColor="@color/dark_grey"
+        app:layout_constraintStart_toStartOf="@+id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@+id/filter_dialog_tv_sort_by_title" />
+
+    <Spinner
+        android:id="@+id/filter_dialog_spinner_category"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
         app:layout_constraintBottom_toBottomOf="@+id/filter_dialog_tv_category_title"
         app:layout_constraintEnd_toEndOf="@id/guideline_end"
+        app:layout_constraintStart_toEndOf="@+id/filter_dialog_tv_category_title"
         app:layout_constraintTop_toTopOf="@+id/filter_dialog_tv_category_title" />
+
+    <TextView
+        android:id="@+id/filter_dialog_tv_genre_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/text_genre"
+        android:textColor="@color/dark_grey"
+        app:layout_constraintStart_toStartOf="@+id/guideline_start"
+        app:layout_constraintTop_toBottomOf="@+id/filter_dialog_tv_category_title" />
+
+    <Spinner
+        android:id="@+id/filter_dialog_spinner_genre"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/filter_dialog_tv_genre_title"
+        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+        app:layout_constraintStart_toStartOf="@+id/filter_dialog_spinner_category"
+        app:layout_constraintTop_toTopOf="@+id/filter_dialog_tv_genre_title" />
 
     <TextView
         android:id="@+id/filter_dialog_tv_years_title"
@@ -63,8 +84,8 @@
         android:layout_marginTop="24dp"
         android:text="@string/text_years"
         android:textColor="@color/dark_grey"
-        app:layout_constraintStart_toStartOf="@+id/filter_dialog_tv_category_title"
-        app:layout_constraintTop_toBottomOf="@+id/filter_dialog_tv_category_title" />
+        app:layout_constraintStart_toStartOf="@+id/filter_dialog_tv_genre_title"
+        app:layout_constraintTop_toBottomOf="@+id/filter_dialog_tv_genre_title" />
 
     <me.bendik.simplerangeview.SimpleRangeView
         android:id="@+id/filter_dialog_rpb_years"

@@ -26,11 +26,12 @@
     <string name="action_view_on_imdb">View on IMDB</string>
     <string name="text_try_again">Try again</string>
     <string name="text_filter_options">Filter Options</string>
-    <string name="text_category">Category</string>
+    <string name="text_genre">Genre</string>
     <string name="text_sort_by">Sort by</string>
     <string name="text_years">Years</string>
     <string name="text_rate">Rate</string>
     <string name="text_apply">Apply</string>
     <string name="text_cancel">Cancel</string>
     <string name="text_reset">Reset</string>
+    <string name="text_category">Category</string>
 </resources>
