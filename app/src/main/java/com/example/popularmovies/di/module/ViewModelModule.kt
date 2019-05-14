@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.popularmovies.di.ViewModelKey
 import com.example.popularmovies.ui.details.movie.viewmodel.MovieDetailsFragmentViewModel
 import com.example.popularmovies.ui.details.person.viewmodel.PersonDetailsFragmentViewModel
+import com.example.popularmovies.ui.main.viewmodel.FilterDialogFragmentViewModel
 import com.example.popularmovies.ui.main.viewmodel.MainMoviesFragmentViewModel
 import com.example.popularmovies.viewmodel.MoviesViewModelFactory
 import dagger.Binds
@@ -31,5 +32,10 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(PersonDetailsFragmentViewModel::class)
     internal abstract fun bindPersonDetailsFragmentViewModel(viewModel: PersonDetailsFragmentViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FilterDialogFragmentViewModel::class)
+    internal abstract fun bindFilterDialogFragmentViewModel(viewModel: FilterDialogFragmentViewModel): ViewModel
 
 }

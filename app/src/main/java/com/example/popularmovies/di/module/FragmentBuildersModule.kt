@@ -2,6 +2,7 @@ package com.example.popularmovies.di.module
 
 import com.example.popularmovies.ui.details.movie.view.MovieDetailsFragment
 import com.example.popularmovies.ui.details.person.view.PersonDetailsFragment
+import com.example.popularmovies.ui.main.view.FilterDialogFragment
 import com.example.popularmovies.ui.main.view.MainMoviesFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -17,6 +18,9 @@ abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributePersonDetailsFragment(): PersonDetailsFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeFilterDialogFragment(): FilterDialogFragment
 
 }
 
