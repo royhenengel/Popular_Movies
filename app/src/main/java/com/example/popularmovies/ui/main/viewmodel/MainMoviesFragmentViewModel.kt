@@ -4,7 +4,7 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import com.example.popularmovies.data.MoviesRepository
 import com.example.popularmovies.data.main.entity.MovieEntity
-import com.example.popularmovies.data.source.remote.MoviesRemoteDataSource
+import com.example.popularmovies.data.source.remote.MoviesPagedKeyDataSource
 import com.example.popularmovies.ui.main.entity.MovieUiEntity
 import com.example.popularmovies.viewmodel.SingleLiveEvent
 import timber.log.Timber
@@ -29,15 +29,15 @@ class MainMoviesFragmentViewModel @Inject constructor(
 
         stateLiveData.value = STATE.LOADING
         stateLiveData.removeSource(repository.dataSourceState)
-        stateLiveData.addSource(repository.dataSourceState) { dataSourceState: MoviesRemoteDataSource.STATE ->
+        stateLiveData.addSource(repository.dataSourceState) { dataSourceState: MoviesPagedKeyDataSource.STATE ->
 
             when(dataSourceState){
 
-                MoviesRemoteDataSource.STATE.LOADED -> handleDataSourceStateLoaded()
+                MoviesPagedKeyDataSource.STATE.LOADED -> handleDataSourceStateLoaded()
 
-                MoviesRemoteDataSource.STATE.LOADING -> handleDataSourceStateLoading()
+                MoviesPagedKeyDataSource.STATE.LOADING -> handleDataSourceStateLoading()
 
-                MoviesRemoteDataSource.STATE.ERROR -> handleDataSourceStateError()
+                MoviesPagedKeyDataSource.STATE.ERROR -> handleDataSourceStateError()
             }
         }
     }
@@ -45,6 +45,18 @@ class MainMoviesFragmentViewModel @Inject constructor(
     fun onActionFilterBtnClicked() {
 
         onActionFilterClickedLiveEvent.call()
+    }
+
+    fun onMovieClicked(movieUiEntity: MovieUiEntity) {
+
+        val entity = getEntityFromUiEntity(movieUiEntity)
+        onMovieClickedLiveEvent.value = entity
+    }
+
+    fun onTryAgainClicked() {
+
+        stateLiveData.value = STATE.LOADING
+        repository.restartMoviesDataSource()
     }
 
     private fun handleDataSourceStateLoaded() {
@@ -61,18 +73,6 @@ class MainMoviesFragmentViewModel @Inject constructor(
 
         Timber.e(MESSAGE_INTERNAL_ERROR)
         stateLiveData.value = STATE.ERROR
-    }
-
-    fun onMovieClicked(movieUiEntity: MovieUiEntity) {
-
-        val entity = getEntityFromUiEntity(movieUiEntity)
-        onMovieClickedLiveEvent.value = entity
-    }
-
-    fun onTryAgainClicked() {
-
-        stateLiveData.value = STATE.LOADING
-        repository.restartMoviesDataSource()
     }
 
     private fun getEntityFromUiEntity(movieUiEntity: MovieUiEntity): MovieEntity? {
