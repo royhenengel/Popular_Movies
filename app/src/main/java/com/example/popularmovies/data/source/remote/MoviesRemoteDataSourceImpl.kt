@@ -1,103 +1,72 @@
 package com.example.popularmovies.data.source.remote
 
-import android.annotation.SuppressLint
 import com.example.popularmovies.BuildConfig
 import com.example.popularmovies.api.MoviesService
-import com.example.popularmovies.data.main.entity.MovieEntity
+import com.example.popularmovies.data.details.entity.cast.ActorInMovieEntity
+import com.example.popularmovies.data.details.entity.cast.PersonDetailsEntity
+import com.example.popularmovies.data.details.entity.movie.MovieActorInEntity
+import com.example.popularmovies.data.details.entity.movie.MovieDetailsEntity
 import com.example.popularmovies.data.main.entity.MovieGenreEntity
-import com.example.popularmovies.data.source.remote.mapper.ResponseMovieGenresItemToEntityMapper
-import com.example.popularmovies.data.source.remote.mapper.ResponseMovieItemToEntityMapper
+import com.example.popularmovies.data.source.remote.mapper.*
 import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
-import timber.log.Timber
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
 class MoviesRemoteDataSourceImpl @Inject constructor(
 
-        private val moviesService: MoviesService,
+        moviesService: MoviesService,
 
-        responseMovieGenresItemToEntityMapper: ResponseMovieGenresItemToEntityMapper,
+        responseMovieDetailsToEntityMapper: ResponseMovieDetailsToEntityMapper,
 
-        responseMovieItemToEntityMapper: ResponseMovieItemToEntityMapper
+        responseActorInMovieItemToEntityMapper: ResponseActorInMovieItemToEntityMapper,
 
-) : MoviesRemoteDataSource(responseMovieItemToEntityMapper, responseMovieGenresItemToEntityMapper) {
+        responsePersonDetailsToEntityMapper: ResponsePersonDetailsToEntityMapper,
 
-    @SuppressLint("CheckResult")
-    override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, MovieEntity>) {
+        responseMovieActorInItemToEntityMapper: ResponseMovieActorInItemToEntityMapper,
 
-        stateLiveData.postValue(STATE.LOADING)
-        moviesService.getMoviesAsync(
+        responseMovieGenresItemToEntityMapper: ResponseMovieGenresItemToEntityMapper
+
+) : MoviesRemoteDataSource(moviesService, responseMovieDetailsToEntityMapper, responseActorInMovieItemToEntityMapper,
+        responsePersonDetailsToEntityMapper, responseMovieActorInItemToEntityMapper, responseMovieGenresItemToEntityMapper) {
+
+    override fun getMovieDetails(movieId: Int): Single<MovieDetailsEntity> {
+
+        return moviesService.getMovieDetailsAsync(
                 endpoint = BuildConfig.ENDPOINT_MOVIES,
-                category = CATEGORY.POPULAR.description,
+                movieId = movieId,
                 key = BuildConfig.API_KEY,
-                language = MOVIE_LANGUAGE,
-                page = FIRST_PAGE
+                language = LANGUAGE
         )
-                .subscribeOn(Schedulers.io())
-                .map { response -> mapResponseMovieItemsToEntities(response) }
-                .subscribe({ movieModelList ->
-                    callback.onResult(movieModelList, null, FIRST_PAGE + 1)
-                    stateLiveData.postValue(STATE.LOADED)
-                }, { t ->
-                    Timber.e(t)
-                    stateLiveData.postValue(STATE.ERROR)
-                })
-
+                .map { response -> mapMovieDetailsResponseToModel(response) }
     }
 
-    @SuppressLint("CheckResult")
-    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, MovieEntity>) {
+    override fun getMovieCast(movieId: Int): Single<List<ActorInMovieEntity>> {
 
-        stateLiveData.postValue(STATE.LOADING)
-        moviesService.getMoviesAsync(
+        return moviesService.getMovieCastAsync(
                 endpoint = BuildConfig.ENDPOINT_MOVIES,
-                category = CATEGORY.POPULAR.description,
+                movieId = movieId,
                 key = BuildConfig.API_KEY,
-                language = MOVIE_LANGUAGE,
-                page = params.key
-        )
-                .subscribeOn(Schedulers.io())
-                .map { response -> mapResponseMovieItemsToEntities(response) }
-                .subscribe({ movieModelList ->
-                    callback.onResult(movieModelList, keyAfter(params))
-                    stateLiveData.postValue(STATE.LOADED)
-                }, { t ->
-                    Timber.e(t)
-                    stateLiveData.postValue(STATE.ERROR)
-                })
+                language = LANGUAGE
+        ).map { response -> mapActorsInMovieResponseItemsToEntities(response) }
     }
 
-    @SuppressLint("CheckResult")
-    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, MovieEntity>) {
+    override fun getCastDetails(castId: Int): Single<PersonDetailsEntity> {
 
-        stateLiveData.postValue(STATE.LOADING)
-        moviesService.getMoviesAsync(
-                endpoint = BuildConfig.ENDPOINT_MOVIES,
-                category = CATEGORY.POPULAR.description,
+        return moviesService.getCastDetailsAsync(
+                endpoint = BuildConfig.ENDPOINT_PERSON,
+                castId = castId,
                 key = BuildConfig.API_KEY,
-                language = MOVIE_LANGUAGE,
-                page = params.key
-        )
-                .subscribeOn(Schedulers.io())
-                .map { response -> mapResponseMovieItemsToEntities(response) }
-                .subscribe({ movieModelList ->
-                    callback.onResult(movieModelList, keyBefore(params))
-                    stateLiveData.postValue(STATE.LOADED)
-                }, { t ->
-                    Timber.e(t)
-                    stateLiveData.postValue(STATE.ERROR)
-                })
+                language = LANGUAGE
+        ).map { response -> mapResponsePersonDetailsToEntity(response) }
     }
 
-    override fun getMovieGenres(): Single<List<MovieGenreEntity>> {
+    override fun getCastMovies(castId: Int): Single<List<MovieActorInEntity>> {
 
-        return moviesService.getMovieGenresAsync(
-            endpoint = BuildConfig.ENDPOINT_GENRES,
-            key = BuildConfig.API_KEY,
-            language = MOVIE_LANGUAGE
-        ).map { mapResponseMovieGenresItemsToEntities(it) }
+        return moviesService.getMoviesCreditsAsync(
+                endpoint = BuildConfig.ENDPOINT_PERSON,
+                castId = castId,
+                key = BuildConfig.API_KEY,
+                language = LANGUAGE
+        ).map { response -> mapResponseMoviesActorInToEntities(response) }
     }
 
 }

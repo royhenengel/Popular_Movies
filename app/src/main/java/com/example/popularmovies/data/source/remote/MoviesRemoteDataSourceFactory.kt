@@ -14,19 +14,16 @@ class MoviesRemoteDataSourceFactory @Inject constructor(
 
     private val responseMovieItemToEntityMapper: ResponseMovieItemToEntityMapper,
 
-    private val responseMovieGenresItemToEntityMapper: ResponseMovieGenresItemToEntityMapper,
-
     private val moviesService: MoviesService
 
 ) : DataSource.Factory<Int, MovieEntity>() {
 
-    val dataSource = MutableLiveData<MoviesRemoteDataSource>()
+    val dataSource = MutableLiveData<MoviesPagedKeyDataSource>()
 
     override fun create(): DataSource<Int, MovieEntity> {
 
-        val moviesRemoteDataSourceImpl = MoviesRemoteDataSourceImpl(
-            moviesService, responseMovieGenresItemToEntityMapper,
-            responseMovieItemToEntityMapper
+        val moviesRemoteDataSourceImpl = MoviesPagedKeyDataSourceImpl(
+            moviesService, responseMovieItemToEntityMapper
         )
 
         dataSource.postValue(moviesRemoteDataSourceImpl)

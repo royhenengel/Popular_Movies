@@ -1,55 +1,110 @@
 package com.example.popularmovies.data.source.remote
 
-import androidx.lifecycle.MutableLiveData
-import androidx.paging.PageKeyedDataSource
-import com.example.popularmovies.api.main.entity.ResponseMoviesList
+import com.example.popularmovies.BuildConfig
+import com.example.popularmovies.api.MoviesService
+import com.example.popularmovies.api.details.entity.cast.ResponseActorsInMovie
+import com.example.popularmovies.api.details.entity.cast.ResponseMoviesActorIn
+import com.example.popularmovies.api.details.entity.cast.ResponsePersonDetails
+import com.example.popularmovies.api.details.entity.movie.ResponseMovieDetails
 import com.example.popularmovies.api.main.genre.ResponseMovieGenres
-import com.example.popularmovies.data.main.entity.MovieEntity
+import com.example.popularmovies.data.details.entity.cast.ActorInMovieEntity
+import com.example.popularmovies.data.details.entity.cast.PersonDetailsEntity
+import com.example.popularmovies.data.details.entity.movie.MovieActorInEntity
+import com.example.popularmovies.data.details.entity.movie.MovieDetailsEntity
 import com.example.popularmovies.data.main.entity.MovieGenreEntity
-import com.example.popularmovies.data.source.remote.mapper.ResponseMovieGenresItemToEntityMapper
-import com.example.popularmovies.data.source.remote.mapper.ResponseMovieItemToEntityMapper
+import com.example.popularmovies.data.source.remote.mapper.*
 import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 
 abstract class MoviesRemoteDataSource(
 
-    private val responseMovieItemToEntityMapper: ResponseMovieItemToEntityMapper,
+        protected val moviesService: MoviesService,
 
-    private val responseMovieGenresItemToEntityMapper: ResponseMovieGenresItemToEntityMapper
+        private val responseMovieDetailsToEntityMapper: ResponseMovieDetailsToEntityMapper,
 
-) : PageKeyedDataSource<Int, MovieEntity>() {
+        private val responseActorInMovieItemToEntityMapper: ResponseActorInMovieItemToEntityMapper,
 
-    val stateLiveData = MutableLiveData<STATE>()
+        private val responsePersonDetailsToEntityMapper: ResponsePersonDetailsToEntityMapper,
 
-    abstract override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, MovieEntity>)
+        private val responseMovieActorInItemToEntityMapper: ResponseMovieActorInItemToEntityMapper,
 
-    abstract override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, MovieEntity>)
+        private val responseMovieGenresItemToEntityMapper: ResponseMovieGenresItemToEntityMapper
 
-    abstract override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, MovieEntity>)
+) {
 
-    abstract fun getMovieGenres(): Single<List<MovieGenreEntity>>
+    lateinit var movieGenresList: List<MovieGenreEntity>
 
-    protected fun keyAfter(params: LoadParams<Int>): Int? = if (params.key > 1) params.key + 1 else null
+    init {
 
-    protected fun keyBefore(params: LoadParams<Int>): Int? = if (params.key > 1) params.key - 1 else null
+        getMovieGenres()
+                .subscribeOn(Schedulers.io())
+                .subscribe({ movieGenresList = it }, {
+                    Timber.e(it, MESSAGE_ERROR_GETTING_MOVIE_GENRES)
+                    movieGenresList = listOf()
+                })
+    }
 
-    protected fun mapResponseMovieItemsToEntities(response: ResponseMoviesList): MutableList<MovieEntity> {
+    abstract fun getMovieDetails(movieId: Int): Single<MovieDetailsEntity>
 
-        val movieModelsList = arrayListOf<MovieEntity>()
-        if (response.resultsList != null) {
-            for (responseMovieItem in response.resultsList) {
-                if (responseMovieItem?.id != null) {
-                    movieModelsList.add(responseMovieItemToEntityMapper.apply(responseMovieItem))
+    abstract fun getMovieCast(movieId: Int): Single<List<ActorInMovieEntity>>
+
+    abstract fun getCastDetails(castId: Int): Single<PersonDetailsEntity>
+
+    abstract fun getCastMovies(castId: Int): Single<List<MovieActorInEntity>>
+
+    protected fun mapMovieDetailsResponseToModel(response: ResponseMovieDetails): MovieDetailsEntity {
+
+        return responseMovieDetailsToEntityMapper.apply(response)
+    }
+
+    protected fun mapActorsInMovieResponseItemsToEntities(responseActorsIn: ResponseActorsInMovie): MutableList<ActorInMovieEntity> {
+
+        val castModelsList = arrayListOf<ActorInMovieEntity>()
+        if (responseActorsIn.responseActorsInMovieList != null) {
+            for (responseCastItem in responseActorsIn.responseActorsInMovieList) {
+                if (responseCastItem?.id != null) {
+                    castModelsList.add(responseActorInMovieItemToEntityMapper.apply(responseCastItem))
                 }
             }
         }
 
-        return movieModelsList
+        return castModelsList
     }
 
-    protected fun mapResponseMovieGenresItemsToEntities(response: ResponseMovieGenres): ArrayList<MovieGenreEntity> {
+    protected fun mapResponsePersonDetailsToEntity(response: ResponsePersonDetails): PersonDetailsEntity {
+
+        return responsePersonDetailsToEntityMapper.apply(response)
+    }
+
+    protected fun mapResponseMoviesActorInToEntities(responseActorIn: ResponseMoviesActorIn): List<MovieActorInEntity> {
+
+        val castMovieEntities = arrayListOf<MovieActorInEntity>()
+        if (responseActorIn.responseMovieActorInList != null) {
+            for (responseCastItem in responseActorIn.responseMovieActorInList) {
+                if (responseCastItem?.id != null) {
+                    castMovieEntities.add(responseMovieActorInItemToEntityMapper.apply(responseCastItem))
+                }
+            }
+        }
+
+        return castMovieEntities
+    }
+
+    private fun getMovieGenres(): Single<List<MovieGenreEntity>> {
+
+        return moviesService.getMovieGenresAsync(
+                endpoint = BuildConfig.ENDPOINT_GENRES,
+                key = BuildConfig.API_KEY,
+                language = MoviesPagedKeyDataSource.MOVIE_LANGUAGE
+        ).map { mapResponseMovieGenresItemsToEntities(it) }
+    }
+
+    private fun mapResponseMovieGenresItemsToEntities(response: ResponseMovieGenres): ArrayList<MovieGenreEntity> {
 
         val genresList = arrayListOf<MovieGenreEntity>()
-        if (response.genres!= null) {
+        genresList.add(MovieGenreEntity(-1, "All Genres"))
+        if (response.genres != null) {
             for (responseMovieItem in response.genres) {
                 if (responseMovieItem?.id != null) {
                     genresList.add(responseMovieGenresItemToEntityMapper.apply(responseMovieItem))
@@ -60,23 +115,23 @@ abstract class MoviesRemoteDataSource(
         return genresList
     }
 
-    enum class STATE {
-        LOADED, LOADING, ERROR
-    }
-
     enum class CATEGORY(
 
-        val description: String
+            val description: String
 
     ) {
 
+        LATEST(""),
+        NO_PLAYING(""),
+        TOP_RATED(""),
+        UPCOMING(""),
         POPULAR("popular")
     }
 
     companion object {
 
-        const val FIRST_PAGE = 1
-        const val PAGE_SIZE = 20
-        const val MOVIE_LANGUAGE = "en-US"
+        const val LANGUAGE = "en-US"
+
+        private const val MESSAGE_ERROR_GETTING_MOVIE_GENRES = "Error fetching movie genres"
     }
 }
