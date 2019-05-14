@@ -28,7 +28,7 @@ class MoviesPagedKeyDataSourceImpl @Inject constructor(
         stateLiveData.postValue(STATE.LOADING)
         moviesService.getMoviesAsync(
                 endpoint = BuildConfig.ENDPOINT_MOVIES,
-                category = MoviesRemoteDataSource.CATEGORY.POPULAR.description,
+                category = MoviesRemoteDataSource.CATEGORY.POPULAR.description.toLowerCase(),
                 key = BuildConfig.API_KEY,
                 language = MOVIE_LANGUAGE,
                 page = FIRST_PAGE
@@ -51,7 +51,7 @@ class MoviesPagedKeyDataSourceImpl @Inject constructor(
         stateLiveData.postValue(STATE.LOADING)
         moviesService.getMoviesAsync(
                 endpoint = BuildConfig.ENDPOINT_MOVIES,
-                category = MoviesRemoteDataSource.CATEGORY.POPULAR.description,
+                category = MoviesRemoteDataSource.CATEGORY.POPULAR.description.toLowerCase(),
                 key = BuildConfig.API_KEY,
                 language = MOVIE_LANGUAGE,
                 page = params.key
@@ -73,7 +73,7 @@ class MoviesPagedKeyDataSourceImpl @Inject constructor(
         stateLiveData.postValue(STATE.LOADING)
         moviesService.getMoviesAsync(
                 endpoint = BuildConfig.ENDPOINT_MOVIES,
-                category = MoviesRemoteDataSource.CATEGORY.POPULAR.description,
+                category = MoviesRemoteDataSource.CATEGORY.POPULAR.description.toLowerCase(),
                 key = BuildConfig.API_KEY,
                 language = MOVIE_LANGUAGE,
                 page = params.key

@@ -121,11 +121,22 @@ abstract class MoviesRemoteDataSource(
 
     ) {
 
-        LATEST(""),
-        NO_PLAYING(""),
-        TOP_RATED(""),
-        UPCOMING(""),
-        POPULAR("popular")
+        LATEST("Latest"),
+        NOW_PLAYING("Now Playing"),
+        TOP_RATED("Top Rated"),
+        UPCOMING("Upcoming"),
+        POPULAR("Popular");
+
+        fun fromDescription(desc: String): CATEGORY? {
+
+            for (category in values()){
+                if (category.description == desc){
+                    return category
+                }
+            }
+
+            return null
+        }
     }
 
     companion object {
