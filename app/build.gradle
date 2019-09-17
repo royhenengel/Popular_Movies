@@ -56,8 +56,8 @@ android {
         implementation networkDependencies.values()
 
         // DI
-        implementation diImplementations.values()
-        kapt diAnnotationProcessors.values()
+        implementation di.implementations.values()
+        kapt di.annotationsProcessors.values()
 
         // RxJava
         implementation rxJava.values()

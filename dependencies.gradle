@@ -83,14 +83,14 @@ ext {
     ]
 
     // Dagger + Auto Value (needed for Dagger)
-    diImplementations = [
+    di = [:]
+    di.implementations = [
             dagger : "com.google.dagger:dagger:$dagger",
             dagger_android : "com.google.dagger:dagger-android:$dagger",
             android_support: "com.google.dagger:dagger-android-support:$dagger",
             auto_value     : "com.google.auto.value:auto-value:$auto_value"
     ]
-
-    diAnnotationProcessors = [
+    di.annotationsProcessors = [
             dagger_compiler         : "com.google.dagger:dagger-compiler:$dagger",
             dagger_android_processor: "com.google.dagger:dagger-android-processor:$dagger",
             auto_value_annotations  : "com.google.auto.value:auto-value-annotations:$auto_value"
