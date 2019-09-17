@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
 apply from: 'network.gradle'
+apply from: 'versions.gradle'
+apply from: '../dependencies.gradle'
 
 android {
     compileSdkVersion version_sdk_target
@@ -14,83 +16,61 @@ android {
         versionCode version_app_code
         versionName version_app_name
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        buildTypes {
+            release {
+                minifyEnabled false
+                proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            }
         }
+
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath true
+            }
+        }
+
+        kotlinOptions {
+            jvmTarget = kotlin_jvm_target
+        }
+
     }
 
-    compileOptions{
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+    dependencies {
+        implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+        implementation libs.kotlinStdLib
+
+        // AndroidX
+        implementation androidX.values()
+
+        // Kotlin
+        implementation ktx.values()
+
+        // Network dependencies
+        implementation networkDependencies.values()
+
+        // DI
+        implementation diImplementations.values()
+        kapt diAnnotationProcessors.values()
+
+        // RxJava
+        implementation rxJava.values()
+
+        // Glide
+        implementation libs.glide
+
+        // Timber
+        implementation libs.timber
+
+        // Test
+        testImplementation testImplementations.values()
+        androidTestImplementation androidTestImplementations.values()
+
     }
-
-    kotlinOptions{
-        jvmTarget = kotlin_jvm_target
-    }
-
-}
-
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$version_kotlin"
-    implementation "androidx.appcompat:appcompat:$version_app_compat"
-    implementation "androidx.legacy:legacy-support-v4:$version_support_leagacy"
-    implementation "androidx.constraintlayout:constraintlayout:$version_contraintlayout"
-    implementation "androidx.recyclerview:recyclerview:$version_recyclerview"
-    implementation "com.android.support:cardview-v7:$version_support_leagacy"
-    implementation "com.google.android.material:material:$version_material"
-    implementation "com.android.support:design:$version_design"
-    implementation "android.arch.paging:runtime:$version_paging_library"
-    implementation "android.arch.lifecycle:extensions:$versions_arch"
-
-    // Dagger
-    implementation "com.google.dagger:dagger:$version_dagger"
-    implementation "com.google.dagger:dagger-android:$version_dagger"
-    implementation "com.google.dagger:dagger-android-support:$version_dagger"
-    kapt "com.google.dagger:dagger-compiler:$version_dagger"
-    kapt "com.google.dagger:dagger-android-processor:$version_dagger"
-
-    // Auto Value (needed for Dagger)
-    kapt "com.google.auto.value:auto-value:$version_auto_value"
-    implementation "com.google.auto.value:auto-value-annotations:$version_auto_value"
-
-    // Kotlin
-    implementation "androidx.core:core-ktx:$version_ktx_core"
-    implementation "androidx.lifecycle:lifecycle-extensions:$version_lifecycle_extensions"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$version_ktx_lifecycle_view_model"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_ktx_coroutines"
-
-    //Navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:$version_ktx_navigation"
-    implementation "androidx.navigation:navigation-ui-ktx:$version_ktx_navigation"
-
-    // Retrofit 2
-    implementation "com.squareup.retrofit2:retrofit:$version_retrofit"
-    implementation "com.squareup.retrofit2:converter-gson:$version_retrofit"
-    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$version_retrofit_coroutines_adapter"
-
-    // OkHttp
-    implementation "com.squareup.okhttp3:okhttp:$version_okhttp"
-    implementation "com.squareup.okhttp3:logging-interceptor:$version_logging_interceptor"
-
-    // Glide
-    implementation "com.github.bumptech.glide:glide:$version_glide"
-
-    // RxJava
-    implementation "io.reactivex.rxjava2:rxjava:$version_rxjava"
-    implementation "io.reactivex.rxjava2:rxandroid:$version_rxandroid"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:$version_rxadapter"
-
-    // Timber
-    implementation "com.jakewharton.timber:timber:$version_timber"
-
-    // Test
-    testImplementation "junit:junit:$version_junit"
-    androidTestImplementation "androidx.test:runner:$version_testRunner"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$version_espresso_core"
-
 }

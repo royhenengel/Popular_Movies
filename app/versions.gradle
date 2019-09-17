@@ -1,0 +1,15 @@
+buildscript {
+
+    ext.version_sdk_min = 21
+
+    ext.version_sdk_target = 28
+
+    ext.version_app_code = 1
+
+    ext.version_app_name = '1.0'
+
+    ext.version_buildTools = '28.0.3'
+
+    ext.kotlin_jvm_target = '1.8'
+
+}
