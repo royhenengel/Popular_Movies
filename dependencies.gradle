@@ -31,6 +31,8 @@ ext {
     def junit = '4.12'
     def testRunner = '1.1.0-alpha4'
     def espresso_core = '3.1.0-alpha4'
+    def arch_core_testing = '1.1.1'
+    def mockk = '1.9.3'
 
     libs = [
             gradleVersion      : "com.android.tools.build:gradle:$gradle",
@@ -103,12 +105,15 @@ ext {
     ]
 
     testImplementations = [
-            junit: "junit:junit:$junit"
+            junit: "junit:junit:$junit",
+            archCoreTesting: "android.arch.core:core-testing:$arch_core_testing",
+            mockK: "io.mockk:mockk:$mockk"
     ]
 
     androidTestImplementations = [
             testRunner  : "androidx.test:runner:$testRunner",
-            espressoCore: "androidx.test.espresso:espresso-core:$espresso_core"
+            espressoCore: "androidx.test.espresso:espresso-core:$espresso_core",
+            archCoreTesting: "android.arch.core:core-testing:$arch_core_testing"
     ]
 
 }
