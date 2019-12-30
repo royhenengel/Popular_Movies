@@ -13,7 +13,7 @@ import com.example.popularmovies.data.details.entity.movie.MovieActorInEntity
 import com.example.popularmovies.data.details.entity.movie.MovieDetailsEntity
 import com.example.popularmovies.data.main.entity.MovieEntity
 import com.example.popularmovies.data.source.remote.mapper.*
-import com.example.popularmovies.ui.main.viewmodel.MainMoviesFragmentViewModel
+import com.example.popularmovies.ui.view.main.viewmodel.MainMoviesFragmentViewModel
 import io.reactivex.Single
 
 abstract class MoviesRemoteDataSource(

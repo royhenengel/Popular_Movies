@@ -7,7 +7,7 @@
 
     <fragment
             android:id="@+id/dest_main"
-            android:name="com.example.popularmovies.ui.main.view.MainMoviesFragment"
+            android:name="com.example.popularmovies.ui.view.main.view.MainMoviesFragment"
             android:label="@string/home"
             tools:layout="@layout/fragment_main_movies">
 
@@ -23,7 +23,7 @@
 
     <fragment
             android:id="@+id/dest_movie_details"
-            android:name="com.example.popularmovies.ui.details.movie.view.MovieDetailsFragment"
+            android:name="com.example.popularmovies.ui.view.details.movie.view.MovieDetailsFragment"
             android:label="@string/movie_details"
             tools:layout="@layout/fragment_movie_details">
 
@@ -46,7 +46,7 @@
 
     <fragment
         android:id="@+id/dest_person_details"
-        android:name="com.example.popularmovies.ui.details.person.view.PersonDetailsFragment"
+        android:name="com.example.popularmovies.ui.view.details.person.view.PersonDetailsFragment"
         android:label="@string/person_details"
         tools:layout="@layout/fragment_person_details">
 

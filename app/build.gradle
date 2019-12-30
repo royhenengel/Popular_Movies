@@ -14,6 +14,8 @@ apply from: '../dependencies.gradle'
 
 android {
     compileSdkVersion versions.sdk_target
+    buildToolsVersion versions.build_tools
+
     defaultConfig {
         applicationId "com.example.popularmovies"
         minSdkVersion versions.sdk_min
@@ -76,6 +78,9 @@ android {
         // Test
         testImplementation testImplementations.values()
         androidTestImplementation androidTestImplementations.values()
+
+        // Modules
+        implementation project(':ui')
 
     }
 }

@@ -16,7 +16,9 @@ class ResponseMovieItemToEntityMapper @Inject constructor() : Function<ResponseM
             id = movieResponse.id!!  ,
             title = movieResponse.originalTitle,
             overview = movieResponse.overview ,
-            releaseDate = dateFromString(dateString = movieResponse.releaseDate),
+            releaseDate = com.example.popularmovies.ui.util.dateFromString(
+                dateString = movieResponse.releaseDate
+            ),
             score = movieResponse.voteAverage,
             thumbnailPath = movieResponse.posterPath
         )

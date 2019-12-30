@@ -1,8 +1,8 @@
 package com.example.popularmovies.di.module
 
-import com.example.popularmovies.ui.details.movie.view.MovieDetailsFragment
-import com.example.popularmovies.ui.details.person.view.PersonDetailsFragment
-import com.example.popularmovies.ui.main.view.MainMoviesFragment
+import com.example.popularmovies.ui.view.details.movie.view.MovieDetailsFragment
+import com.example.popularmovies.ui.view.details.person.view.PersonDetailsFragment
+import com.example.popularmovies.ui.view.main.view.MainMoviesFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -10,13 +10,13 @@ import dagger.android.ContributesAndroidInjector
 abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
-    abstract fun contributeMainMoviesFragment(): MainMoviesFragment
+    abstract fun contributeMainMoviesFragment(): com.example.popularmovies.ui.view.main.view.MainMoviesFragment
 
     @ContributesAndroidInjector
-    abstract fun contributeMovieDetailsFragment(): MovieDetailsFragment
+    abstract fun contributeMovieDetailsFragment(): com.example.popularmovies.ui.view.details.movie.view.MovieDetailsFragment
 
     @ContributesAndroidInjector
-    abstract fun contributePersonDetailsFragment(): PersonDetailsFragment
+    abstract fun contributePersonDetailsFragment(): com.example.popularmovies.ui.view.details.person.view.PersonDetailsFragment
 
 }
 

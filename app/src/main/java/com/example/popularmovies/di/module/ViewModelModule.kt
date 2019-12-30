@@ -3,10 +3,10 @@ package com.example.popularmovies.di.module
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.popularmovies.di.ViewModelKey
-import com.example.popularmovies.ui.details.movie.viewmodel.MovieDetailsFragmentViewModel
-import com.example.popularmovies.ui.details.person.viewmodel.PersonDetailsFragmentViewModel
-import com.example.popularmovies.ui.main.viewmodel.MainMoviesFragmentViewModel
-import com.example.popularmovies.viewmodel.MoviesViewModelFactory
+import com.example.popularmovies.ui.view.details.movie.viewmodel.MovieDetailsFragmentViewModel
+import com.example.popularmovies.ui.view.details.person.viewmodel.PersonDetailsFragmentViewModel
+import com.example.popularmovies.ui.view.main.viewmodel.MainMoviesFragmentViewModel
+import com.example.popularmovies.ui.viewmodel.MoviesViewModelFactory
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -29,7 +29,7 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(PersonDetailsFragmentViewModel::class)
+    @ViewModelKey(com.example.popularmovies.ui.view.details.person.viewmodel.PersonDetailsFragmentViewModel::class)
     internal abstract fun bindPersonDetailsFragmentViewModel(viewModel: PersonDetailsFragmentViewModel): ViewModel
 
 }

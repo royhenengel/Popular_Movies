@@ -1,0 +1,57 @@
+apply plugin: 'com.android.library'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+apply from: '../dependencies.gradle'
+
+android {
+    compileSdkVersion versions.sdk_target
+    buildToolsVersion versions.build_tools
+
+    defaultConfig {
+        minSdkVersion versions.sdk_min
+        targetSdkVersion versions.sdk_target
+        versionCode versions.app_code
+        versionName versions.app_name
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    dataBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation libs.kotlinStdLib
+
+    // AndroidX
+    implementation androidX.values()
+
+    // Kotlin
+    implementation ktx.values()
+
+    // DI
+    implementation di.implementations.values()
+    kapt di.annotationsProcessors.values()
+
+    // RxJava
+    implementation rxJava.values()
+
+    // Glide
+    implementation libs.glide
+
+    // Timber
+    implementation libs.timber
+
+    // Test
+    testImplementation testImplementations.values()
+    androidTestImplementation androidTestImplementations.values()
+}

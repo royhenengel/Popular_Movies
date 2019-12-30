@@ -3,7 +3,7 @@ package com.example.popularmovies.data.source.remote.mapper
 import androidx.arch.core.util.Function
 import com.example.popularmovies.api.details.entity.movie.ResponseMovieDetails
 import com.example.popularmovies.data.details.entity.movie.MovieDetailsEntity
-import com.example.popularmovies.util.dateFromString
+import com.example.popularmovies.ui.util.dateFromString
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -16,7 +16,9 @@ class ResponseMovieDetailsToEntityMapper @Inject constructor() : Function<Respon
                 id = movieDetailsResponse.id!!,
                 title = movieDetailsResponse.title,
                 overview = movieDetailsResponse.overview,
-                releaseDate = dateFromString(dateString = movieDetailsResponse.releaseDate),
+                releaseDate = com.example.popularmovies.ui.util.dateFromString(
+                    dateString = movieDetailsResponse.releaseDate
+                ),
                 score = movieDetailsResponse.voteAverage,
                 length = movieDetailsResponse.runtime,
                 imagePath = movieDetailsResponse.backdropPath

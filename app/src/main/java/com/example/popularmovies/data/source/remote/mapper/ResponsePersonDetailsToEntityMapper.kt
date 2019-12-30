@@ -3,7 +3,7 @@ package com.example.popularmovies.data.source.remote.mapper
 import androidx.arch.core.util.Function
 import com.example.popularmovies.api.details.entity.cast.ResponsePersonDetails
 import com.example.popularmovies.data.details.entity.cast.PersonDetailsEntity
-import com.example.popularmovies.util.dateFromString
+import com.example.popularmovies.ui.util.dateFromString
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -15,8 +15,12 @@ class ResponsePersonDetailsToEntityMapper @Inject constructor() : Function<Respo
         return PersonDetailsEntity(
             id = responsePersonDetails.id ?: NULLABLE_INT_DEFAULT,
             name = responsePersonDetails.name ?: NULLABLE_STRING_DEFAULT,
-            birthday = dateFromString(responsePersonDetails.birthday),
-            deathDay = dateFromString(responsePersonDetails.deathday),
+            birthday = com.example.popularmovies.ui.util.dateFromString(
+                responsePersonDetails.birthday
+            ),
+            deathDay = com.example.popularmovies.ui.util.dateFromString(
+                responsePersonDetails.deathday
+            ),
             biography = responsePersonDetails.biography ?: NULLABLE_STRING_DEFAULT,
             imagePath = responsePersonDetails.profilePath ?: NULLABLE_STRING_DEFAULT,
             imdbId = responsePersonDetails.imdbId ?: NULLABLE_STRING_DEFAULT
