@@ -10,18 +10,16 @@ apply plugin: 'androidx.navigation.safeargs.kotlin'
 
 apply from: 'network.gradle'
 
-apply from: 'versions.gradle'
-
 apply from: '../dependencies.gradle'
 
 android {
-    compileSdkVersion version_sdk_target
+    compileSdkVersion versions.sdk_target
     defaultConfig {
         applicationId "com.example.popularmovies"
-        minSdkVersion version_sdk_min
-        targetSdkVersion version_sdk_target
-        versionCode version_app_code
-        versionName version_app_name
+        minSdkVersion versions.sdk_min
+        targetSdkVersion versions.sdk_target
+        versionCode versions.app_code
+        versionName versions.app_name
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         buildTypes {
@@ -43,7 +41,7 @@ android {
         }
 
         kotlinOptions {
-            jvmTarget = kotlin_jvm_target
+            jvmTarget = versions.kotlin_jvm_target
         }
 
     }
