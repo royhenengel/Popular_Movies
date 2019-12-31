@@ -6,7 +6,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
-import com.example.popularmovies.ui.BuildConfig
 import com.example.popularmovies.ui.R
 import com.example.popularmovies.ui.common.scrollingthumbnail.entity.ThumbnailClickListener
 import com.example.popularmovies.ui.common.scrollingthumbnail.entity.ThumbnailUiEntity
@@ -21,6 +20,10 @@ class ThumbnailViewHolder(
 
 ) : RecyclerView.ViewHolder(itemView) {
 
+    private companion object {
+        private const val MOVIES_IMAGE_BASE_URL = "https://api.themoviedb.org/"
+    }
+
     private val titleTv = itemView.findViewById<TextView>(R.id.thumbnail_tv_title)
     private val descTv = itemView.findViewById<TextView>(R.id.thumbnail_tv_desc)
     private val imageIv = itemView.findViewById<ImageView>(R.id.thumbnail_iv_image)
@@ -29,7 +32,7 @@ class ThumbnailViewHolder(
 
         thumbnailCastUiEntity.let {
 
-            glideRequestManager.load("${BuildConfig.MOVIES_IMAGE_BASE_URL}${it.imagePath}")
+            glideRequestManager.load("$MOVIES_IMAGE_BASE_URL${it.imagePath}")
                 .apply(initRequestOptions())
                 .into(imageIv)
 

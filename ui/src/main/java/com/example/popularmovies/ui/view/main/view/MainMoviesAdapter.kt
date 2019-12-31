@@ -7,12 +7,12 @@ import androidx.recyclerview.widget.DiffUtil
 import com.bumptech.glide.RequestManager
 import com.example.popularmovies.R
 import com.example.popularmovies.data.main.entity.MovieEntity
-import com.example.popularmovies.ui.view.main.entity.mapper.MovieEntityToUiEntityMapper
+import com.example.popularmovies.ui.view.main.model.mapper.MovieUiModelMapper
 
 
 class MainMoviesAdapter(
 
-    private val movieEntityToUiEntityMapper: MovieEntityToUiEntityMapper,
+    private val movieUiModelMapper: MovieUiModelMapper,
 
     private val movieClickListener: MovieViewHolder.MovieClickListener,
 
@@ -34,7 +34,7 @@ class MainMoviesAdapter(
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
 
-        val uiEntity = movieEntityToUiEntityMapper.apply(getItem(position)!!)
+        val uiEntity = movieUiModelMapper.apply(getItem(position)!!)
         holder.bind(uiEntity)
     }
 

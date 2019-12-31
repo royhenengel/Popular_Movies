@@ -1,0 +1,50 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply from: '../dependencies.gradle'
+
+android {
+    compileSdkVersion versions.sdk_target
+    buildToolsVersion versions.build_tools
+
+    defaultConfig {
+        minSdkVersion versions.sdk_min
+        targetSdkVersion versions.sdk_target
+        versionCode versions.app_code
+        versionName versions.app_name
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation libs.kotlinStdLib
+
+    // Modules
+    implementation project(':domain')
+
+    // AndroidX
+    implementation androidX.values()
+
+    // RxJava
+    implementation rxJava.values()
+
+    // Timber
+    implementation libs.timber
+
+    // DI
+    implementation di.implementations.values()
+    kapt di.annotationsProcessors.values()
+}

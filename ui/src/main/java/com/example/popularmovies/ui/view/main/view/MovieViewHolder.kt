@@ -5,9 +5,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
-import com.example.popularmovies.ui.BuildConfig
 import com.example.popularmovies.ui.R
-import com.example.popularmovies.ui.view.main.entity.MovieUiEntity
+import com.example.popularmovies.ui.view.main.model.MovieUiModel
 
 class MovieViewHolder(
 
@@ -26,20 +25,20 @@ class MovieViewHolder(
     private val thumbnailIv: ImageView = itemView.findViewById(R.id.item_movie_iv_image)
 
     interface MovieClickListener {
-        fun onMovieClicked(uiEntity: MovieUiEntity)
+        fun onMovieClicked(uiModel: MovieUiModel)
     }
 
-    fun bind(movieEntity: MovieUiEntity?) {
+    fun bind(movieModel: MovieUiModel?) {
 
-        movieEntity?.let {
+        movieModel?.let {
             title.text = it.title
             yearTv.text = it.releaseDate
             overviewTv.text = it.overview
             scoreTv.text = it.score.toString()
 
-            glide.load("${BuildConfig.MOVIES_IMAGE_BASE_URL}${it.thumbnailPath}").into(thumbnailIv)
+            glide.load("$MOVIES_IMAGE_BASE_URL${it.thumbnailPath}").into(thumbnailIv)
 
-            itemView.setOnClickListener { movieClickListener?.onMovieClicked(movieEntity) }
+            itemView.setOnClickListener { movieClickListener?.onMovieClicked(movieModel) }
         }
     }
 

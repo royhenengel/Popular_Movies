@@ -1,10 +1,9 @@
 package com.example.popularmovies.ui.view.details.person.entity.mapper
 
 import androidx.arch.core.util.Function
-import com.example.popularmovies.BuildConfig
-import com.example.popularmovies.data.details.entity.cast.PersonDetailsEntity
+import com.example.popularmovies.data.entity.cast.PersonDetailsEntity
+import com.example.popularmovies.ui.util.dateAsString
 import com.example.popularmovies.ui.view.details.person.entity.PersonDetailsUiEntity
-import com.example.popularmovies.util.dateAsString
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -25,7 +24,7 @@ class PersonDetailsEntityToUiEntityMapper @Inject constructor() : Function<Perso
             name = personDetailsEntity.name,
             lifeExpectancy = lifeExpectancy,
             biography = personDetailsEntity.biography,
-            imageUrl = "${BuildConfig.MOVIES_IMAGE_BASE_URL}${personDetailsEntity.imagePath}"
+            imageUrl = "${MOVIES_IMAGE_BASE_URL}${personDetailsEntity.imagePath}"
         )
     }
 
@@ -40,9 +39,12 @@ class PersonDetailsEntityToUiEntityMapper @Inject constructor() : Function<Perso
     }
 
     companion object{
+        private const val MOVIES_IMAGE_BASE_URL = "https://api.themoviedb.org/"
 
         private const val PATTERN_DATE = "dd/MM/yyyy"
+
         private const val PATTERN_BIRTH_TO_DEATH = "%s - %s"
+
         private const val NULLABLE_STRING_DEFAULT = ""
     }
 

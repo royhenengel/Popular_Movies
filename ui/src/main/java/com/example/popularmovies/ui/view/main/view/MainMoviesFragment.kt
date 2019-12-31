@@ -15,8 +15,8 @@ import com.bumptech.glide.Glide
 import com.example.popularmovies.R
 import com.example.popularmovies.data.main.entity.MovieEntity
 import com.example.popularmovies.di.Injectable
-import com.example.popularmovies.ui.view.main.entity.MovieUiEntity
-import com.example.popularmovies.ui.view.main.entity.mapper.MovieEntityToUiEntityMapper
+import com.example.popularmovies.ui.view.main.model.MovieUiModel
+import com.example.popularmovies.ui.view.main.model.mapper.MovieUiModelMapper
 import com.example.popularmovies.ui.view.main.viewmodel.MainMoviesFragmentViewModel
 import kotlinx.android.synthetic.main.fragment_main_movies.*
 import javax.inject.Inject
@@ -28,7 +28,7 @@ class MainMoviesFragment : Fragment(), Injectable,
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     @Inject
-    lateinit var movieEntityToUiEntityMapper: MovieEntityToUiEntityMapper
+    lateinit var movieUiModelMapper: MovieUiModelMapper
 
     private lateinit var fragmentViewModel: MainMoviesFragmentViewModel
     private lateinit var moviesRv: RecyclerView
@@ -72,9 +72,9 @@ class MainMoviesFragment : Fragment(), Injectable,
         observe()
     }
 
-    override fun onMovieClicked(uiEntity: MovieUiEntity) {
+    override fun onMovieClicked(uiModel: MovieUiModel) {
 
-        fragmentViewModel.onMovieClicked(uiEntity)
+        fragmentViewModel.onMovieClicked(uiModel)
     }
 
     private fun initViews(view: View) {
@@ -99,7 +99,7 @@ class MainMoviesFragment : Fragment(), Injectable,
 
         moviesAdapter =
             MainMoviesAdapter(
-                movieEntityToUiEntityMapper,
+                movieUiModelMapper,
                 this@MainMoviesFragment,
                 Glide.with(this)
             )

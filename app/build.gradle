@@ -8,8 +8,6 @@ apply plugin: 'kotlin-kapt'
 
 apply plugin: 'androidx.navigation.safeargs.kotlin'
 
-apply from: 'network.gradle'
-
 apply from: '../dependencies.gradle'
 
 android {
@@ -59,25 +57,12 @@ android {
         // Kotlin
         implementation ktx.values()
 
-        // Network dependencies
-        implementation networkDependencies.values()
-
         // DI
         implementation di.implementations.values()
         kapt di.annotationsProcessors.values()
 
-        // RxJava
-        implementation rxJava.values()
-
-        // Glide
-        implementation libs.glide
-
         // Timber
         implementation libs.timber
-
-        // Test
-        testImplementation testImplementations.values()
-        androidTestImplementation androidTestImplementations.values()
 
         // Modules
         implementation project(':ui')

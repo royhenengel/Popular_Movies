@@ -3,10 +3,9 @@ package com.example.popularmovies.ui.view.details.person.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.bumptech.glide.load.engine.GlideException
-import com.example.popularmovies.BuildConfig
-import com.example.popularmovies.data.MoviesRepository
-import com.example.popularmovies.data.details.entity.cast.PersonDetailsEntity
-import com.example.popularmovies.data.details.entity.movie.MovieActorInEntity
+import com.example.popularmovies.data.MoviesRepositoryImpl
+import com.example.popularmovies.data.entity.cast.PersonDetailsEntity
+import com.example.popularmovies.data.entity.movie.MovieActorInEntity
 import com.example.popularmovies.ui.common.scrollingthumbnail.entity.ThumbnailUiEntity
 import com.example.popularmovies.ui.common.scrollingthumbnail.viewmodel.ScrollingThumbnailsViewUiModel
 import com.example.popularmovies.ui.view.details.person.entity.PersonDetailsUiEntity
@@ -23,7 +22,7 @@ import javax.inject.Inject
 
 class PersonDetailsFragmentViewModel @Inject constructor(
 
-    private val repository: MoviesRepository,
+    private val repositoryImpl: MoviesRepositoryImpl,
 
     private val personDetailsEntityToUiEntityMapper: PersonDetailsEntityToUiEntityMapper,
 
@@ -31,16 +30,25 @@ class PersonDetailsFragmentViewModel @Inject constructor(
 
 ) : ViewModel() {
 
+    private companion object {
+        private const val IMDB_BASE_URL = "http://www.imdb.com/name/"
+
+        private const val PATTERN_MESSAGE_GETTING_DATA = "Getting person details data with id: %d"
+        private const val MESSAGE_INTERNAL_ERROR = "Error getting data for person details fragment"
+        private const val MESSAGE_ERROR_LOADING_IMAGE = "Error loading person details image"
+    }
+
     val personDetailsUiEntityLiveData = MutableLiveData<PersonDetailsUiEntity>()
+
     val movieThumbnailsUiModelLiveData = MutableLiveData<ScrollingThumbnailsViewUiModel>()
+
     val stateLiveData = MutableLiveData<STATE>()
 
-    val movieActorInClickedLiveEvent =
-        com.example.popularmovies.ui.viewmodel.SingleLiveEvent<MovieActorInEntity>()
-    val openInBrowserLiveEvent =
-        com.example.popularmovies.ui.viewmodel.SingleLiveEvent<String>()
-    val actionHomeLiveEvent =
-        com.example.popularmovies.ui.viewmodel.SingleLiveEvent<Unit>()
+    val movieActorInClickedLiveEvent = SingleLiveEvent<MovieActorInEntity>()
+
+    val openInBrowserLiveEvent = SingleLiveEvent<String>()
+
+    val actionHomeLiveEvent = SingleLiveEvent<Unit>()
 
     val userErrorMessage = "Error loading data\nPlease check your internet connection\nand try again"
 
@@ -71,7 +79,7 @@ class PersonDetailsFragmentViewModel @Inject constructor(
     fun onOpenInBrowserClicked() {
 
         if (stateLiveData.value == STATE.LOADED) {
-            val url = "${BuildConfig.IMDB_BASE_URL}${personDetailsEntity.imdbId}"
+            val url = "${IMDB_BASE_URL}${personDetailsEntity.imdbId}"
             openInBrowserLiveEvent.value = url
         }
     }
@@ -98,8 +106,8 @@ class PersonDetailsFragmentViewModel @Inject constructor(
     private fun initData() {
 
         setStateLoading()
-        val detailsSingle = repository.getPersonDetails(personId)
-        val moviesActorInSingle = repository.getPersonMovies(personId)
+        val detailsSingle = repositoryImpl.getPersonDetails(personId)
+        val moviesActorInSingle = repositoryImpl.getPersonMovies(personId)
 
         disposable = Single.zip(detailsSingle, moviesActorInSingle,
                 BiFunction<PersonDetailsEntity, List<MovieActorInEntity>, RxZipResult> { details, movies ->
@@ -169,12 +177,5 @@ class PersonDetailsFragmentViewModel @Inject constructor(
         val thumbnails: List<ThumbnailUiEntity>
 
     )
-
-    companion object {
-
-        private const val PATTERN_MESSAGE_GETTING_DATA = "Getting person details data with id: %d"
-        private const val MESSAGE_INTERNAL_ERROR = "Error getting data for person details fragment"
-        private const val MESSAGE_ERROR_LOADING_IMAGE = "Error loading person details image"
-    }
 
 }

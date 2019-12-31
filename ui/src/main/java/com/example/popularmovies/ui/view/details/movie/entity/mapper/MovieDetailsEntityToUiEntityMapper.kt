@@ -1,8 +1,7 @@
 package com.example.popularmovies.ui.view.details.movie.entity.mapper
 
 import androidx.arch.core.util.Function
-import com.example.popularmovies.BuildConfig
-import com.example.popularmovies.data.details.entity.movie.MovieDetailsEntity
+import com.example.popularmovies.data.entity.movie.MovieDetailsEntity
 import com.example.popularmovies.ui.BuildConfig
 import com.example.popularmovies.ui.util.dateAsString
 import com.example.popularmovies.ui.view.details.movie.entity.MovieDetailsUiEntity

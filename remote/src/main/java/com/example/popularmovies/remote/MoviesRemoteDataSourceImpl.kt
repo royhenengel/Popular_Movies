@@ -1,0 +1,88 @@
+package com.example.popularmovies.remote
+
+import android.annotation.SuppressLint
+import com.example.popularmovies.data.model.MovieEntity
+import com.example.popularmovies.remote.api.MoviesService
+import com.example.popularmovies.remote.mapper.ResponseMovieItemToEntityMapper
+import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
+import javax.inject.Inject
+import javax.inject.Singleton
+
+@Singleton
+class MoviesRemoteDataSourceImpl @Inject constructor(
+
+    private val moviesService: MoviesService,
+
+    responseMovieItemToEntityMapper: ResponseMovieItemToEntityMapper
+
+) : MoviesRemoteDataSource(responseMovieItemToEntityMapper) {
+
+    @SuppressLint("CheckResult")
+    override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, MovieEntity>) {
+        stateLiveData.postValue(STATE.LOADING)
+
+        moviesService.getMoviesAsync(
+                endpoint = ENDPOINT_MOVIES,
+                category = CATEGORY.POPULAR.description,
+                key = API_KEY,
+                language = MOVIE_LANGUAGE,
+                page = FIRST_PAGE
+        )
+                .subscribeOn(Schedulers.io())
+                .map { response -> mapPopularMovieResponseItemsToModels(response) }
+                .subscribe({ movieModelList ->
+                    callback.onResult(movieModelList, null, FIRST_PAGE + 1)
+                    stateLiveData.postValue(STATE.LOADED)
+                }, { t ->
+                    Timber.e(t)
+                    stateLiveData.postValue(STATE.ERROR)
+                })
+
+    }
+
+    @SuppressLint("CheckResult")
+    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, MovieEntity>) {
+        stateLiveData.postValue(STATE.LOADING)
+
+        moviesService.getMoviesAsync(
+                endpoint = ENDPOINT_MOVIES,
+                category = CATEGORY.POPULAR.description,
+                key = API_KEY,
+                language = MOVIE_LANGUAGE,
+                page = params.key
+        )
+                .subscribeOn(Schedulers.io())
+                .map { response -> mapPopularMovieResponseItemsToModels(response) }
+                .subscribe({ movieModelList ->
+                    callback.onResult(movieModelList, keyAfter(params))
+                    stateLiveData.postValue(STATE.LOADED)
+                }, { t ->
+                    Timber.e(t)
+                    stateLiveData.postValue(STATE.ERROR)
+                })
+    }
+
+    @SuppressLint("CheckResult")
+    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, MovieEntity>) {
+        stateLiveData.postValue(STATE.LOADING)
+
+        moviesService.getMoviesAsync(
+                endpoint = ENDPOINT_MOVIES,
+                category = CATEGORY.POPULAR.description,
+                key = API_KEY,
+                language = MOVIE_LANGUAGE,
+                page = params.key
+        )
+                .subscribeOn(Schedulers.io())
+                .map { response -> mapPopularMovieResponseItemsToModels(response) }
+                .subscribe({ movieModelList ->
+                    callback.onResult(movieModelList, keyBefore(params))
+                    stateLiveData.postValue(STATE.LOADED)
+                }, { t ->
+                    Timber.e(t)
+                    stateLiveData.postValue(STATE.ERROR)
+                })
+    }
+
+}

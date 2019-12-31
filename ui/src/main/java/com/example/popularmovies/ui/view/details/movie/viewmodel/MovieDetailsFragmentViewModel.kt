@@ -3,7 +3,7 @@ package com.example.popularmovies.ui.view.details.movie.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.bumptech.glide.load.engine.GlideException
-import com.example.popularmovies.data.MoviesRepository
+import com.example.popularmovies.data.MoviesRepositoryImpl
 import com.example.popularmovies.data.details.entity.cast.ActorInMovieEntity
 import com.example.popularmovies.data.details.entity.movie.MovieDetailsEntity
 import com.example.popularmovies.ui.common.scrollingthumbnail.entity.ThumbnailUiEntity
@@ -11,7 +11,6 @@ import com.example.popularmovies.ui.common.scrollingthumbnail.viewmodel.Scrollin
 import com.example.popularmovies.ui.view.details.movie.entity.MovieDetailsUiEntity
 import com.example.popularmovies.ui.view.details.movie.entity.mapper.ActorInMovieEntityToThumbnailUiEntityMapper
 import com.example.popularmovies.ui.view.details.movie.entity.mapper.MovieDetailsEntityToUiEntityMapper
-import com.example.popularmovies.ui.viewmodel.SingleLiveEvent
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -22,7 +21,7 @@ import javax.inject.Inject
 
 class MovieDetailsFragmentViewModel @Inject constructor(
 
-    private val repository: MoviesRepository,
+    private val repositoryImpl: MoviesRepositoryImpl,
 
     private val actorInMovieEntityToThumbnailUiEntityMapper: ActorInMovieEntityToThumbnailUiEntityMapper,
 
@@ -88,8 +87,8 @@ class MovieDetailsFragmentViewModel @Inject constructor(
 
     private fun initData() {
 
-        val detailsSingle = repository.getMovieDetails(movieId)
-        val castSingle = repository.getMovieCast(movieId)
+        val detailsSingle = repositoryImpl.getMovieDetails(movieId)
+        val castSingle = repositoryImpl.getMovieCast(movieId)
 
         disposable = Single.zip(detailsSingle, castSingle,
                 BiFunction<MovieDetailsEntity, List<ActorInMovieEntity>, RxZipResult> { details, actors ->
